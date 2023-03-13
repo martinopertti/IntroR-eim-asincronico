@@ -1,0 +1,123 @@
+---
+title: "Operadores en R"
+subtitle: "Escuela de Invierno en Métodos 2023, UCU"
+author: "Martín Opertti"
+output: 
+  html_document:
+    theme: cerulean 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo=FALSE}
+h1, h3, h4 {
+  text-align: center;
+}
+
+body {
+  font-size: 12pt;
+}
+```
+
+Los operadores son símbolos que nos permiten hacer operaciones, comparar, asignar y relacionar objetos. Debajo se muestran distintos operadores tanto aritméticos, relacionales como lógicos o booleanos. 
+
+## Operadores aritméticos
+
+Estos son los operadores más sencillos y nos permiten realizar operaciones aritméticas
+
+```{r}
+5 + 5 # Suma
+5 - 5 # Resta
+5 * 5 # Multiplicación
+5 / 5 # División
+5 ^ 5 # Potencia
+13 %/% 2 # Cociente entero de división 
+log(100) # Logaritmo natural
+log10(100) # Logaritmo en base 10
+```
+No es necesario aplicarlos entre números sino que se le puede aplicar a objetos (de tipo númerico), por ejemplo:
+
+```{r}
+objeto_a <- 10
+objeto_b <- 5
+
+objeto_a + objeto_b
+```
+
+
+
+## Operadores relacionales 
+
+Podemos testear expresiones y R nos devuelve si son verdaderas o falsas
+
+```{r}
+6 < 10 # Menor que
+10 <= 10 # Menor o igual que
+6 > 10 # Mayor que
+6 >= 10 # ,ayor o igual que
+```
+
+También con lo podemos hacer con objetos, en este caso podemos testear si son iguales para cada valor, por orden (tienen que tener el mismo largo):
+
+
+```{r}
+vnum_1 <- c(2, 4, 6, 8, 10)
+vnum_2 <- c(2, 3, 6, 10, 10)
+vnum_1 == vnum_2 
+```
+
+Podemos sino testear valores específicos:
+
+```{r}
+vnum_1[4] == vnum_2[5] # Valores específicos con indexación
+vnum_1[4] != vnum_2[5] # Testea si es distinto a...  
+```
+
+Si queremos ver si un vector contiene un valor:
+
+```{r}
+7 %in% vnum_1 # vnum_1 no contiene el valor 7
+10 %in% vnum_2 # vnum_1 sí contiene el valor 10
+vnum_1 %in% vnum_2 # Para cada valor
+```
+
+También podemos utilizar estos operadores para objetos de tipo caracteres:
+
+```{r}
+vcar_1 <- c("Natalia", "Nicolás", "Marcelo", "Florencia")
+vcar_2 <- c("Natalia", "Nicolás", "Marcelo", "Florencia", "Romina", "Román")
+vcar_1[1] == vcar_2[1] # El primer valor es igual
+vcar_1 %in% vcar_2 # Comprobamos si cada valor del vector vcar_1 está incluido dentro del vector vcar_2
+```
+
+
+## Operadores lógicos o booleanos 
+
+Son operadores que permiten agrupar expresiones, como `&` (y) o `|` (o).  Por ejemplo si quiero testear si tanto el número 6 como el 7 está dentro del objeto `vnum_3`:
+
+
+```{r}
+vnum_3 <- c(2, 4, 6, 10, 12, 16)
+6 & 7 %in% vnum_3 # Pruebo si 6 Y 7 están en vnum_3 (tienen que estar ambos para que sea TRUE)
+```
+
+Si quiero testear si al menos uno de 6 o 7 está dentro de vnum_3, uso el operador `|`:
+
+```{r}
+6 | 7 %in% vnum_3 # Pruebo si al menos uno de 6 o 7 están en vnum_3 (con uno alcanza)
+```
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>

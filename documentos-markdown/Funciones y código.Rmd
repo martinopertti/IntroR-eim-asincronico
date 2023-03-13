@@ -1,0 +1,109 @@
+---
+title: "Funciones y código"
+subtitle: "Escuela de Invierno en Métodos 2023, UCU"
+author: "Martín Opertti"
+output: 
+  html_document:
+    theme: cerulean 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo=FALSE}
+h1, h3, h4 {
+  text-align: center;
+}
+
+body {
+  font-size: 12pt;
+}
+```
+
+## Funciones (repaso)
+
+Una función es una serie de instrucciones para realizar una tarea específica. La función suele necesitar un imput (generalmente datos) y suele devolver un output (generalmente datos luego de cierta regla). En R los objetos son cosas, las funciones hacen cosas.
+
+Por ejemplo, usemos la función mean() para calcular la media de la variable "edad" del dataframe "encuesta"
+
+```{r}
+# Usamos la función data.frame
+encuesta <- data.frame(edad = c(18,24,80,40,76), 
+                       ideologia = c("Izquierda", "Izquierda", "Derecha", 
+                                     "Centro", "Derecha"),
+                       voto = c("Partido A", "Partido A", "Partido C",
+                                "Partido B", "Partido B"))
+
+# Usamos la función mean (aplicada a la variable edad del dataframe encuesta)
+mean(encuesta$edad)
+```
+
+
+## Funciones y objetos
+
+Como vimos, las funciones se aplican a objetos. Muchas veces queremos "guardar" (asignar) el resultado de aplicarle una función a un objeto. Por ejemplo, supongamos que queremos calcular la media del dataframe que asignamos con el nombre "encuesta", y lo queremos asignar como otro objeto con el nombre "media_edad"
+
+```{r}
+encuesta
+
+media_edad <- mean(encuesta$edad)
+
+print(media_edad)
+```
+
+
+## Estructura del código
+
+Cuando empezmos a transformar o crear nuevos objetos mediante funciones, tenemos varias formas de estructurar el código:
+
+- Sobreescribir objeto a medida que se aplican funciones
+
+- Ir creando objetos intermedios a medida que aplicamos funciones
+
+- Anidar funciones (se aplicará primero la función más al centro y por último la primera desde la izquierda)
+
+- Pipeline ([magrittr](https://magrittr.tidyverse.org/), lo veremos más adelante) 
+
+Supongamos que queremos aplicar dos funciones a un vector númerico: `mean()` para calcular la media y `round()` para redondear el resultado a 1 dígito después de la coma. Veamos cada una de ellas:
+
+
+### Sobreescribir objetos
+
+```{r echo = TRUE}
+data_ej <- c(12, 21, 33, 41, 27, 23) 
+
+# Correr funciones de una, almismo objeto
+media <- mean(data_ej) # Primero estimo la media y la asigno con el nombre "resultado_A"
+media <- round(media, digit = 1) # Redondeo resultado_A, asignandolo con el mismo nombre
+```
+
+### Crear objetos intermedios
+
+```{r echo = TRUE}
+# Correr funciones de una, con objetos intermedios
+media <- mean(data_ej) # Creo un primer objeto con la media
+media_redondeada <- round(media, digits = 1) # Creo 2do objeto con la media redondeada
+```
+
+
+### Anidar funciones
+
+```{r echo = TRUE}
+# Corro las dos funciones en la misma línea
+media_redondeada <- round(mean(data_ej), digits = 1)
+```
+
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>

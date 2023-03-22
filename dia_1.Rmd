@@ -1,6 +1,6 @@
 ---
 title: "Intro a R"
-subtitle: "Día 1: Introducción y fundamentos de la programación en R"
+subtitle: "Módulo 1: Introducción y fundamentos de la programación en R"
 author: "Escuela de Invierno en Métodos 2023 - Martín Opertti"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output:
@@ -635,6 +635,31 @@ mean(encuesta$edad) # Podemos aplicarle funciones (la media en este caso)
 *(2) Realizar una operación sobre ese vector para calcular la edad de cada integrante en 2030*
 
 *(3) Crear un tercer vector con el nombre de cada uno y combinar los 3 vectores en un dataframe*
+]
+
+---
+
+## Ejercicio
+
+.codefontchico[
+```{r, echo = TRUE}
+# (1) Vector con la edad de los integrantes de tu hogar
+edades <- c(26, 27)
+edades
+
+# (2) Calcular la edad para 2030
+edades_2030 <- edades + 7
+edades_2030
+
+# (3) Tercer vector con el nombre de cada uno y crear dataframe
+nombres <- c("Martín", "Leticia")
+nombres
+
+data.frame(edad_actual = edades,
+           edades_2030 = edades_2030,
+           nombres = nombres)
+
+```
 ]
 
 ---

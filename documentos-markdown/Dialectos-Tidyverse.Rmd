@@ -1,0 +1,158 @@
+---
+title: "Dialectos-Tidyverse"
+subtitle: "Escuela de Invierno en Métodos 2023, UCU"
+author: "Martín Opertti"
+output: 
+  html_document:
+    theme: cerulean 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dialectos
+
+En R podemos realizar una misma operación de muchas maneras distintas, en función de los paquetes o conjuntos de paquetes que utilizamos. Puesto de otra manera, R como lenguaje de programación tiene distintos "dialectos", esto es, paquetes (o conjuntos de paquetes) con sus propias funciones, sintaxis y comunidad de usuarios. 
+
+Para la mayoría de las funciones requeridas para un análisis de datos estándar (importar datos, manipular, modelar y visualizar) existen -de forma muy simplificada- tres grandes dialectos: [R Base](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html), [tidyverse](https://www.tidyverse.org/) y [data.table](https://rdatatable.gitlab.io/data.table/).
+
+```{r echo = FALSE, results='hide', message=FALSE, warning=FALSE}
+library(readxl)
+library(tidyverse)
+library(data.table)
+datauru <- read_excel("data/datauru.xlsx")
+data <- select(datauru, year, gdp_lcu, inflation, unemployment, presidente)
+```
+
+Por ejemplo, tomemos un dataframe con datos anuales de PBI, inflación, desempleo y presidente en Uruguay. Supongamos que queremos calcular la media de inflación y desempleo durante los años en los que gobernaron Sanguinetti y Vázquez. Es decir, queremos obtener una tabla 2x2 con la inflación y el desempleo promedio para todos los años en los que gobernó Sanguinetti y para los que gobernó Vázquez.
+
+Comencemos por examinar el dataframe en cuestión (que ya importé y asigné con el nombre data):
+
+```{r echo = TRUE,}
+print(data)
+```
+
+Ahora vamos a ver cómo podemos construir la tabla que queremos utilizando 3 fragmentos de código muy distintos. Cada uno de ellos se corresponde con uno de los "dialectos" que podemos utilizar en R. 
+
+### R Base
+
+Primero veamos cómo podemos resumir estos datos para crear la tabla que queremos utilizando **R base**, es decir, las funciones que trae R por defecto. Las ventajas de esto es que no es necesario instalar ni cargar paquetes adicionales, y que es muy estable (las funciones no suelen cambiar). Sin embargo, puede resultar más complejo y difícil de interpetar que otras opciones.
+
+
+```{r ej2f, echo = TRUE}
+as.data.frame(t(sapply(X = split(
+  x = data[which(data$presidente %in% c("Vázquez", "Sanguinetti")),
+           which(colnames(data) %in% c("gdp_lcu", "inflation"))],
+  f = data$presidente[which(data$presidente %in% c("Vázquez", "Sanguinetti"))],
+  drop = TRUE),
+  FUN = function(x) {apply(x, 2, mean)})))
+```
+
+### Datatable
+
+Otra opción es usar las funciones de paquete data.table. Esta opción es un poco más sencilla aunque todavía es bastante difícil de leer sin conocer el código
+
+
+```{r ej2g, echo = TRUE}
+data_dt <- data 
+setDT(data_dt) 
+data_dt[presidente %in% c("Vázquez", "Sanguinetti"),
+       c("presidente", "gdp_lcu", "inflation")  ][ 
+         , lapply(.SD, mean), by = presidente] 
+```
+
+
+### Tidyverse
+
+La tercera opción es utilizar la sintáxis del Tidyverse. El código debajo realiza lo mismo que los dos anteriores pero en formato Tidyverse. Este formato está caracterizado por ser fácil de leer aún sin saber las funciones y por tener una gran comunidad de usuarios. Decimos que es fácil de leer debido a que está estructurado en distintos pasos que siguen un orden y que los nombres de las funciones se corresponden con verbos que describen los que hacen. 
+
+
+```{r ej2h, echo = TRUE}
+data %>%
+  filter(presidente %in% c("Vázquez", "Sanguinetti")) %>% 
+  select(presidente, gdp_lcu, inflation) %>%
+  group_by(presidente) %>% 
+  summarise_all(mean) 
+
+```
+
+Tomemos como ejemplo el fragmento de código anterior y analizemoslo. El código empieza con un objeto (`data`) y luego se le aplica la función `filter()` -que como su nombre indica filtra casos- para quedarnos con los años en los que presidió Vázquez o Sanguinetti. Luego aplicamos la función `select()` para quedarnos solamente con 3 variables, `presidente`, `gdp_lcu` e `inflation` que son las que necesitamos para crear nuestra tabla. Nuevamente el nombre de la función (`select()`) nos da un fuerte indicio de qué es lo que se está haciendo en esa línea de código. Por último, se aparecen las funciones `group_by()` para agrupar según la variable `presidente`, y la función `summarise_all()` para resumir los datos calculando la media.
+
+Durante el curso, aprenderemos la mayoría de las cosas usando el Tidyverse.
+
+
+## Más sobre el Tidyverse
+
+```{r , echo=FALSE, out.width= "25%", out.extra='style="float:right; padding:15px"'}
+knitr::include_graphics(here::here("ima/tidy.jpg"))
+```
+
+[Tidyverse](https://www.tidyverse.org/) es una colección de paquetes diseñados para el análisis de datos. Este conjunto de paquetes comparte una filosofía de diseño, grámatica y estructura de datos. Las ventajas de Tidyverse están en su gramática (fácil de leer lo que invita a compartir y replicar), consistencia, alcance y su numerosa y creciente comunidad.
+
+```{r ej1, echo = FALSE, results='hide'}
+encuesta <- data.frame(edad = c(18,24,80), 
+                       ideologia = c("Izquierda", "Izquierda", "Derecha"),
+                       voto = c("Partido A", "Partido A", "Partido C"))
+```
+
+
+Tidyverse cuenta con varios paquetes que sirven para distintos tipos de tareas específicas. Podemos cargar todos los paquetes de forma conjunta: 
+
+```{r ej00, echo = TRUE, results='hide', error=TRUE}
+ # install.packages("tidyverse")
+library(tidyverse)
+```
+
+O también podemos instalar/cargar los paquetes dentro del Tidyverse -como dplyr- de forma separada
+
+```{r echo = TRUE, results='hide', error=TRUE}
+ # install.packages("dplyr")
+library(dplyr)
+```
+
+
+La mejor manera de entender los principios de tidyverse es a través del libro del creador de tidyverse (Hadley Wickham) y Garrett Grolemund "R for Data Science" (2018). En este [enlace](https://es.r4ds.hadley.nz/) podrás encontrar su versión en español.
+
+```{r ej0_b, out.width = "600px", echo = FALSE}
+knitr::include_graphics(here::here("ima/tidy_pr.png"))
+```
+
+La lista debajo incluye los paquetes que componen el Tidyverse (son cargados o instalados por defecto cuando cargamos o instalamos el Tidyverse) y su fin.
+
+```{r , echo=FALSE, out.width= "60%", out.extra='style="float:right; padding:15px"'}
+knitr::include_graphics(here::here("ima/tidy_pack.jpg"))
+```
+
+- [readr](https://readr.tidyverse.org/): importar y exportar datos
+- [dplyr](https://dplyr.tidyverse.org/): manipulación de datos
+- [tidyr](https://tidyr.tidyverse.org/): manipulación de datos
+- [ggplot2](https://ggplot2.tidyverse.org/): visualización de datos
+- [purr](https://purrr.tidyverse.org/): programación avanzada
+- [tibble](https://tibble.tidyverse.org/): estructura de datos
+- [forcats](https://forcats.tidyverse.org/): factores
+- [stringr](https://stringr.tidyverse.org/): variables de caracteres
+
+
+Estos son algunos paquetes (para tareas más específicas) que forman parte del Tidyverse pero se tienen que cargar por separado:
+
+- [readxl](https://readxl.tidyverse.org/): importar datos (excel)
+- [haven](https://haven.tidyverse.org/): importar (Stata, SPSS, SAS)
+- [lubridate](https://lubridate.tidyverse.org/): manipulación de fechas
+- [rvest](https://rvest.tidyverse.org/): webscrapping
+- [glue](https://www.tidyverse.org/blog/2017/10/glue-1.2.0/): combinar data
+- [tidymodels](https://www.tidymodels.org/): modelar datos
+
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>

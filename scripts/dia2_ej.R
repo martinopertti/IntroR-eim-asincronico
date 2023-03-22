@@ -1,10 +1,26 @@
 
 ## ***************************************************************************
-##  Día 2: Estadística descriptiva y limpieza de datos          
+##  Módulo 2: Estadística descriptiva y limpieza de datos          
 ##  Ejercicios                                                     
 ##  Escuela de Invierno en Métodos                                 
-##  Martín Opertti - 2022                                         
+##  Martín Opertti - 2023                                         
 ## ***************************************************************************
+
+
+## 0. Instala el paquete "dplyr", cargalo y usa la función "filter" para filtrar 
+# "paises_eco" de modo que   solo queden los países de América Latina. Utiliza 
+# help(filter) para  entender como usar la función.Cuidado que el paquete "stats" 
+# también tiene una función "filter", por lo que cuando uses help(filter), 
+# selecciona la función del paquete "dplyr"
+
+paises_eco <- data.frame(
+  pais = c("Argentina", "Brasil", "Chile", "Uruguay", "Gibraltar"),
+  continente = c("América Latina", "América Latina", "América Latina",
+                 "América Latina", "Europa"),
+  desempleo = c(10.4, 12, 7.1, 8.8, NA),
+  pbi_perc = c(9912, 8717, 14896, 16190, NA))
+
+paises_eco
 
 
 ## 1. Importar dataframe "datauru" y asignarle el mismo nombre "datauru" 

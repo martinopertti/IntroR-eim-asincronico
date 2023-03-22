@@ -8,6 +8,7 @@
 
 ## En este script vamos a repasar algunas funciones y operadores básicos de R
 
+
 ##  1. Comandos básicos   ====================================================
 
 # Creamos un objeto llamado "year" con este año en forma numérica
@@ -225,55 +226,14 @@ identical(resultado_A, resultado_B_2)
 identical(resultado_A, resultado_C)
 
 
-
-## * 5.4. Crear una función ---- 
-
-# Supongamos que tenemos un dataframe con tres variables: pais, vacas y personas 
-data <- data.frame(pais = c("Uruguay", "Argentina", "Brasil", "Mexico"),
-                   humanos = c(3.4, 43.8, 209.5, 128.6),
-                   vacas = c(11800, 53500, 22600, 16500))
-data
-
-# Ahora quiero calcular la cantidad de vacas per capita. Podría hacer:
-data$vacas_pc <- (data$vacas / 1000) / data$humanos 
-data
-
-# Ahora me gustaría tener una tabla un poco más prolija: números redondeados y "per"
-data$vacas_pc <- round(data$vacas_pc, digits = 1)
-data$vacas_pc <- paste(data$vacas_pc, "per", sep = " ")
-data
-
-# Ok, lo logramos. Pero necesitar calcular más tablas:
-data_2 <- data.frame(pais = c("Uruguay", "Nueva Zelanda", "Australia", "Japón"),
-                     humanos = c(3.4, 4.5, 43.8, 126.3),
-                     vacas = c(11800, 9900, 53500, 3800))
-data_2
-
-
-# Tendría que copiar y pegar varias veces el mismo código, cambiando el nombre 
-# de los objetos. En este tipo de casos es muy util crear nuestra propia 
-# función, para resumir este conjunto  de operaciones:
-
-calc_vacas <- function(x, y){ 
-  vacas_pc <- (x / 1000) / y   # Calculo la proporción de x / 1000 sobre y
-  vacas_pc_1 <- round(vacas_pc, digits = 2) # Redondeo
-  vacas_pc_2 <- paste(vacas_pc_1, "per", sep = " ")
-  return(vacas_pc_2)
-}
-
-data_2$vacas_pc <- calc_vacas(x = data_2$vacas, y = data_2$humanos)
-
-data_2
-
-
-## * 5.5. Errores ---- 
+## * 5.4. Errores ---- 
 vector_ej <- rnorm(n = 10, mean = 10, sd = 5) # Creo valores aleatorios
 mean(Vector_ej) # Aplico función para obtener la media
 
 # No funciona porque el nombre del objeto está mal escrito
 mean(vector_ej) # Aplico función para obtener la media
 
-## * 5.6. Advertencias ----
+## * 5.5. Advertencias ----
 vector_1 <- c("10", "35%", "35", "50") # Vector de caracteres que contiene números 
 vector_1
 
@@ -288,39 +248,11 @@ vector_2 # Los valores que además del número tenían (%) no pueden pasarse a n
 
 
 
-##  6. Paquetes  =============================================================
+##  6. Operadores  ===========================================================
 
 rm(list=ls()) # Limpiamos el ambiente
 
-## * 6.1. Descargar y cargar ----
-
-# Para descargar paquetes de CRAN, utilizamos la siguiente función:
-install.packages("dplyr") # Ejemplo, correr solo si es necesario
-
-# Existen otros paquetes no alojados en CRAN, que se instalan utilizando el paquete "devtools" 
-library(dplyr) # Ejemplo
-
-## * 6.2. Utilzar función sin cargar paquete ----
-# Creo dataframes con columnas no iguales
-df_1 <- data.frame(col_a = c(1, 2, 3),
-                   col_b = c(2, 4, 6))
-
-df_2 <- data.frame(col_a = c(1, 2, 3),
-                   col_c = c(-2, 1, 6))
-
-# Uso la función rbind.fill() que a diferencia de rbind() del Base, permite mergear
-# dataframes con columnas que no matchean de forma exacta, agregando NAs
-# No cargo todo el paquete plyr sino que llamo la función específica usando ::
-df_3 <- rbind(df_1, df_2) # No me sirve rbind() del Base porque las columnas no son iguales
-df_3 <- rbind.fill(df_1, df_2)
-
-
-
-##  7. Operadores  ===========================================================
-
-rm(list=ls()) # Limpiamos el ambiente
-
-## * 7.1. Operadores aritméticos ----
+## * 6.1. Operadores aritméticos ----
 
 # Ya vimos algunos al principio:
 5 + 5 # Suma
@@ -331,7 +263,7 @@ rm(list=ls()) # Limpiamos el ambiente
 log(100) # Logaritmo natural
 log10(100) # Logaritmo en base 10
 
-## * 7.2. Operadores relacionales ----
+## * 6.2. Operadores relacionales ----
 
 # Podemos testear expresiones y R nos devuelve si son verdaderas o falsas
 6 < 10 # menor que
@@ -359,7 +291,7 @@ vcar_2 <- c("Natalia", "Nicolás", "Marcelo", "Florencia", "Romina", "Román")
 vcar_1[1] == vcar_2[1] # El primer valor es igual
 vcar_1 %in% vcar_2
 
-## * 7.3. Operadores booleanos ----
+## * 6.3. Operadores booleanos ----
 
 vnum_3 <- c(2, 4, 6, 10, 12, 16)
 6 & 7 %in% vnum_3 # Pruebo si 6 Y 7 están en vnum_3 (tienen que estar ambos para que sea TRUE)

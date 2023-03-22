@@ -1,6 +1,6 @@
 ---
 title: "Intro a R"
-subtitle: "Día 3: Manipulación de datos"
+subtitle: "Módulo 3: Manipulación de datos"
 author: "Escuela de Invierno en Métodos 2022 - Martín Opertti"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output:
@@ -174,18 +174,6 @@ dim(data_incompleta)
 data_completa_reb <- filter(nba_data, !is.na(reb_home))
 dim(data_completa_reb)
 
-```
-
----
-## Datos perdidos
-También se puede usar la función `drop_na` de tidyr para eliminar las filas con al menos un dato perdido (si no especificamos variables), o con datos perdidos en una o un conjunto de variables especificadas
-
-```{r ch3, eval = FALSE, echo = TRUE}
-# Filtrar las observaciones con data perdida en todas las variables:
-drop_na(nba_data)
-
-# Filtrar las observaciones con data perdida en la variable reb_home:
-drop_na(nba_data, reb_home)
 ```
 
 ---

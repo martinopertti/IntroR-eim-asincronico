@@ -1,9 +1,9 @@
 
 ## ***************************************************************************
-##  Día 2: Estadística descriptiva y limpieza de datos          
+##  Módulo 2: Estadística descriptiva y limpieza de datos          
 ##  Código de la presentación                                      
 ##  Escuela de Invierno en Métodos                                
-##  Martín Opertti - 2022                                         
+##  Martín Opertti - 2023                                         
 ## ***************************************************************************
 
 
@@ -12,6 +12,7 @@
 getwd() # Con está función puedo consultar el directorio
 
 # Podríamos usar setwd() para cambiarlo
+
 # Ahora estamos trabajando en un proyecto de R (.Rproj), por lo que el 
 # directorio por defecto debe ser donde está ubicado el .Rproj
 
@@ -19,6 +20,7 @@ getwd() # Con está función puedo consultar el directorio
 # Como todo lo que queremos importar a R está dentro de la carpeta, 
 # solo hay que usar directorios relativos:
 
+# install.packages("readxl") # Instalar en caso de ser necesario
 library(readxl)
 
 desempleo_uru <- read_excel("data/desempleo.xlsx")
@@ -27,7 +29,7 @@ rm(desempleo_uru)
 
 
 
-##  2. Dialectos  ============================================================    
+##  2. Dialectos y paquetes  ==============================================
 
 # Creo un data.frame "encuesta"
 encuesta <- data.frame(edad = c(18,24,80), 
@@ -39,9 +41,11 @@ encuesta # Retomemos el data.frame "encuesta"
 # Supongamos que quiero quedarme solo con las variables de edad y voto
 encuesta_base <-  encuesta[ , c("edad", "voto")] # R Base
 
+# install.packages("tidyverse") # Instalar en caso de ser necesario
 library(tidyverse)
 encuesta_tidy <- select(encuesta, edad, voto) # Tidyverse
 
+# install.packages("data.table") # Instalar en caso de ser necesario
 library(data.table)
 encuesta_dt <- as.data.table(encuesta)[ , .(edad, voto)]
 
@@ -49,6 +53,20 @@ encuesta_dt <- as.data.table(encuesta)[ , .(edad, voto)]
 colnames(encuesta_base)
 colnames(encuesta_tidy)
 colnames(encuesta_dt)
+
+
+
+
+# "paises_eco" de modo que  solo queden los países de América Latina. 
+
+# Utiliza help(filter) para entender como usar la función. Cuidado que el paquete "stats" también
+# tiene una función "filter", por lo que cuando uses help(filter), selecciona la función del
+# paquete "dplyr". También puedes buscar directamente en un navegador
+# install.packages("dplyr") # Instalar en caso de ser necesario
+library(dplyr)
+help(filter)
+paises_eco <- filter(paises_eco, continente == "América Latina")
+paises_eco
 
 
 
@@ -158,21 +176,6 @@ rm(list=ls())
 
 
 
-##  6. Tibbles  =============================================================
-
-d_gap <- gapminder
-class(d_gap) # Ya es un tibble 
-
-d_gap <- as.data.frame(d_gap)
-class(d_gap) # Ahora solamente dataframe
-print(d_gap)
-
-d_gap <- as_tibble(d_gap) # Pasamos nuevamente a tibble
-class(d_gap)
-print(d_gap)
-
-
-
 ##  7. Explorar datos  ======================================================
 
 # R tiene un visor para datos. Pueden clickear en el dataframe en el ambiente o:
@@ -180,8 +183,6 @@ View(d_gap)
 dim(d_gap) # Número de filas y columnas
 names(d_gap) # Nombre de variables
 head(d_gap, 3) # Imprime primeras filas (3 en este caso)
-str(d_gap) 
-summary(d_gap) 
 glimpse(d_gap) # Recomiendo utilizar esta función
 
 
@@ -201,17 +202,15 @@ addmargins(prop.table(tabla_1)) # Proporciones y totales
 ## Tablas cruzadas
 
 # Creo una variable Mercosur
-d_gap$mercosur <- ifelse(d_gap$country == "Uruguay", 1,
-                         ifelse(d_gap$country == "Argentina", 1,
-                                ifelse(d_gap$country == "Paraguay", 1,
-                                       ifelse(d_gap$country == "Brazil", 1,
-                                              0))))
-
+d_gap <- d_gap %>% 
+  mutate(mercosur = case_when(
+    country == "Uruguay" ~ 1,
+    country == "Argentina" ~ 1,
+    country == "Paraguay" ~ 1,
+    country == "Brazil" ~ 1,
+  ))
+  
 tabla_2 <- table(d_gap$continent, d_gap$mercosur)
-tabla_2
-
-# Editar nombre de columna
-colnames(tabla_2) <- c("No mercosur", "Mercosur")
 tabla_2
 
 # Totales por fila o columna
@@ -338,40 +337,7 @@ glimpse(d_gap)
 rm(list=ls())
 
 
-## 10.1. Recodificar con recode() ----
-
-## recode() con factores
-# Argumento .default
-d_gap <- gapminder
-table(d_gap$continent)
-class(d_gap$continent)
-d_gap <- mutate(d_gap, continent_sigla = recode(continent, 
-                                                "Africa" = "AF",
-                                                "Americas" = "AM",
-                                                .default = levels(continent)))
-table(d_gap$continent_sigla)
-
-# Especificar todos los valores
-table(d_gap$continent)
-d_gap <- mutate(d_gap, continent_sigla2 = recode(continent,
-                                                 "Africa" = "AF",
-                                                 "Americas" = "AM",
-                                                 "Asia" = "AS",
-                                                 "Europe" = "EU",
-                                                 "Oceania" = "OC"))
-table(d_gap$continent_sigla2)
-
-## recode() con variables de caracteres
-d_gap <- gapminder
-d_gap$continent <- as.character(d_gap$continent) 
-class(d_gap$continent)
-d_gap <- mutate(d_gap, continent_sigla3 = recode(continent,
-                                                 "Africa" = "AF",
-                                                 "Oceania" = "OC"))
-table(d_gap$continent_sigla3)
-
-
-## 10.2. Recodificación con case_when() ----
+## 10.1. Recodificación con case_when() ----
 d_gap <- gapminder
 
 # Creemos una variable que indique si el país es Uruguay o no
@@ -408,22 +374,6 @@ d_gap <- mutate(d_gap, var1 = case_when(gdpPercap > 20000 ~ 1,
                                         lifeExp > 75 ~ 1,
                                         TRUE ~ 0))
 table(d_gap$var1)
-
-
-## 10.3. Recodificación condicional con ifelse() ----
-
-# Recodificacion con ifelse (una sola condición)
-d_gap$poburu <- ifelse(d_gap$pop > 3000000, 1, 0)
-table(d_gap$poburu)
-
-# ifelse() anidado para varias condiciones
-d_gap <- gapminder
-d_gap$mercosur <-  ifelse(d_gap$country == "Uruguay", 1,
-                          ifelse(d_gap$country == "Argentina", 1,
-                                 ifelse(d_gap$country == "Paraguay", 1,
-                                        ifelse(d_gap$country == "Brazil", 1, 
-                                               0))))
-table(d_gap$mercosur)
 
 
 

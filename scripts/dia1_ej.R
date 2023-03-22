@@ -50,11 +50,4 @@ paises_eco
 # B. Que el desempleo en Brasil es mayor que en Argentina
 # C. Que al menos uno de los países tiene una tasa de desempleo de 8.8
 
-## 13. Por último, instala el paquete "dplyr", cargalo y usa la función "filter" para filtrar 
-# "paises_eco" de modo que   solo queden los países de América Latina. Utiliza help(filter) para 
-# entender como usar la función.Cuidado que el paquete "stats" también tiene una función "filter",
-# por lo que cuando uses help(filter), selecciona la función del paquete "dplyr". 
-# También puedes buscar directamente en un navegador
-
-
 

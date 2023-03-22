@@ -1,12 +1,33 @@
 
 ## ***************************************************************************
-##  Día 2: Estadística descriptiva y limpieza de datos          
+##  Módulo 2: Estadística descriptiva y limpieza de datos          
 ##  Solución de ejercicio                                          
 ##  Escuela de Invierno en Métodos                                 
-##  Martín Opertti - 2022                                         
+##  Martín Opertti - 2023                                        
 ## ***************************************************************************
 
-## Trabajaremos con un dataframe con datos de económicos y políticos de Uruguay. 
+
+## 0. Instala el paquete "dplyr", cargalo y usa la función "filter" para filtrar 
+# "paises_eco" de modo que   solo queden los países de América Latina. Utiliza 
+# help(filter) para  entender como usar la función.Cuidado que el paquete "stats" 
+# también tiene una función "filter", por lo que cuando uses help(filter), 
+# selecciona la función del paquete "dplyr"
+
+paises_eco <- data.frame(
+  pais = c("Argentina", "Brasil", "Chile", "Uruguay", "Gibraltar"),
+  continente = c("América Latina", "América Latina", "América Latina",
+                 "América Latina", "Europa"),
+  desempleo = c(10.4, 12, 7.1, 8.8, NA),
+  pbi_perc = c(9912, 8717, 14896, 16190, NA))
+
+paises_eco
+
+library(dplyr)
+paises_eco <- paises_eco %>% 
+  filter(continente == "América Latina")
+
+
+## Ahora, Trabajaremos con un dataframe con datos de económicos y políticos de Uruguay. 
 # La base se llama "datauru" y esta en formato excel (.xlsx)
 
 ## 1. Importar dataframe "datauru" y asignarle el mismo nombre "datauru" 
@@ -66,19 +87,10 @@ hist(datauru$gdp_log)
 ## 14. Crea una variable binaria "inf_digit"que indique si la inflación tiene 
 # dos dígitos o no
 
-# Tres maneras disintas:
-# con case_when()
+# Con case_when()
 datauru <- mutate(datauru, inf_digit = case_when(inflation >= 10 ~ 1,
                                                    TRUE ~ 0))
 
-# ifelse()
-datauru$inf_digit_1 <- ifelse(datauru$inflation >= 10, 1, 0)
-
-# mutate() e ifelse()
-datauru <- mutate(datauru, inf_digit_2 = ifelse(datauru$inflation >= 10, 1, 0))
-
-identical(datauru$inf_digit, datauru$inf_digit_1)
-identical(datauru$inf_digit, datauru$inf_digit_2)
 
 ## 15. Crear una nueva variable que indique los años con inflación y desempleo
 # de un dígito

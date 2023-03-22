@@ -1,0 +1,148 @@
+---
+title: "Datos perdidos en R"
+author: "Martín Opertti"
+date: "2023-03-16"
+output: 
+  html_document:
+    theme: cerulean 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Muchas veces cuando trabajamos con datos no contamos con todas las observaciones. Los softwares estadísticos manejan los datos perdidos de distintas formas. Por ejemplo en Stata, los datos perdidos son representados por un punto. A su vez, en datos de encuestas muchas veces se codifica el dato perdido con números altos como 98 o 99.
+
+Tanto conceptualmente como para el funcionamiento de código es importante identificar cuando tenemos datos perdidos porque puede afectar el funcionamiento de las funciones que le aplicamos a los datos, o afectar la validez de los resultados. En caso de que nuestros datos perdidos estén representados por números o texto debemos en primer lugar indicarle a R que no tenemos esos datos. Tenemos que tener particular cuidado cuando improtamos datos desde otros formatos.
+
+En R los observaciones perdidas se representan con el termino `NA` (sin comillas) que significa Not available. Supongamos que hacemos una pequeña encuesta a las primeras 10 personas que vemos sobre la cantidad de mascotas que tienen, y que de las 10 personas, 2 no nos quieren responder nuestra encuesta. Supongamos que como muchas veces se hace, codificamos a los que no nos contestaron (los encuestados número 6 y 9) con el número 99.
+
+```{r echo = TRUE, error = TRUE}
+# Los encuestados 6 y 9 no contestaron cuántas mascotas tienen
+mascotas <- c(0, 2, 1, 1, 0, 0, 99, 0, 4, 99, 2) 
+```
+
+Algunos problemas con este enfoque son que si hacemos algún cálculo como la media de mascotas por persona, o consultamos a R si tenemos datos perdidos, tendremos resultados conceptualmente equivocados.
+
+```{r echo = TRUE, error = TRUE}
+mean(mascotas)
+
+sum(is.na(mascotas)) # Con estas dos funciones consultamos cuántos valores de este vector son NA
+```
+
+La forma correcta de crear el vector es ingresando los datos perdidos de forma correcta, como `NA`.
+
+```{r echo = TRUE, error = TRUE}
+mascotas <- c(0, 2, 1, 1, 0, 0, NA, 0, 4, NA, 2) 
+```
+
+Probemos nuevamente la cantidad de datos perdidos:
+
+```{r echo = TRUE, error = TRUE}
+sum(is.na(mascotas)) # Con estas dos funciones consultamos cuántos valores de este vector son NA
+```
+
+Con is.na() podemos también chequear individualmente si cada valor de un vector o variable de un dataframe es un dato perdido o no.
+
+```{r echo = TRUE, error = TRUE}
+is.na(mascotas)
+```
+
+Ahora, qué pasa si calculamos la media?
+
+```{r echo = TRUE, error = TRUE}
+mean(mascotas)
+```
+
+Nos devuelve un dato perdido en lugar de un valor numérico como queríamos. Esto se debe a que la función mean() por defecto devuelve valor NA en caso de que al menos uno de los valores del conjunto del que se quiere calcular la media es un valor perdido. Para obtener la media **entre** los valores de los que realmente tenemos datos, debemos utilizar el argumento `na.rm = TRUE`.
+
+```{r echo = TRUE, error = TRUE}
+mean(mascotas, na.rm = TRUE)
+```
+
+Por estos casos es importante saber si tenemos datos perdidos porque puede afectar nuestro código tanto desde el punto de vista de la ejecución del código como de la interpretación de los resultados.
+
+Muchas veces funciones que utilizamos generan datos perdidos. Miremos algunos ejemplos:
+
+```{r ej30, echo = TRUE}
+# Operaciones con vectores y datos perdidos
+vector1 <- c(1, 2, 3, 4)
+vector2 <- c(1, 0, 1, NA)
+vector_final <- vector1 / vector2
+vector_final
+```
+
+Combinando la función `is.na()` con otras funciones podemos obtener resultados muy útiles:
+
+```{r ej30b, echo = TRUE}
+# Por ejemplo, usando any() podemos ver si hay al menos un valor perdido
+any(is.na(vector2))
+
+# Con which() podemos ver cuáles valores son perdidos
+which(is.na(vector2))
+
+# Con mean() podemos calcular el procentaje de datos perdidos
+mean(is.na(vector2))
+
+# Con sum() podemos calcular cuántos valores son perdidos
+sum(is.na(vector2)) 
+```
+
+## Datos perdidos en dataframes
+
+Ahora veamos cómo manejar datos perdidos en dataframes. Supongamos que hacemos otra encuesta donde recabamos edad, ideología y voto y la hacemos en dos días distintos. El segundo día nos damos cuentas que queríamos recolectar también el género del encuestado
+
+```{r ej000, echo = FALSE, results='hide'}
+dia_1 <- data.frame(edad = c(18,24,80), 
+                    ideologia = c("Izquierda", "Izquierda", "Derecha"),
+                    voto = c("Partido A", "Partido A", "Partido C"))
+
+print(dia_1)
+
+dia_2 <- data.frame(edad = c(40, 44, NA),
+                    ideologia = c("Derecha", "Izquierda", "Derecha"),
+                    voto = c("Partido B", "Partido A", "Partido C"),
+                    genero = c("Mujer", "Hombre", "Mujer"))
+
+print(dia_2)
+```
+
+
+Si queremos unir estos datos podemos usar la función `bind_rows()` del paquete dplyr:
+
+
+```{r ej32, echo = TRUE, error = TRUE}
+encuesta_anexada <- dplyr::bind_rows(dia_1, dia_2) # Unimos ambos dataframes
+
+# Miremos la encuesta anexada
+print(encuesta_anexada)
+```
+
+Como pueden ver tenemos un dato perdido en edad, y tres en género. Con las función `complete.cases()` averiguamos que filas están completas, mientras que con `drop_na` del paquete tidyr, dependiendo de su especificación nos quedamos con los casos completos en todas las variables o de una variable en específico
+
+```{r ej33, echo = TRUE, error = TRUE}
+# Con complete.cases vemos que filas están completas
+complete.cases(encuesta_anexada)
+
+# Con drop_na nos eliminamos las observaciones con datos perdidos
+tidyr::drop_na(encuesta_anexada)
+
+# Con drop_na también podemos especificar eliminar los casos con datos perdidos en una variable en particular
+tidyr::drop_na(encuesta_anexada, genero) # el caso con dato perdido en edad se mantiene
+```
+
+
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>

@@ -55,8 +55,8 @@ paises_eco <- data.frame(
 
 paises_eco
 
-## 9. Cuál fue la tasa de desempleo en Chile en 2019? y el pbi per capita en
-# Uruguay? (responde en código)
+## 9. Utilizando la indexación, ¿cuál fue la tasa de desempleo en Chile
+# en 2019? y el pbi per capita en Uruguay? (responde en código)
 paises_eco[3, 3]
 paises_eco[4, 4]
 
@@ -79,18 +79,6 @@ paises_eco[2, 3] > paises_eco[1, 3]
 
 # C. Que al menos uno de los países tiene una tasa de desempleo de 8.8
 8.8 %in% paises_eco$desempleo
-
-## 13. Por último, instala el paquete "dplyr", cargalo y usa la función "filter" para filtrar 
-# "paises_eco" de modo que  solo queden los países de América Latina. 
-
-# Utiliza help(filter) para entender como usar la función. Cuidado que el paquete "stats" también
-# tiene una función "filter", por lo que cuando uses help(filter), selecciona la función del
-# paquete "dplyr". También puedes buscar directamente en un navegador
-install.packages("dplyr")
-library(dplyr)
-help(filter)
-paises_eco <- filter(paises_eco, continente == "América Latina")
-paises_eco
 
 
 

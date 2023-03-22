@@ -4,8 +4,8 @@
     <title>Intro a R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Escuela de Invierno en Métodos 2022 - Martín Opertti" />
-    <meta name="date" content="2022-07-27" />
-    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <meta name="date" content="2023-03-17" />
+    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
     <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
@@ -28,10 +28,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Intro a R
+]
+.subtitle[
 ## Día 3: Manipulación de datos
+]
+.author[
 ### Escuela de Invierno en Métodos 2022 - Martín Opertti
-### July 27, 2022
+]
+.date[
+### March 17, 2023
+]
 
 ---
 
@@ -77,29 +85,29 @@ glimpse(nba_data)
 ```
 ## Rows: 23,520
 ## Columns: 23
-## $ game_date_est    &lt;date&gt; 2020-12-19, 2020-12-19, 2020-12-19, 2020-12-18, 2020~
-## $ game_id          &lt;dbl&gt; 12000047, 12000048, 12000049, 12000039, 12000040, 120~
-## $ game_status_text &lt;chr&gt; "Final", "Final", "Final", "Final", "Final", "Final",~
-## $ home_team_id     &lt;dbl&gt; 1610612753, 1610612764, 1610612763, 1610612754, 16106~
-## $ visitor_team_id  &lt;dbl&gt; 1610612766, 1610612765, 1610612737, 1610612755, 16106~
-## $ season           &lt;dbl&gt; 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020,~
-## $ team_id_home     &lt;dbl&gt; 1610612753, 1610612764, 1610612763, 1610612754, 16106~
-## $ pts_home         &lt;dbl&gt; 120, 99, 116, 107, 105, 119, 89, 127, 103, 129, 113, ~
-## $ fg_pct_home      &lt;dbl&gt; 0.433, 0.427, 0.400, 0.371, 0.380, 0.513, 0.348, 0.51~
-## $ ft_pct_home      &lt;dbl&gt; 0.792, 0.625, 0.744, 0.692, 0.737, 0.788, 0.810, 0.61~
-## $ fg3_pct_home     &lt;dbl&gt; 0.425, 0.295, 0.396, 0.262, 0.356, 0.517, 0.178, 0.36~
-## $ ast_home         &lt;dbl&gt; 23, 24, 21, 19, 27, 27, 18, 25, 21, 30, 26, 26, 18, 2~
-## $ reb_home         &lt;dbl&gt; 50, 45, 43, 45, 37, 41, 48, 51, 51, 53, 46, 53, 42, 4~
-## $ team_id_away     &lt;dbl&gt; 1610612766, 1610612765, 1610612737, 1610612755, 16106~
-## $ pts_away         &lt;dbl&gt; 117, 96, 117, 113, 117, 83, 113, 113, 105, 96, 114, 1~
-## $ fg_pct_away      &lt;dbl&gt; 0.444, 0.402, 0.422, 0.533, 0.534, 0.395, 0.432, 0.42~
-## $ ft_pct_away      &lt;dbl&gt; 0.864, 0.647, 0.837, 0.629, 0.741, 0.611, 0.778, 0.90~
-## $ fg3_pct_away     &lt;dbl&gt; 0.439, 0.326, 0.297, 0.355, 0.514, 0.387, 0.457, 0.25~
-## $ ast_away         &lt;dbl&gt; 21, 18, 24, 23, 30, 20, 26, 21, 27, 17, 25, 32, 20, 1~
-## $ reb_away         &lt;dbl&gt; 52, 51, 47, 48, 51, 35, 53, 44, 56, 42, 33, 43, 42, 4~
-## $ home_team_wins   &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,~
-## $ home_team        &lt;chr&gt; "Orlando Magic", "Washington Wizards", "Memphis Grizz~
-## $ visitor_team     &lt;chr&gt; "Charlotte Hornets", "Detroit Pistons", "Atlanta Hawk~
+## $ game_date_est    &lt;date&gt; 2020-12-19, 2020-12-19, 2020-12-19, 2020-12-18, 2020…
+## $ game_id          &lt;dbl&gt; 12000047, 12000048, 12000049, 12000039, 12000040, 120…
+## $ game_status_text &lt;chr&gt; "Final", "Final", "Final", "Final", "Final", "Final",…
+## $ home_team_id     &lt;dbl&gt; 1610612753, 1610612764, 1610612763, 1610612754, 16106…
+## $ visitor_team_id  &lt;dbl&gt; 1610612766, 1610612765, 1610612737, 1610612755, 16106…
+## $ season           &lt;dbl&gt; 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020,…
+## $ team_id_home     &lt;dbl&gt; 1610612753, 1610612764, 1610612763, 1610612754, 16106…
+## $ pts_home         &lt;dbl&gt; 120, 99, 116, 107, 105, 119, 89, 127, 103, 129, 113, …
+## $ fg_pct_home      &lt;dbl&gt; 0.433, 0.427, 0.400, 0.371, 0.380, 0.513, 0.348, 0.51…
+## $ ft_pct_home      &lt;dbl&gt; 0.792, 0.625, 0.744, 0.692, 0.737, 0.788, 0.810, 0.61…
+## $ fg3_pct_home     &lt;dbl&gt; 0.425, 0.295, 0.396, 0.262, 0.356, 0.517, 0.178, 0.36…
+## $ ast_home         &lt;dbl&gt; 23, 24, 21, 19, 27, 27, 18, 25, 21, 30, 26, 26, 18, 2…
+## $ reb_home         &lt;dbl&gt; 50, 45, 43, 45, 37, 41, 48, 51, 51, 53, 46, 53, 42, 4…
+## $ team_id_away     &lt;dbl&gt; 1610612766, 1610612765, 1610612737, 1610612755, 16106…
+## $ pts_away         &lt;dbl&gt; 117, 96, 117, 113, 117, 83, 113, 113, 105, 96, 114, 1…
+## $ fg_pct_away      &lt;dbl&gt; 0.444, 0.402, 0.422, 0.533, 0.534, 0.395, 0.432, 0.42…
+## $ ft_pct_away      &lt;dbl&gt; 0.864, 0.647, 0.837, 0.629, 0.741, 0.611, 0.778, 0.90…
+## $ fg3_pct_away     &lt;dbl&gt; 0.439, 0.326, 0.297, 0.355, 0.514, 0.387, 0.457, 0.25…
+## $ ast_away         &lt;dbl&gt; 21, 18, 24, 23, 30, 20, 26, 21, 27, 17, 25, 32, 20, 1…
+## $ reb_away         &lt;dbl&gt; 52, 51, 47, 48, 51, 35, 53, 44, 56, 42, 33, 43, 42, 4…
+## $ home_team_wins   &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,…
+## $ home_team        &lt;chr&gt; "Orlando Magic", "Washington Wizards", "Memphis Grizz…
+## $ visitor_team     &lt;chr&gt; "Charlotte Hornets", "Detroit Pistons", "Atlanta Hawk…
 ```
 ]
 
@@ -164,24 +172,25 @@ Si no guardamos el resultado en un objeto simplemente se imprime
 ```
 
 ```
-## # A tibble: 1,241 x 23
-##    game_date_est  game_id game_status_text home_team_id visitor_team_id season
-##    &lt;date&gt;           &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt;
-##  1 2020-10-11    41900406 Final              1610612748      1610612747   2019
-##  2 2020-10-09    41900405 Final              1610612747      1610612748   2019
-##  3 2020-10-06    41900404 Final              1610612748      1610612747   2019
-##  4 2020-10-04    41900403 Final              1610612748      1610612747   2019
-##  5 2020-10-02    41900402 Final              1610612747      1610612748   2019
-##  6 2020-09-30    41900401 Final              1610612747      1610612748   2019
-##  7 2020-09-27    41900306 Final              1610612748      1610612738   2019
-##  8 2020-09-26    41900315 Final              1610612747      1610612743   2019
-##  9 2020-09-25    41900305 Final              1610612738      1610612748   2019
-## 10 2020-09-24    41900314 Final              1610612743      1610612747   2019
-## # ... with 1,231 more rows, and 17 more variables: team_id_home &lt;dbl&gt;,
-## #   pts_home &lt;dbl&gt;, fg_pct_home &lt;dbl&gt;, ft_pct_home &lt;dbl&gt;, fg3_pct_home &lt;dbl&gt;,
-## #   ast_home &lt;dbl&gt;, reb_home &lt;dbl&gt;, team_id_away &lt;dbl&gt;, pts_away &lt;dbl&gt;,
-## #   fg_pct_away &lt;dbl&gt;, ft_pct_away &lt;dbl&gt;, fg3_pct_away &lt;dbl&gt;, ast_away &lt;dbl&gt;,
-## #   reb_away &lt;dbl&gt;, home_team_wins &lt;dbl&gt;, home_team &lt;chr&gt;, visitor_team &lt;chr&gt;
+## # A tibble: 1,241 × 23
+##    game_date_est  game_id game_…¹ home_…² visit…³ season team_…⁴ pts_h…⁵ fg_pc…⁶
+##    &lt;date&gt;           &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 2020-10-11    41900406 Final    1.61e9  1.61e9   2019  1.61e9      93   0.443
+##  2 2020-10-09    41900405 Final    1.61e9  1.61e9   2019  1.61e9     108   0.463
+##  3 2020-10-06    41900404 Final    1.61e9  1.61e9   2019  1.61e9      96   0.427
+##  4 2020-10-04    41900403 Final    1.61e9  1.61e9   2019  1.61e9     115   0.513
+##  5 2020-10-02    41900402 Final    1.61e9  1.61e9   2019  1.61e9     124   0.505
+##  6 2020-09-30    41900401 Final    1.61e9  1.61e9   2019  1.61e9     116   0.452
+##  7 2020-09-27    41900306 Final    1.61e9  1.61e9   2019  1.61e9     125   0.563
+##  8 2020-09-26    41900315 Final    1.61e9  1.61e9   2019  1.61e9     117   0.545
+##  9 2020-09-25    41900305 Final    1.61e9  1.61e9   2019  1.61e9     121   0.452
+## 10 2020-09-24    41900314 Final    1.61e9  1.61e9   2019  1.61e9     108   0.506
+## # … with 1,231 more rows, 14 more variables: ft_pct_home &lt;dbl&gt;,
+## #   fg3_pct_home &lt;dbl&gt;, ast_home &lt;dbl&gt;, reb_home &lt;dbl&gt;, team_id_away &lt;dbl&gt;,
+## #   pts_away &lt;dbl&gt;, fg_pct_away &lt;dbl&gt;, ft_pct_away &lt;dbl&gt;, fg3_pct_away &lt;dbl&gt;,
+## #   ast_away &lt;dbl&gt;, reb_away &lt;dbl&gt;, home_team_wins &lt;dbl&gt;, home_team &lt;chr&gt;,
+## #   visitor_team &lt;chr&gt;, and abbreviated variable names ¹​game_status_text,
+## #   ²​home_team_id, ³​visitor_team_id, ⁴​team_id_home, ⁵​pts_home, ⁶​fg_pct_home
 ```
 ]
 
@@ -399,7 +408,7 @@ print(data_bulls)
 ```
 
 ```
-## # A tibble: 1,563 x 5
+## # A tibble: 1,563 × 5
 ##    game_date_est home_team              visitor_team        pts_home pts_away
 ##    &lt;date&gt;        &lt;chr&gt;                  &lt;chr&gt;                  &lt;dbl&gt;    &lt;dbl&gt;
 ##  1 2020-12-18    Oklahoma City Thunder  Chicago Bulls            103      105
@@ -412,7 +421,7 @@ print(data_bulls)
 ##  8 2020-03-04    Minnesota Timberwolves Chicago Bulls            115      108
 ##  9 2020-03-02    Chicago Bulls          Dallas Mavericks         109      107
 ## 10 2020-02-29    New York Knicks        Chicago Bulls            125      115
-## # ... with 1,553 more rows
+## # … with 1,553 more rows
 ```
 ]
 
@@ -431,7 +440,7 @@ print(data_bulls)
 ```
 
 ```
-## # A tibble: 1,563 x 5
+## # A tibble: 1,563 × 5
 ##    game_date_est home_team              visitor_team        pts_home pts_away
 ##    &lt;date&gt;        &lt;chr&gt;                  &lt;chr&gt;                  &lt;dbl&gt;    &lt;dbl&gt;
 ##  1 2020-12-18    Oklahoma City Thunder  Chicago Bulls            103      105
@@ -444,7 +453,7 @@ print(data_bulls)
 ##  8 2020-03-04    Minnesota Timberwolves Chicago Bulls            115      108
 ##  9 2020-03-02    Chicago Bulls          Dallas Mavericks         109      107
 ## 10 2020-02-29    New York Knicks        Chicago Bulls            125      115
-## # ... with 1,553 more rows
+## # … with 1,553 more rows
 ```
 ]
 
@@ -479,7 +488,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 1,570 x 5
+## # A tibble: 1,570 × 5
 ##    game_date_est home_team            visitor_team    pts_home pts_away
 ##    &lt;date&gt;        &lt;chr&gt;                &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;
 ##  1 2012-03-19    Orlando Magic        Chicago Bulls         59       85
@@ -492,7 +501,7 @@ nba_data %&gt;%
 ##  8 2013-02-21    Chicago Bulls        Miami Heat            67       86
 ##  9 2012-02-08    New Orleans Pelicans Chicago Bulls         67       90
 ## 10 2006-10-19    San Antonio Spurs    Chicago Bulls         67       99
-## # ... with 1,560 more rows
+## # … with 1,560 more rows
 ```
 ]
 
@@ -552,7 +561,7 @@ nba_data_2
 ```
 
 ```
-## # A tibble: 30 x 1
+## # A tibble: 30 × 1
 ##    home_team            
 ##    &lt;chr&gt;                
 ##  1 Orlando Magic        
@@ -565,7 +574,7 @@ nba_data_2
 ##  8 New Orleans Pelicans 
 ##  9 Oklahoma City Thunder
 ## 10 Denver Nuggets       
-## # ... with 20 more rows
+## # … with 20 more rows
 ```
 ]
 
@@ -636,7 +645,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   media
 ##   &lt;dbl&gt;
 ## 1  102.
@@ -684,7 +693,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 6 x 2
+## # A tibble: 6 × 2
 ##   season media
 ##    &lt;dbl&gt; &lt;dbl&gt;
 ## 1   2003  94.9
@@ -713,7 +722,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 10 x 2
+## # A tibble: 10 × 2
 ##    season media
 ##     &lt;dbl&gt; &lt;dbl&gt;
 ##  1   2011  97.4
@@ -751,7 +760,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 36 x 3
+## # A tibble: 36 × 3
 ## # Groups:   season [18]
 ##    season home_team       media
 ##     &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
@@ -765,7 +774,7 @@ nba_data %&gt;%
 ##  8   2006 New York Knicks 101. 
 ##  9   2007 Chicago Bulls    98.6
 ## 10   2007 New York Knicks  97  
-## # ... with 26 more rows
+## # … with 26 more rows
 ```
 ]
 
@@ -787,7 +796,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 5 x 5
+## # A tibble: 5 × 5
 ##   season media_pts_home suma_pts_home max_pts_home partidos
 ##    &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;    &lt;int&gt;
 ## 1   2016           107.        150217          149     1405
@@ -812,7 +821,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 30 x 4
+## # A tibble: 30 × 4
 ##    home_team             fg_pct_home ft_pct_home fg3_pct_home
 ##    &lt;chr&gt;                       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
 ##  1 Atlanta Hawks               0.458       0.761        0.349
@@ -825,7 +834,7 @@ nba_data %&gt;%
 ##  8 Denver Nuggets              0.469       0.749        0.350
 ##  9 Detroit Pistons             0.453       0.734        0.345
 ## 10 Golden State Warriors       0.474       0.766        0.374
-## # ... with 20 more rows
+## # … with 20 more rows
 ```
 ]
 
@@ -843,7 +852,7 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 30 x 3
+## # A tibble: 30 × 3
 ##    home_team             pts_home ast_home
 ##    &lt;chr&gt;                    &lt;dbl&gt;    &lt;dbl&gt;
 ##  1 Atlanta Hawks            101.      23.6
@@ -856,7 +865,7 @@ nba_data %&gt;%
 ##  8 Denver Nuggets           108.      25.3
 ##  9 Detroit Pistons           99.0     22.5
 ## 10 Golden State Warriors    109.      25.8
-## # ... with 20 more rows
+## # … with 20 more rows
 ```
 ]
 
@@ -874,23 +883,24 @@ nba_data %&gt;%
 ```
 
 ```
-## # A tibble: 30 x 20
-##    home_team   game_id home_team_id visitor_team_id season team_id_home pts_home
-##    &lt;chr&gt;         &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
-##  1 Atlanta Ha~  2.17e7   1610612737     1610612752.  2011.   1610612737    101. 
-##  2 Boston Cel~  2.27e7   1610612738     1610612752.  2011.   1610612738    101. 
-##  3 Brooklyn N~  2.13e7   1610612751     1610612751.  2011.   1610612751     99.1
-##  4 Charlotte ~  2.06e7   1610612766     1610612751.  2011.   1610612766     99.3
-##  5 Chicago Bu~  2.13e7   1610612741     1610612752.  2011.   1610612741     99.1
-##  6 Cleveland ~  2.22e7   1610612739     1610612752.  2011.   1610612739    101. 
-##  7 Dallas Mav~  2.17e7   1610612742     1610612752.  2011.   1610612742    104. 
-##  8 Denver Nug~  2.18e7   1610612743     1610612752.  2011.   1610612743    108. 
-##  9 Detroit Pi~  2.17e7   1610612765     1610612751.  2010.   1610612765     99.0
-## 10 Golden Sta~  2.23e7   1610612744     1610612752.  2011.   1610612744    109. 
-## # ... with 20 more rows, and 13 more variables: fg_pct_home &lt;dbl&gt;,
-## #   ft_pct_home &lt;dbl&gt;, fg3_pct_home &lt;dbl&gt;, ast_home &lt;dbl&gt;, reb_home &lt;dbl&gt;,
-## #   team_id_away &lt;dbl&gt;, pts_away &lt;dbl&gt;, fg_pct_away &lt;dbl&gt;, ft_pct_away &lt;dbl&gt;,
-## #   fg3_pct_away &lt;dbl&gt;, ast_away &lt;dbl&gt;, reb_away &lt;dbl&gt;, home_team_wins &lt;dbl&gt;
+## # A tibble: 30 × 20
+##    home_team      game_id home_…¹ visit…² season team_…³ pts_h…⁴ fg_pc…⁵ ft_pc…⁶
+##    &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Atlanta Hawks   2.17e7  1.61e9  1.61e9  2011.  1.61e9   101.    0.458   0.761
+##  2 Boston Celtics  2.27e7  1.61e9  1.61e9  2011.  1.61e9   101.    0.463   0.773
+##  3 Brooklyn Nets   2.13e7  1.61e9  1.61e9  2011.  1.61e9    99.1   0.447   0.757
+##  4 Charlotte Hor…  2.06e7  1.61e9  1.61e9  2011.  1.61e9    99.3   0.443   0.752
+##  5 Chicago Bulls   2.13e7  1.61e9  1.61e9  2011.  1.61e9    99.1   0.442   0.759
+##  6 Cleveland Cav…  2.22e7  1.61e9  1.61e9  2011.  1.61e9   101.    0.456   0.744
+##  7 Dallas Maveri…  2.17e7  1.61e9  1.61e9  2011.  1.61e9   104.    0.463   0.787
+##  8 Denver Nuggets  2.18e7  1.61e9  1.61e9  2011.  1.61e9   108.    0.469   0.749
+##  9 Detroit Pisto…  2.17e7  1.61e9  1.61e9  2010.  1.61e9    99.0   0.453   0.734
+## 10 Golden State …  2.23e7  1.61e9  1.61e9  2011.  1.61e9   109.    0.474   0.766
+## # … with 20 more rows, 11 more variables: fg3_pct_home &lt;dbl&gt;, ast_home &lt;dbl&gt;,
+## #   reb_home &lt;dbl&gt;, team_id_away &lt;dbl&gt;, pts_away &lt;dbl&gt;, fg_pct_away &lt;dbl&gt;,
+## #   ft_pct_away &lt;dbl&gt;, fg3_pct_away &lt;dbl&gt;, ast_away &lt;dbl&gt;, reb_away &lt;dbl&gt;,
+## #   home_team_wins &lt;dbl&gt;, and abbreviated variable names ¹​home_team_id,
+## #   ²​visitor_team_id, ³​team_id_home, ⁴​pts_home, ⁵​fg_pct_home, ⁶​ft_pct_home
 ```
 ]
 
@@ -970,7 +980,7 @@ head(nba_data_17_18, 3)
 ```
 
 ```
-## # A tibble: 3 x 3
+## # A tibble: 3 × 3
 ##   season pts_home game_date_est
 ##    &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;       
 ## 1   2017       85 NA           
@@ -1000,7 +1010,7 @@ head(nba_data_C, 5)
 ```
 
 ```
-## # A tibble: 5 x 4
+## # A tibble: 5 × 4
 ##   game_date_est fg3_pct_home ast_home home_team_wins
 ##   &lt;date&gt;               &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;
 ## 1 2020-12-19           0.425       23              1
@@ -1044,7 +1054,7 @@ head(nba_u10, 5)
 ```
 
 ```
-## # A tibble: 5 x 4
+## # A tibble: 5 × 4
 ##   home_team          visitor_team       pts_home pts_away
 ##   &lt;chr&gt;              &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 Orlando Magic      Charlotte Hornets       120      117
@@ -1074,9 +1084,9 @@ glimpse(nba_teams)
 ```
 ## Rows: 30
 ## Columns: 3
-## $ city       &lt;chr&gt; "Atlanta", "Boston", "New Orleans", "Chicago", "Dallas", "D~
-## $ nickname   &lt;chr&gt; "Hawks", "Celtics", "Pelicans", "Bulls", "Mavericks", "Nugg~
-## $ conference &lt;chr&gt; "east", "east", "west", "east", "west", "west", "west", "we~
+## $ city       &lt;chr&gt; "Atlanta", "Boston", "New Orleans", "Chicago", "Dallas", "D…
+## $ nickname   &lt;chr&gt; "Hawks", "Celtics", "Pelicans", "Bulls", "Mavericks", "Nugg…
+## $ conference &lt;chr&gt; "east", "east", "west", "east", "west", "west", "west", "we…
 ```
 
 ---
@@ -1161,8 +1171,8 @@ glimpse(nba_teams)
 ```
 ## Rows: 30
 ## Columns: 2
-## $ team       &lt;chr&gt; "Atlanta Hawks", "Boston Celtics", "New Orleans Pelicans", ~
-## $ conference &lt;chr&gt; "east", "east", "west", "east", "west", "west", "west", "we~
+## $ team       &lt;chr&gt; "Atlanta Hawks", "Boston Celtics", "New Orleans Pelicans", …
+## $ conference &lt;chr&gt; "east", "east", "west", "east", "west", "west", "west", "we…
 ```
 ]
 
@@ -1175,10 +1185,10 @@ glimpse(nba_u10)
 ```
 ## Rows: 12,240
 ## Columns: 4
-## $ home_team    &lt;chr&gt; "Orlando Magic", "Washington Wizards", "Memphis Grizzlies~
-## $ visitor_team &lt;chr&gt; "Charlotte Hornets", "Detroit Pistons", "Atlanta Hawks", ~
-## $ pts_home     &lt;dbl&gt; 120, 99, 116, 107, 105, 119, 89, 127, 103, 129, 113, 115,~
-## $ pts_away     &lt;dbl&gt; 117, 96, 117, 113, 117, 83, 113, 113, 105, 96, 114, 123, ~
+## $ home_team    &lt;chr&gt; "Orlando Magic", "Washington Wizards", "Memphis Grizzlies…
+## $ visitor_team &lt;chr&gt; "Charlotte Hornets", "Detroit Pistons", "Atlanta Hawks", …
+## $ pts_home     &lt;dbl&gt; 120, 99, 116, 107, 105, 119, 89, 127, 103, 129, 113, 115,…
+## $ pts_away     &lt;dbl&gt; 117, 96, 117, 113, 117, 83, 113, 113, 105, 96, 114, 123, …
 ```
 ]
 
@@ -1248,7 +1258,7 @@ nba_full
 ```
 
 ```
-## # A tibble: 12,240 x 5
+## # A tibble: 12,240 × 5
 ##    home_team             visitor_team           pts_home pts_away conference
 ##    &lt;chr&gt;                 &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
 ##  1 Orlando Magic         Charlotte Hornets           120      117 east      
@@ -1261,7 +1271,7 @@ nba_full
 ##  8 New Orleans Pelicans  Milwaukee Bucks             127      113 west      
 ##  9 Oklahoma City Thunder Chicago Bulls               103      105 west      
 ## 10 Denver Nuggets        Portland Trail Blazers      129       96 west      
-## # ... with 12,230 more rows
+## # … with 12,230 more rows
 ```
 ]
 
@@ -1367,7 +1377,7 @@ print(wb_unemp_long)
 ```
 
 ```
-## # A tibble: 9 x 3
+## # A tibble: 9 × 3
 ##   pais      year   desempleo
 ##   &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;
 ## 1 Argentina d_2018       9.2
@@ -1417,7 +1427,7 @@ wb_unemp %&gt;%
 ```
 
 ```
-## # A tibble: 3 x 4
+## # A tibble: 3 × 4
 ##   pais       year desempleo pbi_per_capita
 ##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;
 ## 1 Argentina  2018       9.2          11633
@@ -1531,6 +1541,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

@@ -4,7 +4,7 @@
     <title>Intro a R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Escuela de Invierno en Métodos 2023 - Martín Opertti" />
-    <meta name="date" content="2023-03-13" />
+    <meta name="date" content="2023-03-17" />
     <script src="libs/header-attrs-2.20/header-attrs.js"></script>
     <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -36,13 +36,13 @@ class: center, middle, inverse, title-slide
 # Intro a R
 ]
 .subtitle[
-## Día 1: Introducción y fundamentos de la programación en R
+## Módulo 1: Introducción y fundamentos de la programación en R
 ]
 .author[
 ### Escuela de Invierno en Métodos 2023 - Martín Opertti
 ]
 .date[
-### March 13, 2023
+### March 17, 2023
 ]
 
 ---
@@ -831,6 +831,55 @@ mean(encuesta$edad) # Podemos aplicarle funciones (la media en este caso)
 ]
 
 ---
+
+## Ejercicio
+
+.codefontchico[
+
+```r
+# (1) Vector con la edad de los integrantes de tu hogar
+edades &lt;- c(26, 27)
+edades
+```
+
+```
+## [1] 26 27
+```
+
+```r
+# (2) Calcular la edad para 2030
+edades_2030 &lt;- edades + 7
+edades_2030
+```
+
+```
+## [1] 33 34
+```
+
+```r
+# (3) Tercer vector con el nombre de cada uno y crear dataframe
+nombres &lt;- c("Martín", "Leticia")
+nombres
+```
+
+```
+## [1] "Martín"  "Leticia"
+```
+
+```r
+data.frame(edad_actual = edades,
+           edades_2030 = edades_2030,
+           nombres = nombres)
+```
+
+```
+##   edad_actual edades_2030 nombres
+## 1          26          33  Martín
+## 2          27          34 Leticia
+```
+]
+
+---
 class: inverse, center, middle
 
 # Funciones
@@ -1041,7 +1090,7 @@ mean(vector_ej) # Aplico función para obtener la media
 ```
 
 ```
-## [1] 9.45049
+## [1] 8.442731
 ```
 
 ---

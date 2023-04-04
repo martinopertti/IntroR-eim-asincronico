@@ -95,6 +95,54 @@ media_redondeada <- round(mean(data_ej), digits = 1)
 ```
 
 
+## Errores y advertencias
+
+Cuando utilizamos funciones podemos encontrarnos con errores (errors) y advertencias (warnings). La principal diferencia entre ellas es que el error implica que la función no se pudo aplicar, mientras que en la advertencia la función fue aplicada pero que algo no funcionó como era esperado. También es posible ver mensajes (messages) que simplemente informan algo sobre la función o el paquete.
+
+Por ejemplo, creemos este vector con valores aleatorios:
+
+```{r echo = TRUE, error=TRUE}
+vector_ej <- rnorm(n = 10, mean = 10, sd = 5)
+
+vector_ej
+```
+
+Ahora calculemos la media:
+
+```{r echo = TRUE, error=TRUE}
+mean(Vector_ej) 
+```
+¿A qué se debe este error? 
+
+En este caso lo sucedido es que el nombre de vector que habíamos creado está escrito todo en minúscula (como se recomienda hacer), pero la función `mean()` se le aplica al un vector que empieza con mayúscula, y por lo tanto R no lo encuentra, porque no existe.
+
+Ahora sí:
+
+```{r  echo = TRUE}
+mean(vector_ej) # Aplico función para obtener la media
+```
+
+En el caso anterior, es sencillo entender porque la función no corrió. Sin embargo, muchas veces podemos no entender que es lo que salió mal y copiar y pegar el error en un buscador de internet es un buen primer paso.
+
+
+
+### Advertencias
+
+El ejemplo debajo ilustra de para qué sirven las advertenicas y cómo modificar el código en función de ellas:
+
+```{r echo = TRUE, error=TRUE}
+vector_1 <- c("10", "35%", "35", "50") # Vector de caracteres que contiene números 
+vector_1
+vector_2 <- as.numeric(vector_1) # Transformo a vector númerico
+vector_2 # Los valores que además del número tenían (%) no pueden pasarse a númericos
+vector_1 <- gsub("%", "", vector_1) # Quito los % del vector original 
+vector_1 # Sin valores perdidos
+vector_2 <- as.numeric(vector_1) # Transformo a vector númerico
+vector_2 # Ahora si puedo
+```
+
+
+
 &nbsp;
 <hr />
 

@@ -51,7 +51,7 @@ use_extra_styles(
 ```
 
 
-# ¿Qué es y qué se puede hacer con R?  
+# ¿Qué es R?  
 
 ---
 
@@ -80,108 +80,8 @@ knitr::include_graphics("ima/rstudio.png")
 
 ---
 
-## ¿Por qué usar R? 
+## Recursos complementarios
 
-- Libre y gratuito
-
-- Comunidad 
-
-- Es uno de los programas más utilizados para técnicas innovadaras en estadística y visualización de datos 
-
-- Trabaja muy bien con otros programas/lenguajes (Excel, Latex, HTML, etc.)
-
-- Uso va en aumento
-
----
-class: inverse, center, middle
-
-# ¿Qué se puede hacer con R? 
-
----
-
-## ¿Qué se puede hacer con R?
-
-- Ingresar datos
---
-
-- Importar y exportar datos (de Excel, Stata, documento de texto, APIs, etc)
---
-
-- Manipular datos (recodificación, cambios de estructura)
---
-
-- Estadística descrpitiva e inferencial
---
-
-- Visualización de datos (gráficos de alta calidad)
---
-
-- Técnicas estadísticas y de visualización de datos innovadoras
---
-
-- Crear tus propias funciones y paquetes
---
-
-- Escribir artículos y presentaciones integrando código
---
-
-- Escribir libros
---
-
-- Webscrapping, trabajar con Big data y machine learning
---
-
-- Aplicaciones intercativas para visualización de datos (shiny apps)
---
-
-- Hasta jugar videojuegos!
-
----
-
-## Aplicaciones (shiny apps), paquetes y presentaciones
-
-- [Mirador DESCA](https://bancodedatos-fcs.shinyapps.io/Mirador-DESCA-app/) 
-
-- [OPUY](https://github.com/Nicolas-Schmidt/opuy) 
-
-- Esta misma presentación, ver [Xaringan](https://github.com/yihui/xaringan)
-
-- [r4ds](https://r4ds.had.co.nz/)
-
-
----
-class: inverse, center, middle
-
-# Aprendizaje
-
----
-
-## ¿Qué tan difícil es aprender R?
-
-- Al comienzo puede ser más difícil que la sintaxis básica de otros programas, particularmente porque es un lenguaje bastante distinto al resto. Sin embargo, una vez que se logra cierto entendimiento y autonomía, las posibilidades son infinitas.
-
-- Muchas de las dificultades para aprender R se deben a sus principales ventajas: flexibilidad y potencia.
-
----
-
-## Recursos 
-
-Ningún recurso es en si mismo suficiente para aprender R. Cada análisis de datos es particular en su manera y las soluciones no siempre estarán en el contenido de un curso o libro específico. Hay muchos recursos para aprender R de forma general y para obtener ayuda puntual.
-
-.center[
-```{r image_grobs, fig.show = "hold", out.width = "25%", fig.align = "default"}
-
-knitr::include_graphics("ima/sof.png")
-
-knitr::include_graphics("ima/rblog.png")
-
-knitr::include_graphics("ima/r4ds.jpg")
-
-```
-]
----
-
-## Recursos
 La comunidad de usuarios de R es inmensa y muy abierta. Por esto hay muchísimos recursos para aprender de forma independiente y resolver problemas cuando nos estancamos:
 
 - Libro "R for Data Science". Es muy completo y referencia en la mayoría de los cursos de R, pueden acceder a la versión online [original](https://r4ds.had.co.nz/) y a una [traducción](https://r4ds-en-espaniol.netlify.app/)
@@ -190,32 +90,6 @@ La comunidad de usuarios de R es inmensa y muy abierta. Por esto hay muchísimos
 - Existen foros -por ej. [Stack Overflow](https://stackoverflow.com/)- donde responden una infinidad preguntas de programación en R. 
 - [IntRo](https://github.com/Nicolas-Schmidt/IntRo) es un excelente curso de R (con gran contenido teórico) de FCS-UdelaR a cargo de Nicolás Schmidt 
 - [AnalizaR](https://arcruz0.github.io/libroadp/index.html) es un libro sobre análisis de datos en R con énfasis en Ciencia Política 
-
----
-
-## Ayuda  
-
-- Obtener la ayuda correcta es fundamental al programar en R. Podemos obtener ayuda de todas las funciones que utilizamos con el comando `help()` (ej. `help(mean)`) o `?` (ej. `?mean`)
-
-- Si no podemos solucionar un error con la documentación de las funciones/paquetes muchas veces sirve buscar en un navegador 
-
-- Muchas páginas contienen información relevante para solucionar problemas, entre las que se destaca [stackoverflow](https://stackoverflow.com/questions/tagged/r)
-
-- En caso de no encontrar solución se puede consultar en páginas como stackoverflow mediante un [ejemplo reproducible o reprex](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
-
----
-
-## Ayuda
-
-```{r ej9bb2_e3, echo = TRUE, eval = FALSE}
-help(mean)
-```
-
-.center[
-```{r, out.width = "1000px"}
-knitr::include_graphics("ima/ima_mean.jpeg")
-```
-]
 
 
 ---
@@ -256,7 +130,34 @@ knitr::include_graphics("ima/consola_standard_2.png")
 - Haciendo click luego en el script guardado se inicia R Studio. 
 
 - Para ejecutar una línea de código pueden usar el botón de "Run" arriba a la derecha o -más cómodo- `ctrl + enter`
-     
+
+---
+
+## Ayuda  
+
+- Obtener la ayuda correcta es fundamental al programar en R. Podemos obtener ayuda de todas las funciones que utilizamos con el comando `help()` (ej. `help(mean)`) o `?` (ej. `?mean`)
+
+- Si no podemos solucionar un error con la documentación de las funciones/paquetes muchas veces sirve buscar en un navegador 
+
+- Muchas páginas contienen información relevante para solucionar problemas, entre las que se destaca [stackoverflow](https://stackoverflow.com/questions/tagged/r)
+
+- En caso de no encontrar solución se puede consultar en páginas como stackoverflow mediante un [ejemplo reproducible o reprex](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
+
+---
+
+## Ayuda
+
+```{r ej9bb2_e3, echo = TRUE, eval = FALSE}
+help(mean)
+```
+
+.center[
+```{r, out.width = "1000px"}
+knitr::include_graphics("ima/ima_mean.jpeg")
+```
+]
+
+   
 ---
 
 ## Workspace
@@ -265,6 +166,7 @@ knitr::include_graphics("ima/consola_standard_2.png")
 - Lo recomendado es NO guardar el workspace, y guardar solamente el Script. De esta forma, cuando retomemos nuestro análisis en una nueva sesión de R, podemos correrlo y chequear que efectivamente genere los que querramos.
 
 - Pueden desactivar la pregunta en Tools - Global Options - General - desmarcando la opción "Save workspace into RData" y desmarcando "restore RData into workspace"
+      
       
 ---
 class: inverse, center, middle
@@ -440,23 +342,6 @@ R tiene funciones que nos permiten identificar la clase, el tipo, la estructura 
 
 - `attributes()` - ¿Tiene metadatos?
 
----
-
-## Clases y tipos de objetos
-
-```{r ej7, echo = TRUE}
-  # Creamos algunos objetos distintos
-  year <- 2021
-  nombre <- "Dos mil veintiuno"
-  
-  # Uso la función class para averiguar la clase de objeto
-  class(year) 
-  class(nombre)
-  
-  # Uso la función typeof para averiguar el tipo de la data del objeto
-  typeof(nombre)
-  
-```
 
 ---
 
@@ -526,23 +411,6 @@ v3
 ```
 
 ---
-
-## Coerción 
-
-¿Qué pasa si unimos vectores de distinto tipo? 
-
-Si unimos un vector de tipo caracter con uno númerico, R convertirá todo el vector a caracter. Si unimos un vector númerico (double o integer) a lógico, R convertirá el vector en númerico (`TRUE = 1`, `FALSE = 0`)
-
-```{r ej7b35d, echo = TRUE}
-## Ejemplo de coerción automática:
-v2 <- seq(0, 50, 10) # De 0 a 50 de a 10 números
-v4 <- c("rojo", "verde", "blanco") # character
-v6 <- c(v2, v4)
-v6
-class(v6)
-```
-
----
 class: inverse, center, middle
 
 # Dataframes 
@@ -590,6 +458,8 @@ encuesta <- data.frame(edad = c(18,24,80,40,76),
                        voto = c("Partido A", "Partido A", "Partido C",
                                 "Partido B", "Partido B"))
 class(encuesta)
+
+encuesta
 ```
 ]
 
@@ -677,7 +547,7 @@ class: inverse, center, middle
 
 - Por ejemplo, en el caso anterior, usamos la función `mean()` para calcular la media de la variable "edad" del dataframe "encuesta"
 
-- Usar una función en sencillo: escribimos el nombre de la función, seguido de un paréntesis y dentro los datos a los que le queremos aplicar la función. Pueden ser objetos o directamente valores. Ej. `mean(c(10,20,30))` o `mean(objeto)`
+- Usar una función es sencillo: escribimos el nombre de la función, seguido de un paréntesis y dentro los datos a los que le queremos aplicar la función. Pueden ser objetos o directamente valores. Ej. `mean(c(10,20,30))` o `mean(objeto)`
 
 - Dentro de la función se especifican los argumentos, que pueden ser dividos en dos tipos. El primero son los datos a los que se le aplica la función y el resto detalles de cómo se computa la función.
 
@@ -790,47 +660,4 @@ knitr::include_graphics("ima/ima_mean.jpeg")
 ```
 ]
 
----
-
-## Errores y advertencias
-- Cuando utilizamos funciones podemos encontrarnos con errores (errors) y advertencias (warnings). La principal diferencia entre ellas es que el error implica que la función no se pudo aplicar, mientras que en la advertencia la función fue aplicada pero que algo no funcionó como esperado. También es posible ver mensajes (messages) que simplemente informan algo sobre la función
-
-```{r ej9bb2_m, echo = TRUE, error=TRUE}
-vector_ej <- rnorm(n = 10, mean = 10, sd = 5) # Creo valores aleatorios
-
-mean(Vector_ej) # Aplico función para obtener la media
-```
-
-.content-box-blue[
-*¿A qué se debe este error?*
-]
-
----
-
-## Errores y advertencias
-
-```{r ej9bb2_m3, echo = TRUE, error=TRUE}
-vector_ej <- rnorm(n = 10, mean = 10, sd = 5) # Creo valores aleatorios
-
-mean(vector_ej) # Aplico función para obtener la media
-```
-
----
-
-## Errores y advertencias 
-
-En el caso anterior, es sencillo entender porque la función no corrió. Sin embargo, muchas veces podemos no entender que es lo que salió mal y copiar y pegar el error en un buscador de internet es un buen primer paso.
-
-.codefontchico[
-```{r ej9bb2_n, echo = TRUE, error=TRUE}
-vector_1 <- c("10", "35%", "35", "50") # Vector de caracteres que contiene números 
-vector_1
-vector_2 <- as.numeric(vector_1) # Transformo a vector númerico
-vector_2 # Los valores que además del número tenían (%) no pueden pasarse a númericos
-vector_1 <- gsub("%", "", vector_1) # Quito los % del vector original 
-vector_1 # Sin valores perdidos
-vector_2 <- as.numeric(vector_1) # Transformo a vector númerico
-vector_2 # Los valores que además del número tenían (%) no pueden pasarse a númericos
-```
-]
 

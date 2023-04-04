@@ -81,16 +81,3 @@ table(nba_19$HOME_TEAM_WINS, nba_19$AWAY_TEAM_WINS)
 # Chequear el resultado aquí: https://www.espn.com/nba/standings/_/season/2020
 
 
-## 8. Utilizando la tabla de posiciones generada en el punto 7 y el dataframe
-# nba_teams, averiguar el equipo con más partidos ganados en 2019 sin nunca
-# haber ganado un campeonato (ver variable CHAMPIONSHIP en nba_teams).
-
-# left_join() te puede servir! (recuerda unificar categorías como en el 
-# ejemplo en clase)
-
-
-
-## 9. Por último crea una tabla de posiciones solamente para la conferencia este
-#  (usando nba_teams) otro tipo de join puede ser útil...
-
-

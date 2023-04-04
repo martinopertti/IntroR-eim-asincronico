@@ -407,7 +407,7 @@ print(media_edad)</code></pre>
 <p>Cuando empezmos a transformar o crear nuevos objetos mediante
 funciones, tenemos varias formas de estructurar el código:</p>
 <ul>
-<li><p>Correr funciones de a una, siempre al mismo objeto</p></li>
+<li><p>Sobreescribir objeto a medida que se aplican funciones</p></li>
 <li><p>Ir creando objetos intermedios a medida que aplicamos
 funciones</p></li>
 <li><p>Anidar funciones (se aplicará primero la función más al centro y
@@ -419,8 +419,8 @@ lo veremos más adelante)</p></li>
 <code>mean()</code> para calcular la media y <code>round()</code> para
 redondear el resultado a 1 dígito después de la coma. Veamos cada una de
 ellas:</p>
-<div id="funciones-asignando-al-mismo-objeto" class="section level3">
-<h3>Funciones asignando al mismo objeto</h3>
+<div id="sobreescribir-objetos" class="section level3">
+<h3>Sobreescribir objetos</h3>
 <pre class="r"><code>data_ej &lt;- c(12, 21, 33, 41, 27, 23) 
 
 # Correr funciones de una, almismo objeto
@@ -437,6 +437,54 @@ media_redondeada &lt;- round(media, digits = 1) # Creo 2do objeto con la media r
 <h3>Anidar funciones</h3>
 <pre class="r"><code># Corro las dos funciones en la misma línea
 media_redondeada &lt;- round(mean(data_ej), digits = 1)</code></pre>
+</div>
+</div>
+<div id="errores-y-advertencias" class="section level2">
+<h2>Errores y advertencias</h2>
+<p>Cuando utilizamos funciones podemos encontrarnos con errores (errors)
+y advertencias (warnings). La principal diferencia entre ellas es que el
+error implica que la función no se pudo aplicar, mientras que en la
+advertencia la función fue aplicada pero que algo no funcionó como era
+esperado. También es posible ver mensajes (messages) que simplemente
+informan algo sobre la función o el paquete.</p>
+<p>Por ejemplo, creemos este vector con valores aleatorios:</p>
+<pre class="r"><code>vector_ej &lt;- rnorm(n = 10, mean = 10, sd = 5)
+
+vector_ej</code></pre>
+<pre><code>##  [1] 14.8725866  2.1553125  3.6141155 10.3717765 16.6757816  0.4453446
+##  [7] 13.7396645  3.9716817 11.9496584 12.1085288</code></pre>
+<p>Ahora calculemos la media:</p>
+<pre class="r"><code>mean(Vector_ej) </code></pre>
+<pre><code>## Error in mean(Vector_ej): object &#39;Vector_ej&#39; not found</code></pre>
+<p>¿A qué se debe este error?</p>
+<p>En este caso lo sucedido es que el nombre de vector que habíamos
+creado está escrito todo en minúscula (como se recomienda hacer), pero
+la función <code>mean()</code> se le aplica al un vector que empieza con
+mayúscula, y por lo tanto R no lo encuentra, porque no existe.</p>
+<p>Ahora sí:</p>
+<pre class="r"><code>mean(vector_ej) # Aplico función para obtener la media</code></pre>
+<pre><code>## [1] 8.990445</code></pre>
+<p>En el caso anterior, es sencillo entender porque la función no
+corrió. Sin embargo, muchas veces podemos no entender que es lo que
+salió mal y copiar y pegar el error en un buscador de internet es un
+buen primer paso.</p>
+<div id="advertencias" class="section level3">
+<h3>Advertencias</h3>
+<p>El ejemplo debajo ilustra de para qué sirven las advertenicas y cómo
+modificar el código en función de ellas:</p>
+<pre class="r"><code>vector_1 &lt;- c(&quot;10&quot;, &quot;35%&quot;, &quot;35&quot;, &quot;50&quot;) # Vector de caracteres que contiene números 
+vector_1</code></pre>
+<pre><code>## [1] &quot;10&quot;  &quot;35%&quot; &quot;35&quot;  &quot;50&quot;</code></pre>
+<pre class="r"><code>vector_2 &lt;- as.numeric(vector_1) # Transformo a vector númerico</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre class="r"><code>vector_2 # Los valores que además del número tenían (%) no pueden pasarse a númericos</code></pre>
+<pre><code>## [1] 10 NA 35 50</code></pre>
+<pre class="r"><code>vector_1 &lt;- gsub(&quot;%&quot;, &quot;&quot;, vector_1) # Quito los % del vector original 
+vector_1 # Sin valores perdidos</code></pre>
+<pre><code>## [1] &quot;10&quot; &quot;35&quot; &quot;35&quot; &quot;50&quot;</code></pre>
+<pre class="r"><code>vector_2 &lt;- as.numeric(vector_1) # Transformo a vector númerico
+vector_2 # Ahora si puedo</code></pre>
+<pre><code>## [1] 10 35 35 50</code></pre>
  
 <hr />
 <div style="text-align: center">

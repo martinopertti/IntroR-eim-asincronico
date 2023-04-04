@@ -1,0 +1,254 @@
+---
+title: "Más ggplot2"
+author: "Martín Opertti"
+date: "2023-03-30"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean 
+---
+
+<style type="text/css">
+  body{
+  font-size: 13pt;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(gapminder)
+library(ggridges)
+```
+
+
+En este tutorial repasaremos otros tipos de geometrías para crear otros tipos de gráficos más allá de los gráficos de dispersión, línea o barras. Vamos a utilizar geometrías que vienen por defecto en ggplot2 como `geom_text()` o `geom_density()`, así como geometrías desde otros paquetes que utilizan la gramática de ggplot.
+
+## `geom_text()`
+
+Empezemos por `geom_text()`. que es una geometría muy flexible que se puede combinar con casi todas las restantes.  Permite incluir texto en los gráficos, ver también `annotate()` y `geom_label()`. El objetivo de estas funciones es agregar texto a los gráficos.
+
+Supongamos que tenemos el siguiente gráfico de dispersión y queremos agregarle etiquetas:
+  
+```{r ch42, echo = TRUE, warning = FALSE, message=FALSE}
+lista_a_sur <- c("Argentina", "Brazil", "Bolivia", "Chile", "Colombia",
+                 "Ecuador", "Paraguay", "Peru", "Uruguay", "Venezuela")
+    
+a_sur <- gapminder %>%
+  filter(year == 2007 & country %in% lista_a_sur)
+    
+## Gráfico de dispersión expectativa de vida y pbi per cápita
+ggplot(a_sur, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+
+Al tener pocos países (puntos) más que incluir alguna variable reflejada en los puntos (como tamaño y color anteriormente), podemos querer identificar qué país es cada punto. Es decir, agregarle etiquetas. Podemos hacer eso con `geom_text()`, creando un `aes()` dentro de la función mismo, y especificando el aesthetic label igual a una variable (en este caso la variable `country`)
+
+```{r ch43, echo = TRUE, warning = FALSE, message=FALSE}
+# Agregar etiquetas
+ggplot(a_sur, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  geom_text(aes(label = country))
+    ```
+
+Por defecto la etiqueta está centrada en el valor, con los argumentos `hjust` y `vjust` podemos mover la etiqueta en la dirección que querramos:
+
+```{r ch44, echo = TRUE, warning = FALSE, message=FALSE}
+# Podemos ajustar la posición de las etiquetas
+ggplot(a_sur, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  geom_text(aes(label = country), hjust = 0.5, vjust = -1)
+```
+
+Incluso podemos no incluir el geom_point() y simplemente dejar las etiquetas centradas en su valor (quitando las modificaciones de `hjust` y `vjust` obviamente):
+
+```{r ch45, echo = TRUE, warning = FALSE, message=FALSE}
+# Podemos también dejar solo el texto
+ggplot(a_sur, aes(x = gdpPercap, y = lifeExp)) +
+  geom_text(aes(label = country))
+```
+
+## `annotate()`
+
+Esta función es una geometría que sirve para agregar geometrías en un gráfico, pero con información que no está en un dataframe, sino que está en un vector. Su aplicación más extendida es para agregar texto aunque es posible agregar otro tipo de elementos como áreas sombreadas (ver este [enlace](https://ggplot2.tidyverse.org/reference/annotate.html). Es muy útil para pequeñas anotaciones en gráficos.
+
+Tomemos por ejemplo que tengo el siguiente gráfico de barras (noten que agregué las etiquetas de los valores utilizando `geom_text()`):
+
+```{r ch46, echo = TRUE, warning = FALSE, message=FALSE}
+d_gap_7 <- gapminder::gapminder %>% 
+  filter(year == 2007)
+
+ggplot(data = d_gap_7, aes(x = fct_infreq(continent))) +
+  geom_bar(color = "black", fill = "skyblue3", alpha = .8) +
+  geom_text(aes(label = ..count..), stat = "count", vjust = -.5, fontface = "bold") +
+  labs(title = "Cantidad de países por continente",
+       subtitle = "Data de Gapminder para el año 2007",
+       caption = "Fuente: Gapminder",
+       x = "",
+       y = "") 
+```
+
+Ahora supongamos que quiero aclarar porque solo hay dos observaciones para Oceanía. Con `annotate()` puedo lograr eso. El primer argumento es la geometría que vamos a utilizar, en este caso text porque es texto. Luego especifcamos donde queremos que aparezca ese objeto a través de los argumentos `x` e `y`. En este caso queremos que el texto figure por encima de la barra pertenciente a Oceanía, por lo que especificamos x = Oceanía y a la altura 10. Por último especificamos el label, que es en este caso el texto que vamos a incluir. Noten que tiene este símbolo en el medio `\n` para cortar la frase en dos líneas, para mejorar su visualización.
+
+```{r ch47, echo = TRUE, warning = FALSE, message=FALSE}
+ggplot(data = d_gap_7, aes(x = fct_infreq(continent))) +
+  geom_bar(color = "black", fill = "skyblue3", alpha = .8) +
+  geom_text(aes(label = ..count..), stat = "count", vjust = -.5, fontface = "bold") +
+  labs(title = "Cantidad de países por continente",
+       subtitle = "Data de Gapminder para el año 2007",
+       caption = "Fuente: Gapminder",
+       x = "",
+       y = "") +
+  annotate(geom = "text",
+           x = "Oceania", 
+           y = 10, 
+           label = "Solo hay datos \n para Australia y \n Nueva Zelanda",
+           size = 3)
+```
+
+
+## `geom_boxplot()`
+
+Ahora utilizaremos la geometría `geom_boxplot()` para crear diagramas de caja, que dan un resumen la distribución de una variable continua. Por supuesto, para esto necesitamos tener los datos desagregados. Probemos graficar la distribución del PBI per cápita según continente (excluyendo Oceanía porque son solo dos países):
+
+
+```{r ch48, echo = TRUE, warning = FALSE, message=FALSE}
+## Boxplot tradicional
+d_gap_7 %>%
+  filter(continent != "Oceania") %>% 
+  ggplot(aes(x = continent, y = gdpPercap)) +
+  geom_boxplot() 
+```
+
+A veces queremos mostrar todos los datos en un gráfico. Podemos combinar este enfoque con `geom_boxplot()` con `geom_point()`
+
+
+```{r ch4dsd9, echo = TRUE, warning = FALSE, message=FALSE}
+# Boxplot con todos los puntos con geom_jitter()
+d_gap_7 %>%
+  filter(continent != "Oceania") %>% 
+  ggplot(aes(x = continent, y = gdpPercap)) +
+  geom_boxplot(aes(fill = continent), outlier.shape = NA, lwd=1, alpha=0.4) +
+  geom_point(aes(color = continent), size = 4, alpha = 0.9) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position = "none")
+```
+
+
+Sin embargo, hay mucha superposición entre puntos, al ser la variable del eje de las x una variable discreta. En este caso, podemos utilizar la geometría  `geom_jitter()`. Esta última geometría funciona como `geom_point()` pero agrega variación aleatoria para que los puntos no queden pegados y se pueda mejorar la visualización. 
+
+
+```{r ch49, echo = TRUE, warning = FALSE, message=FALSE}
+# Boxplot con todos los puntos con geom_jitter()
+d_gap_7 %>%
+  filter(continent != "Oceania") %>% 
+  ggplot(aes(x = continent, y = gdpPercap)) +
+  geom_boxplot(aes(fill = continent), outlier.shape = NA, lwd=1, alpha=0.4) +
+  geom_jitter(aes(color = continent), size = 4, alpha = 0.9) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position = "none")
+```
+
+
+## `geom_density()`
+
+Otra geometría muy útil es `geom_density()`, para graficar la función de densidad de una variable, o una versión suavizada de un histrograma. Solo es necesario el aesthetic `x`. Si fijamos el setting `fill` podemos pintar el área debajo de la función
+
+
+```{r ch51, echo = TRUE, warning = FALSE, message=FALSE}
+# Agregamos colores
+ggplot(d_gap_7, aes(x = gdpPercap)) +
+  geom_density(fill = "seagreen3", alpha = .7) 
+```
+
+Como con todas las geometrías, podeos agregar facetas fácilmente:  
+  
+```{r ch52, echo = TRUE, warning = FALSE, message=FALSE}
+# Desagregar por continente
+d_gap_7 %>%
+  filter(continent != "Oceania") %>%
+  ggplot(aes(x = gdpPercap, fill = continent)) +
+  geom_density( alpha = .7, adjust = 1.5) +
+  scale_fill_brewer(palette = "Accent") +
+  facet_wrap(~ continent)
+```
+
+
+## `ggridges`
+
+Por úlitmo veremos un ejemplo de usar paquetes que comparten la misma gramática que ggplot2 pero con geometrías que no vienen por defecto en `ggplot2`. Algunos ejemplos aparte de `ggridges`, como `gganimate` para gráficos animados, `ggrepel` para evitar la superposición de etiquetas o `ggmap` para mapas.
+
+`ggridges` es un paquete que sirve para visualizar distribuciones sobre tiempo o espacio. Sus geometrías son parecidas a `geom_density()` pero dan más flexibilidad para visualizar superposición entre distribuciones. Primero, instalamos y cargamos `ggridges` como cualquier otro paquete:
+
+
+```{r, echo = TRUE, warning = FALSE, message=FALSE, eval=FALSE}
+install.packages("ggridges")
+library(ggridges)
+```
+
+Después supongamos que queremos ver la evolución distribución de la expectativa de vida de los distintos países. Para eso agregamos al `aes()` una variable `y` (que en este caso es temporal) y utilizamos la geometría `geom_density_ridges()`
+
+```{r, echo = TRUE, warning = FALSE, message=FALSE}
+# Densidades segun variable en el mismo eje
+ggplot(gapminder, 
+       aes(x = lifeExp, y = as.factor(year))) + 
+    geom_density_ridges(fill = "lightblue") +
+    labs(title = "Distribución de expectativa de vida por año",
+       caption = "Data: Gapminder",
+       x = "", y = "")
+```
+
+También podemos aplicar facetas!
+
+```{r, echo = TRUE, warning = FALSE, message=FALSE}
+# Agrego facetas
+gapminder %>%
+  filter(continent == "Africa" | continent == "Europe") %>% 
+  ggplot(aes(x = lifeExp, y = as.factor(year))) + 
+  geom_density_ridges(fill = "lightblue") +
+  facet_wrap(~ continent, nrow = 1) +
+    labs(title = "Distribución de expectativa de vida por año en Africa y Europa",
+       caption = "Data: Gapminder",
+       x = "", y = "")
+``` 
+
+O, aun mejor, una variable de corte sin necesidad de crear facetas. Esto nos permite visualizar las distribuciones de la expectativa de vida en dos continentes haciendo énfasis en las diferencias/similutedes gracias a la superposición.
+
+
+```{r, echo = TRUE, warning = FALSE, message=FALSE}
+# Densidades en el mismo eje
+# Agrego la media con quantiles_ines y quantiles_fun!
+gapminder %>% 
+  filter(continent == "Africa" |
+           continent == "Asia") %>% 
+  ggplot(aes(x = lifeExp, 
+             y = as.factor(year),
+             fill = continent)) + 
+  geom_density_ridges(alpha = .6) +
+  scale_fill_manual(name = "Continente",
+                    values = c("red3", 
+                               "lightblue")) +
+    labs(title = "Distribución de expectativa de vida por año en África y Asia",
+       caption = "Data: Gapminder",
+       x = "", y = "")
+``` 
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

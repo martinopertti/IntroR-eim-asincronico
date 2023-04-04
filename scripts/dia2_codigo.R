@@ -178,11 +178,13 @@ rm(list=ls())
 
 ##  7. Explorar datos  ======================================================
 
+d_gap <- gapminder
+
 # R tiene un visor para datos. Pueden clickear en el dataframe en el ambiente o:
 View(d_gap)
 dim(d_gap) # Número de filas y columnas
 names(d_gap) # Nombre de variables
-head(d_gap, 3) # Imprime primeras filas (3 en este caso)
+head(d_gap,3) # Imprime primeras filas (3 en este caso)
 glimpse(d_gap) # Recomiendo utilizar esta función
 
 
@@ -208,6 +210,7 @@ d_gap <- d_gap %>%
     country == "Argentina" ~ 1,
     country == "Paraguay" ~ 1,
     country == "Brazil" ~ 1,
+    TRUE ~ 0
   ))
   
 tabla_2 <- table(d_gap$continent, d_gap$mercosur)
@@ -233,8 +236,8 @@ mean(d_gap$lifeExp) # Media
 median(d_gap$lifeExp) # Mediana
 sd(d_gap$lifeExp) # Desvío estandar
 range(d_gap$lifeExp) # Rango
-max(d_gap$lifeExp) # Minimo
-min(d_gap$lifeExp) # Maximo
+max(d_gap$lifeExp) # Maximo
+min(d_gap$lifeExp) # Minimo
 
 
 # También podemos crear un histograma muy fácilmente

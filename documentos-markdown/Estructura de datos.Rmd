@@ -1,0 +1,118 @@
+---
+title: "Data en Formato Tidy y Estructura de datos"
+author: "Martín Opertti"
+date: "2023-03-29"
+output: 
+  html_document:
+    theme: cerulean 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo = FALSE, results = "hide", message=FALSE}
+library(tidyverse)
+```
+
+
+> “Tidy datasets are all alike, but every messy dataset is messy in its own way.” –– Hadley Wickham
+
+Un mismo conjunto de datos puede ser estructurado de distintas formas. Los criterios para ellos pueden ir desde facilitar la entrada de datos, a utilizar el formato correcto para correr ciertas funciones. 
+
+En el marco del Tidyverse se estructuran los datos en formato "tidy". Esto no significa que siempre que utilicemos R tengamos que estructurar los datos de esta forma, algunas funciones pueden requerir otros formatos. Sin embargo, para la mayoría de las funciones del tidyverse funcionan mejor con el formato tidy
+
+### ¿Qué es el formato Tidy?
+
+Hay tres reglas para que los datos estén en formato Tidy:
+
+- Cada variable tiene que tener su propia columna
+- Cada observación tiene que tener su propia fila
+- Cada valor debe tener su propia celda
+
+```{r, out.width = "600px", echo = FALSE}
+knitr::include_graphics(here::here("ima/tidy_data.png"))
+```
+
+El formato tidy parece obvio, pero muchas veces nos encontramos con datos distinta forma. Por ejemplo, no es tan extraño encontrar datos donde una sola variable está esparcida en varias columnas o una observación en más de una fila. Analizemos un caso muy común:
+
+```{r echo = TRUE, message=FALSE}
+wb_desempleo <- data.frame(pais = c("Argentina", "Chile", "Uruguay"),
+                           d_2018 = c(9.2, 7.2, 8.3),
+                           d_2019 = c(9.8, 7.3, 9.3),
+                           d_2020 = c(11.7, 11.5, 12.7))
+
+
+print(wb_desempleo)
+```
+
+
+## Cambios en la estructura de datos 
+
+Muchas veces nos encontramos con los datos en un formato distinto al formato Tidy. Esto se puede dar cuando una misma variable dispersada en más de una columna o una observación en más de una fila. Para pasar datos a estructura tidy tenemos las funciones `pivot_longer()` (para pasar de formato ancho a largo) y `pivot_wider()` (para pasar de formarto largo a ancho) del paquete tidyr (perteneciente al Tidyverse).
+
+```{r, out.width = "600px", echo = FALSE}
+knitr::include_graphics(here::here("ima/wide_long.png"))
+```
+
+
+## De ancho a largo con pivot_longer
+
+Empecemos para el caso anterior, donde tenemos ua misma variable (desempleo) esparcida en 3 columnas. La función `pivot_longer()` cuenta con 3 argumentos principales: `cols` las variables que van a hacer unificadas en una sola columna, `names_to` que es el nombre que va a tener la variable que contenga el nombre de las columnas previas y `values_to` para especificar el nombre de la variable con los valores.
+
+```{r ch124, echo = TRUE, message=FALSE}
+print(wb_desempleo) # dataframe original 
+
+wb_unemp_long <- wb_desempleo %>% 
+  pivot_longer(cols = c("d_2018", "d_2019", "d_2020"), # Columnas a unir (las que contienen años)
+               names_to = "year", # Nombre de variable "key" 
+               values_to = "desempleo") # Nombre de variable con valores
+
+print(wb_unemp_long)
+```
+
+
+```{r, out.width = "1000px", echo = FALSE}
+knitr::include_graphics(here::here("ima/wide_ima.png"))
+```
+
+
+## De largo a ancho con pivot_wider
+
+Ahora veamos el caso contrario. El siguiente dataframe tiene más de una fila por observación. En este caso debemos usar `pivot_wider()`.
+
+```{r ch125, echo = TRUE,  message=FALSE}
+wb_unemp <- data.frame(pais = c("Argentina", "Argentina", "Argentina", "Argentina", "Argentina"),
+                       year = c(2018, 2019, 2020, 2018, 2019),
+                       variable = c("desempleo", "desempleo", "desempleo", "pbi_per_capita", "pbi_per_capita"),
+                       valor = c(9.2, 9.8, 11.7, 11633, 9912))
+
+print(wb_unemp)
+```
+
+La función `pivot_wider()` tiene dos argumentos principales. El primer argumento `names_from` especifica la columna que contiene más de una variable y el segundo argumento `values_from` espefica la columna valor.
+
+```{r ch126, echo = TRUE, message=FALSE}
+wb_unemp %>% 
+  pivot_wider(names_from = variable,
+              values_from = valor)
+```
+
+
+```{r, out.width = "800px", echo = FALSE}
+knitr::include_graphics(here::here("ima/long_ima.png"))
+```
+
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>

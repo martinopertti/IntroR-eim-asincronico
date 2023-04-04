@@ -4,7 +4,7 @@
     <title>Intro a R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Escuela de Invierno en Métodos 2022 - Martín Opertti" />
-    <meta name="date" content="2023-03-17" />
+    <meta name="date" content="2023-03-31" />
     <script src="libs/header-attrs-2.20/header-attrs.js"></script>
     <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -32,13 +32,13 @@ class: center, middle, inverse, title-slide
 # Intro a R
 ]
 .subtitle[
-## Día 3: Manipulación de datos
+## Módulo 3: Manipulación de datos
 ]
 .author[
 ### Escuela de Invierno en Métodos 2022 - Martín Opertti
 ]
 .date[
-### March 17, 2023
+### March 31, 2023
 ]
 
 ---
@@ -163,40 +163,6 @@ table(nba_data_19$season)
 ---
 ## Filtrar
 
-Si no guardamos el resultado en un objeto simplemente se imprime
-
-.codefont[
-
-```r
- filter(nba_data, season == 2019)
-```
-
-```
-## # A tibble: 1,241 × 23
-##    game_date_est  game_id game_…¹ home_…² visit…³ season team_…⁴ pts_h…⁵ fg_pc…⁶
-##    &lt;date&gt;           &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 2020-10-11    41900406 Final    1.61e9  1.61e9   2019  1.61e9      93   0.443
-##  2 2020-10-09    41900405 Final    1.61e9  1.61e9   2019  1.61e9     108   0.463
-##  3 2020-10-06    41900404 Final    1.61e9  1.61e9   2019  1.61e9      96   0.427
-##  4 2020-10-04    41900403 Final    1.61e9  1.61e9   2019  1.61e9     115   0.513
-##  5 2020-10-02    41900402 Final    1.61e9  1.61e9   2019  1.61e9     124   0.505
-##  6 2020-09-30    41900401 Final    1.61e9  1.61e9   2019  1.61e9     116   0.452
-##  7 2020-09-27    41900306 Final    1.61e9  1.61e9   2019  1.61e9     125   0.563
-##  8 2020-09-26    41900315 Final    1.61e9  1.61e9   2019  1.61e9     117   0.545
-##  9 2020-09-25    41900305 Final    1.61e9  1.61e9   2019  1.61e9     121   0.452
-## 10 2020-09-24    41900314 Final    1.61e9  1.61e9   2019  1.61e9     108   0.506
-## # … with 1,231 more rows, 14 more variables: ft_pct_home &lt;dbl&gt;,
-## #   fg3_pct_home &lt;dbl&gt;, ast_home &lt;dbl&gt;, reb_home &lt;dbl&gt;, team_id_away &lt;dbl&gt;,
-## #   pts_away &lt;dbl&gt;, fg_pct_away &lt;dbl&gt;, ft_pct_away &lt;dbl&gt;, fg3_pct_away &lt;dbl&gt;,
-## #   ast_away &lt;dbl&gt;, reb_away &lt;dbl&gt;, home_team_wins &lt;dbl&gt;, home_team &lt;chr&gt;,
-## #   visitor_team &lt;chr&gt;, and abbreviated variable names ¹​game_status_text,
-## #   ²​home_team_id, ³​visitor_team_id, ⁴​team_id_home, ⁵​pts_home, ⁶​fg_pct_home
-```
-]
-
----
-## Filtrar
-
 Utilizando operadores lógicos podemos filtrar de formas más complejas:
 
 
@@ -228,15 +194,6 @@ table(nba_data_temp$season)
 ## 1432 1422 1420 1382
 ```
 
----
-## Filtrar (operadores lógicos)
-
-.center[
-&lt;img src="ima/logical_op.png" width="700px" /&gt;
-]
-
-.right[Fuente: Grolemund, G., &amp; Wickham, H. (2018).
-]
 
 ---
 ## Filtrar (NA)
@@ -264,93 +221,6 @@ dim(data_completa_reb)
 ```
 ## [1] 23421    23
 ```
-
----
-## Datos perdidos
-También se puede usar la función `drop_na` de tidyr para eliminar las filas con al menos un dato perdido (si no especificamos variables), o con datos perdidos en una o un conjunto de variables especificadas
-
-
-```r
-# Filtrar las observaciones con data perdida en todas las variables:
-drop_na(nba_data)
-
-# Filtrar las observaciones con data perdida en la variable reb_home:
-drop_na(nba_data, reb_home)
-```
-
----
-## Datos duplicados
-Una buena práctica cuando importamos un dataframe es chequear que no hayan casos duplicados (en caso de que conceptualmente no deban haberlos). La función `distinct()` de dplyr nos devuelve un dataframe sin datos duplicados (puede especificarse para que funcione para eliminar datos idénticos en todas las variables o en una sola variable)
-
-
-
-.codefont[
-
-```r
-print(data)
-```
-
-```
-##   id color letra
-## 1  1  Azul     A
-## 2  2  Azul     B
-## 3  2  Azul     B
-## 4  2  Azul     C
-## 5  3  Rojo     D
-## 6  4 Verde     E
-```
-
-```r
-# Filtro para obtener datos no duplicados en la variable de id únicamente
-# Por defecto devuelve solo los valores de la variable especificada 
-distinct(data, id)
-```
-
-```
-##   id
-## 1  1
-## 2  2
-## 3  3
-## 4  4
-```
-]
-
----
-## Datos duplicados
-
-.codefont[
-
-```r
-# Filtro para obtener datos no duplicados en la variable de id únicamente, con
-# el argumento .keep_all = TRUE para mantener el resto de las variables
-distinct(data, id, .keep_all = TRUE)
-```
-
-```
-##   id color letra
-## 1  1  Azul     A
-## 2  2  Azul     B
-## 3  3  Rojo     D
-## 4  4 Verde     E
-```
-
-```r
-# Filtro para obtener datos no duplicados
-# (excluye las filas idénticas en todas las variables)
-distinct(data, .keep_all = TRUE)
-```
-
-```
-##   id color letra
-## 1  1  Azul     A
-## 2  2  Azul     B
-## 3  2  Azul     C
-## 4  3  Rojo     D
-## 5  4 Verde     E
-```
-]
-
-
 
 ---
 ## Seleccionar variables
@@ -506,25 +376,6 @@ nba_data %&gt;%
 ]
 
 ---
-## Ordenar datos 
-
-
-```r
-#Solo por pts_home ascendente
-nba_data %&gt;% 
-  arrange(pts_home) 
-
-# Solo por pts_home descendente
-nba_data %&gt;% 
-  arrange(desc(pts_home)) 
-
-# Primero por equipo local (alfabeticamente) y después por puntos 
-nba_data %&gt;% 
-  arrange(home_team, pts_home) 
-```
-
-
----
 ## Renombrar variables con rename()
 
 Con la función `rename()` podemos renombrar las variables de un dataframe.
@@ -547,65 +398,9 @@ colnames(nba_data_2)
 ```
 
 ---
-## Extraer valores únicos con distinct() y pull() 
-
-La función `distinct()` filtra las observaciones unicas (puede especificarse una variable sola, ver argumento `.keep_all`), la función `pull()` toma una columna de un dataframe y la extrae como vector. La combinación de ambas funciones es muy útil cuando queremos extraer por ejemplo valores únicos de una variable.
-
-.codefont[
-
-```r
-# Solo con distinct() devuelve un dataframe
-nba_data_2 &lt;- nba_data %&gt;% 
-  distinct(home_team)
-nba_data_2
-```
-
-```
-## # A tibble: 30 × 1
-##    home_team            
-##    &lt;chr&gt;                
-##  1 Orlando Magic        
-##  2 Washington Wizards   
-##  3 Memphis Grizzlies    
-##  4 Indiana Pacers       
-##  5 Toronto Raptors      
-##  6 New York Knicks      
-##  7 Boston Celtics       
-##  8 New Orleans Pelicans 
-##  9 Oklahoma City Thunder
-## 10 Denver Nuggets       
-## # … with 20 more rows
-```
-]
-
----
-## Extraer valores únicos con distinct() y pull() 
-
-.codefont[
-
-```r
-# Extraemos los distintos valores como vector
-nba_data %&gt;% 
-  distinct(home_team) %&gt;% 
-  pull()
-```
-
-```
-##  [1] "Orlando Magic"          "Washington Wizards"     "Memphis Grizzlies"     
-##  [4] "Indiana Pacers"         "Toronto Raptors"        "New York Knicks"       
-##  [7] "Boston Celtics"         "New Orleans Pelicans"   "Oklahoma City Thunder" 
-## [10] "Denver Nuggets"         "Phoenix Suns"           "Houston Rockets"       
-## [13] "Dallas Mavericks"       "Sacramento Kings"       "Los Angeles Clippers"  
-## [16] "Philadelphia 76ers"     "Cleveland Cavaliers"    "Charlotte Hornets"     
-## [19] "Miami Heat"             "Milwaukee Bucks"        "Minnesota Timberwolves"
-## [22] "Utah Jazz"              "Atlanta Hawks"          "Brooklyn Nets"         
-## [25] "Detroit Pistons"        "Chicago Bulls"          "Los Angeles Lakers"    
-## [28] "Portland Trail Blazers" "San Antonio Spurs"      "Golden State Warriors"
-```
-]
-
----
 ## Otras funciones de dplyr muy útiles
+
+- `pull()` y `distinct()`: con `distinct()` es posible identificar los valores distintos de una variable y con `pull()` los podemos extraer como un vector
 
 - `slice_min()` y `slice_max()`: filtrar n observaciones de mayor o menor valor según variable. En general, la familia de funciones [slice](https://dplyr.tidyverse.org/reference/slice.html) permite filtrar observaciones en función de su posición.  
 
@@ -625,6 +420,36 @@ nba_data %&gt;%
 
 
 ---
+## Ejercicio 
+
+
+```r
+nba_data %&gt;%
+  filter(home_team == "Dallas Mavericks" &amp; season == 2011) %&gt;% 
+  select(pts_home, ast_home, reb_home) %&gt;% 
+  rename(puntos = pts_home,
+         asistencias = ast_home,
+         rebotes = reb_home)
+```
+
+```
+## # A tibble: 36 × 3
+##    puntos asistencias rebotes
+##     &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+##  1     97          19      39
+##  2     79          15      46
+##  3    104          19      52
+##  4    117          21      39
+##  5    110          24      56
+##  6     97          19      44
+##  7     95          19      45
+##  8     75          14      38
+##  9     90          18      43
+## 10     93          15      29
+## # … with 26 more rows
+```
+
+---
 class: inverse, center, middle
 
 # Resumenes y tablas
@@ -640,8 +465,7 @@ Escencialmente `summarise()` resume un dataframe en una fila según una estadís
 
 ```r
 nba_data %&gt;% 
-  drop_na() %&gt;% 
-  summarise(media = mean(pts_home))
+  summarise(media = mean(pts_home, na.rm=T))
 ```
 
 ```
@@ -665,19 +489,6 @@ mean(nba_data$pts_home, na.rm = TRUE)
 ---
 ## Resumir datos 
 
-Algunas de las operaciones más utilizadas para resumir datos:
-
-- `mean()`: media 
-- `median()`: mediana
-- `sd()`: desvío estandar
-- `sum()`: suma
-- `n()`: número de observaciones
-- `n_distinct()`: número de valores únicos
-- `min()` y `max()`: mínimo y máximo
-
----
-## Resumir datos 
-
 Hasta ahora `summarise()` no nos es de gran utilidad, la utilidad de `summarise()`  es su uso conjunto con `group_by()`, para estimar diferentes estadísticas según grupos específicos. 
 
 Cuando utilizamos `group_by()` en un pipeline cambiamos la unidad de análisis desde todo el dataframe a niveles de una variable. Retomando el ejemplo, podemos ver el promedio de puntos por temporada:
@@ -686,9 +497,8 @@ Cuando utilizamos `group_by()` en un pipeline cambiamos la unidad de análisis d
 
 ```r
 nba_data %&gt;% 
-  drop_na() %&gt;% 
   group_by(season) %&gt;% 
-  summarise(media = mean(pts_home)) %&gt;% 
+  summarise(media = mean(pts_home, na.rm = T)) %&gt;% 
   head()
 ```
 
@@ -705,38 +515,21 @@ nba_data %&gt;%
 ```
 ]
 
+
 ---
-## Resumir datos
+## Resumir datos 
 
-Siempre debemos especificar los grupos con `group_by()` antes de utilizar `summarise()`. Si queremos seguir realizando operaciones luego del `summarise()`, y no queremos que estas operaciones estén agrupadas utilizamos `ungroup()`.
+Algunas de las operaciones más utilizadas para resumir datos:
 
-.codefont[
+- `mean()`: media 
+- `median()`: mediana
+- `sd()`: desvío estandar
+- `sum()`: suma
+- `n()`: número de observaciones
+- `n_distinct()`: número de valores únicos
+- `min()` y `max()`: mínimo y máximo
+- `first()`: primer valor
 
-```r
-nba_data %&gt;% 
-  drop_na() %&gt;% 
-  group_by(season) %&gt;% 
-  summarise(media = mean(pts_home)) %&gt;% 
-  ungroup() %&gt;% 
-  filter(season &gt; 2010)
-```
-
-```
-## # A tibble: 10 × 2
-##    season media
-##     &lt;dbl&gt; &lt;dbl&gt;
-##  1   2011  97.4
-##  2   2012  99.4
-##  3   2013 102. 
-##  4   2014 101. 
-##  5   2015 104. 
-##  6   2016 107. 
-##  7   2017 107. 
-##  8   2018 112. 
-##  9   2019 112. 
-## 10   2020 110.
-```
-]
 
 ---
 ## Resumir datos
@@ -747,11 +540,9 @@ Podemos utilizar más de una variable dentro de `group_by()`. Por ejemplo, calcu
 
 ```r
 nba_data %&gt;% 
-  drop_na() %&gt;%
-  filter(home_team == "Chicago Bulls" | 
-           home_team == "New York Knicks") %&gt;% 
+  filter(home_team %in% c("Chicago Bulls", "New York Knicks")) %&gt;% 
   group_by(season, home_team) %&gt;% 
-  summarise(media = mean(pts_home)) 
+  summarise(media = mean(pts_home, na.rm = TRUE)) 
 ```
 
 ```
@@ -808,111 +599,6 @@ nba_data %&gt;%
 ]
 
 ---
-## Resumir datos de multiples variables
-
-Con `summarise()` y `across()` podemos especificar un tipo de resumen para un conjunto de variables. Por ejemplo, calcular la media para el equipo local de todas las variables que terminan con "pct_home".
-
-.codefont[
-
-```r
-nba_data %&gt;%
-  group_by(home_team) %&gt;%
-  summarise(across(ends_with("pct_home"), ~ mean(.x, na.rm = TRUE)))
-```
-
-```
-## # A tibble: 30 × 4
-##    home_team             fg_pct_home ft_pct_home fg3_pct_home
-##    &lt;chr&gt;                       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-##  1 Atlanta Hawks               0.458       0.761        0.349
-##  2 Boston Celtics              0.463       0.773        0.355
-##  3 Brooklyn Nets               0.447       0.757        0.344
-##  4 Charlotte Hornets           0.443       0.752        0.347
-##  5 Chicago Bulls               0.442       0.759        0.356
-##  6 Cleveland Cavaliers         0.456       0.744        0.358
-##  7 Dallas Mavericks            0.463       0.787        0.364
-##  8 Denver Nuggets              0.469       0.749        0.350
-##  9 Detroit Pistons             0.453       0.734        0.345
-## 10 Golden State Warriors       0.474       0.766        0.374
-## # … with 20 more rows
-```
-]
-
----
-## Resumir datos de multiples variables
-
-Con `across()` (ver [across](https://dplyr.tidyverse.org/reference/across.html)) es posible especificar conjuntos de variables utilizando helpers como start_with() o ends_with(), con vectores de variables, utilizando operadores o condicionales
-
-.codefont[
-
-```r
-nba_data %&gt;%
-  group_by(home_team) %&gt;%
-  summarise(across(c("pts_home", "ast_home"), ~ mean(.x, na.rm = TRUE)))
-```
-
-```
-## # A tibble: 30 × 3
-##    home_team             pts_home ast_home
-##    &lt;chr&gt;                    &lt;dbl&gt;    &lt;dbl&gt;
-##  1 Atlanta Hawks            101.      23.6
-##  2 Boston Celtics           101.      23.5
-##  3 Brooklyn Nets             99.1     22.4
-##  4 Charlotte Hornets         99.3     22.0
-##  5 Chicago Bulls             99.1     22.9
-##  6 Cleveland Cavaliers      101.      22.6
-##  7 Dallas Mavericks         104.      22.1
-##  8 Denver Nuggets           108.      25.3
-##  9 Detroit Pistons           99.0     22.5
-## 10 Golden State Warriors    109.      25.8
-## # … with 20 more rows
-```
-]
-
----
-## Resumir datos
-
-Con `where()` podemos establecer condiciones, como por ejemplo resumir todas las variables numéricas
-
-.codefont[
-
-```r
-nba_data %&gt;%
-  group_by(home_team) %&gt;%
-  summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE)))
-```
-
-```
-## # A tibble: 30 × 20
-##    home_team      game_id home_…¹ visit…² season team_…³ pts_h…⁴ fg_pc…⁵ ft_pc…⁶
-##    &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 Atlanta Hawks   2.17e7  1.61e9  1.61e9  2011.  1.61e9   101.    0.458   0.761
-##  2 Boston Celtics  2.27e7  1.61e9  1.61e9  2011.  1.61e9   101.    0.463   0.773
-##  3 Brooklyn Nets   2.13e7  1.61e9  1.61e9  2011.  1.61e9    99.1   0.447   0.757
-##  4 Charlotte Hor…  2.06e7  1.61e9  1.61e9  2011.  1.61e9    99.3   0.443   0.752
-##  5 Chicago Bulls   2.13e7  1.61e9  1.61e9  2011.  1.61e9    99.1   0.442   0.759
-##  6 Cleveland Cav…  2.22e7  1.61e9  1.61e9  2011.  1.61e9   101.    0.456   0.744
-##  7 Dallas Maveri…  2.17e7  1.61e9  1.61e9  2011.  1.61e9   104.    0.463   0.787
-##  8 Denver Nuggets  2.18e7  1.61e9  1.61e9  2011.  1.61e9   108.    0.469   0.749
-##  9 Detroit Pisto…  2.17e7  1.61e9  1.61e9  2010.  1.61e9    99.0   0.453   0.734
-## 10 Golden State …  2.23e7  1.61e9  1.61e9  2011.  1.61e9   109.    0.474   0.766
-## # … with 20 more rows, 11 more variables: fg3_pct_home &lt;dbl&gt;, ast_home &lt;dbl&gt;,
-## #   reb_home &lt;dbl&gt;, team_id_away &lt;dbl&gt;, pts_away &lt;dbl&gt;, fg_pct_away &lt;dbl&gt;,
-## #   ft_pct_away &lt;dbl&gt;, fg3_pct_away &lt;dbl&gt;, ast_away &lt;dbl&gt;, reb_away &lt;dbl&gt;,
-## #   home_team_wins &lt;dbl&gt;, and abbreviated variable names ¹​home_team_id,
-## #   ²​visitor_team_id, ³​team_id_home, ⁴​pts_home, ⁵​fg_pct_home, ⁶​ft_pct_home
-```
-]
-
----
-## Ejercicio 
-
-.content-box-blue[
-*¿Cuál es la media y desviación estandar de rebotes y asistencias por temporada para los equipos locales?*
-]
-
-
----
 class: inverse, center, middle
 
 # Unir bases de datos
@@ -931,29 +617,7 @@ dplyr cuenta con dos funciones para combinar dataframes: `bind_rows()` y `bind_c
 ---
 ## Unir dataframes por columna
 
-Cuando tenemos dos dataframes con las mismas variables podemos usar `bind_rows()`. También se puede utilizar `rbind()` del R Base.
-
-
-```r
-# Dividamos el dataframe en 2 para volver a unirlo
-nba_data_18 &lt;- filter(nba_data, season == 2018)
-nba_data_17 &lt;- filter(nba_data, season == 2017)
-
-nba_data_17_18 &lt;- bind_rows(nba_data_17, nba_data_18)
-
-table(nba_data_17_18$season)
-```
-
-```
-## 
-## 2017 2018 
-## 1382 1378
-```
-
----
-## Unir dataframes por columna
-
-Si  las columnas de los dataframes que queremos unir no son exactamente iguales, con `bind_rows()` se generan columnas con datos perdidos, mientras que con `rbind()` da error.
+Para unir dos dataframes (sin importar si las clumnas son exactamente iguales) podemos utilizar la función `bind_rows()`. Si las columnas no son exactamente las mismas, se generan columnas con datos perdidos.
 
 .codefont[
 
@@ -992,7 +656,7 @@ head(nba_data_17_18, 3)
 ---
 ## Unir dataframes por fila
 
-Cuando tenemos dos dataframes con las mismas observaciones pero distintas variables podemos utilizar `bind_cols()` para unirlos. También se puede utilizar `cbind()` del R Base.
+Cuando tenemos dos dataframes con las mismas observaciones pero distintas variables podemos utilizar `bind_cols()` para unirlos. 
 
 .codefont[
 
@@ -1022,140 +686,67 @@ head(nba_data_C, 5)
 ]
 
 ---
+
+class: inverse, center, middle
+
+# Datos relacionales
+
+---
 ## Joins
 
-- Cuando trabajamos con datos muchas veces debemos utilizar más de un conjunto de datos. Ya vimos que para combinar datos con las mismas columnas o las mismas filas usamos `bind_cols()` o  `bind_rows()`.
+- Cuando trabajamos con datos muchas veces debemos utilizar más de un conjunto de datos, que están relacionados entre sí. Ya vimos que para combinar datos con las mismas columnas o las mismas filas usamos `bind_cols()` o  `bind_rows()`.
 
 - Para combinar datos con distintas estructuras podemos utilizar las funciones `*_join()` de dplyr. 
 
 - Para llevar a cabo estas operaciones necesitamos al menos una variable que identifique los casos en ambos dataframes (pueden llamarse de distinta forma). Estas variables se denominan key variables.
 
+
+
+
 ---
-## Joins (ejemplo)
+## Joins 
 
-Un ejemplo: La NBA se divide en dos conferencias: este y oeste. Supongamos que queremos averiguar los equipos de cuál conferencia ganaron más partidos en los últimos 10 años. Filtrando el dataframe `nba_data` podemos conseguir fácilmente el resultado de todos los partidos en los últimos 10 años:
+Ahora que tenemos los dos dataframes y que la variable identificadora tiene las mismas categorías, ¿cómo las unimos?
 
-.codefont[
+- dplyr tiene seis tipos de joins. Cuatro de ellos son [mutate](https://dplyr.tidyverse.org/reference/mutate-joins.html) joins y dos son [filter](https://dplyr.tidyverse.org/reference/filter-joins.html) joins. 
 
-```r
-nba_u10 &lt;- nba_data %&gt;% 
-  filter(season &gt; 2010) %&gt;% 
-  select(home_team, visitor_team, pts_home, pts_away)
+- Todos los joins tienen tres argumentos principales:
 
-dim(nba_u10)
-```
+    - `x`: dataframe 1 
+    - `y`: dataframe 2 
+    - `by`: especificar variable identificadora 
 
-```
-## [1] 12240     4
-```
+- Los cuatro tipos de mutate joins son:
 
-```r
-head(nba_u10, 5)
-```
+    - `left_join()`: une incluyendo todas las filas en x
+    - `right_join()`: une incluyendo todas las filas en y
+    - `inner_join()`: une incluyendo todas las filas en x &amp; y
+    - `full_join()`: une incluyendo todas las filas en x o y
 
-```
-## # A tibble: 5 × 4
-##   home_team          visitor_team       pts_home pts_away
-##   &lt;chr&gt;              &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Orlando Magic      Charlotte Hornets       120      117
-## 2 Washington Wizards Detroit Pistons          99       96
-## 3 Memphis Grizzlies  Atlanta Hawks           116      117
-## 4 Indiana Pacers     Philadelphia 76ers      107      113
-## 5 Toronto Raptors    Miami Heat              105      117
-```
+
+
+---
+## Joins
+
+.center[
+&lt;img src="ima/joins.png" width="500px" /&gt;
 ]
 
----
-## Joins (ejemplo)
-
-El problema es que `nba_data` no tiene una variable que identifique la conferencia de cada equipo. Pero esa información está disponible en el dataframe `nba_teams`
-
-
-```r
-nba_teams &lt;- read_csv("data/nba_teams.csv") %&gt;% 
-  janitor::clean_names()
-
-nba_teams &lt;- nba_teams %&gt;% 
-  select(city, nickname, conference)
-
-glimpse(nba_teams)
-```
-
-```
-## Rows: 30
-## Columns: 3
-## $ city       &lt;chr&gt; "Atlanta", "Boston", "New Orleans", "Chicago", "Dallas", "D…
-## $ nickname   &lt;chr&gt; "Hawks", "Celtics", "Pelicans", "Bulls", "Mavericks", "Nugg…
-## $ conference &lt;chr&gt; "east", "east", "west", "east", "west", "west", "west", "we…
-```
+.right[[Wichkham &amp; Grolemund (2018)](https://r4ds.had.co.nz/relational-data.html)]
 
 ---
-## Joins (ejemplo)
+## Joins
 
-De esta forma, queremos incorporar datos de un dataframe a nivel equipo de 30 observaciones a nuestra data por partido de 12240 observaciones. La variable "key" es el equipo.
-
-El primer paso antes de realizar un join es chequear que las variables identificadoras coincidan. Una primer mirada a nuestros dataframes nos indica que este no es nuestro caso: en `nba_data` las variables `home_team` y `visitor_team` los equipos están definidos por ciudad y nombre (Chicago Bulls, por ej.) mientras que en `nba_teams` están dividos en dos variables `city` y `nickname`. 
-
-.codefontchico[
-
-```r
-pull(distinct(nba_teams, nickname))
-```
-
-```
-##  [1] "Hawks"         "Celtics"       "Pelicans"      "Bulls"        
-##  [5] "Mavericks"     "Nuggets"       "Rockets"       "Clippers"     
-##  [9] "Lakers"        "Heat"          "Bucks"         "Timberwolves" 
-## [13] "Nets"          "Knicks"        "Magic"         "Pacers"       
-## [17] "76ers"         "Suns"          "Trail Blazers" "Kings"        
-## [21] "Spurs"         "Thunder"       "Raptors"       "Jazz"         
-## [25] "Grizzlies"     "Wizards"       "Pistons"       "Hornets"      
-## [29] "Cavaliers"     "Warriors"
-```
-
-```r
-pull(distinct(nba_teams, city))
-```
-
-```
-##  [1] "Atlanta"       "Boston"        "New Orleans"   "Chicago"      
-##  [5] "Dallas"        "Denver"        "Houston"       "Los Angeles"  
-##  [9] "Miami"         "Milwaukee"     "Minnesota"     "Brooklyn"     
-## [13] "New York"      "Orlando"       "Indiana"       "Philadelphia" 
-## [17] "Phoenix"       "Portland"      "Sacramento"    "San Antonio"  
-## [21] "Oklahoma City" "Toronto"       "Utah"          "Memphis"      
-## [25] "Washington"    "Detroit"       "Charlotte"     "Cleveland"    
-## [29] "Golden State"
-```
+.center[
+&lt;img src="ima/full_join.png" width="500px" /&gt;
 ]
 
----
-## Joins (ejemplo)
-
-El primero paso entonces es unificar las categorías de las variables identificadoras.
-
-.codefont[
-
-```r
-nba_teams &lt;- nba_teams %&gt;% 
-  mutate(team = paste(city, nickname)) %&gt;% # Concateno ciudad y nombre
-  select(team, conference)
-pull(distinct(nba_teams, team))
-```
-
-```
-##  [1] "Atlanta Hawks"          "Boston Celtics"         "New Orleans Pelicans"  
-##  [4] "Chicago Bulls"          "Dallas Mavericks"       "Denver Nuggets"        
-##  [7] "Houston Rockets"        "Los Angeles Clippers"   "Los Angeles Lakers"    
-## [10] "Miami Heat"             "Milwaukee Bucks"        "Minnesota Timberwolves"
-## [13] "Brooklyn Nets"          "New York Knicks"        "Orlando Magic"         
-## [16] "Indiana Pacers"         "Philadelphia 76ers"     "Phoenix Suns"          
-## [19] "Portland Trail Blazers" "Sacramento Kings"       "San Antonio Spurs"     
-## [22] "Oklahoma City Thunder"  "Toronto Raptors"        "Utah Jazz"             
-## [25] "Memphis Grizzlies"      "Washington Wizards"     "Detroit Pistons"       
-## [28] "Charlotte Hornets"      "Cleveland Cavaliers"    "Golden State Warriors"
-```
+.center[
+&lt;img src="ima/inner_join.png" width="500px" /&gt;
 ]
+
+.right[[Wichkham &amp; Grolemund (2018)](https://r4ds.had.co.nz/relational-data.html)]
+
 
 ---
 ## Joins (ejemplo)
@@ -1191,48 +782,6 @@ glimpse(nba_u10)
 ## $ pts_away     &lt;dbl&gt; 117, 96, 117, 113, 117, 83, 113, 113, 105, 96, 114, 123, …
 ```
 ]
-
----
-## Joins 
-
-Ahora que tenemos los dos dataframes y que la variable identificadora tiene las mismas categorías, ¿cómo las unimos?
-
-- dplyr tiene seis tipos de joins. Cuatro de ellos son [mutate](https://dplyr.tidyverse.org/reference/mutate-joins.html) joins y dos son [filter](https://dplyr.tidyverse.org/reference/filter-joins.html) joins. 
-
-- Todos los joins tienen tres argumentos principales:
-
-    - `x`: dataframe 1 
-    - `y`: dataframe 2 
-    - `by`: especificar variable identificadora 
-
-- Los cuatro tipos de mutate joins son:
-
-    - `left_join()`: une incluyendo todas las filas en x
-    - `right_join()`: une incluyendo todas las filas en y
-    - `inner_join()`: une incluyendo todas las filas en x &amp; y
-    - `full_join()`: une incluyendo todas las filas en x o y
-
----
-## Joins
-
-.center[
-&lt;img src="ima/joins.png" width="500px" /&gt;
-]
-
-.right[[Wichkham &amp; Grolemund (2018)](https://r4ds.had.co.nz/relational-data.html)]
-
----
-## Joins
-
-.center[
-&lt;img src="ima/full_join.png" width="500px" /&gt;
-]
-
-.center[
-&lt;img src="ima/inner_join.png" width="500px" /&gt;
-]
-
-.right[[Wichkham &amp; Grolemund (2018)](https://r4ds.had.co.nz/relational-data.html)]
 
 
 ---
@@ -1302,194 +851,24 @@ df_b &lt;- tibble(pais = c("Uruguay", "Argentina", "Brasil", "Colombia"),
 
 
 ---
-class: inverse, center, middle
-
-# Estructura de datos
-
----
-## Estructura de datos
-
-Un mismo conjunto de datos puede ser estructurado de distintas formas. Los criterios para ellos pueden ir desde facilitar la entrada de datos, a utilizar el formato correcto para correr ciertas funciones. 
-
-En el marco del Tidyverse se estructuran los datos en formato "tidy". Esto no significa que siempre que utilicemos R tengamos que estructurar los datos de esta forma, algunas funciones pueden requerir otros formatos. Sin embargo, para la mayoría de las funciones del tidyverse (particularmente para visualizar datos) funcionan mejor con el formato tidy
-
-.center[
-&lt;img src="ima/tidy_data.png" width="600px" /&gt;
-]
-
-.right[[Wichkham &amp; Grolemund (2018)](https://r4ds.had.co.nz/tidy-data.html)]
-
-
----
-## Estructura de datos
-
-El formato tidy parece obvio, pero muchas veces nos encontramos con datos distinta forma. Por ejemplo, no es tan extraño encontrar datos donde una sola variable está esparcida en varias columnas o una observación en más de una fila. Analizemos un caso muy común:
+## Ejercicio
 
 
 ```r
-wb_desempleo &lt;- data.frame(pais = c("Argentina", "Chile", "Uruguay"),
-                           d_2018 = c(9.2, 7.2, 8.3),
-                           d_2019 = c(9.8, 7.3, 9.3),
-                           d_2020 = c(11.7, 11.5, 12.7))
-```
+df_a &lt;- df_a %&gt;% 
+  left_join(df_b)
 
-
-```r
-print(wb_desempleo)
+df_a
 ```
 
 ```
-##        pais d_2018 d_2019 d_2020
-## 1 Argentina    9.2    9.8   11.7
-## 2     Chile    7.2    7.3   11.5
-## 3   Uruguay    8.3    9.3   12.7
+## # A tibble: 3 × 3
+##   pais      regiones sigla
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;
+## 1 Uruguay         19 URU  
+## 2 Argentina       24 ARG  
+## 3 Chile           16 &lt;NA&gt;
 ```
-
----
-## Cambio de estructura de datos
-
-Para pasar datos a estructura tidy tenemos las funciones `pivot_longer()` (para pasar de formato ancho a largo) y `pivot_wider()` (para pasar de formarto largo a ancho) del paquete tidyr.
-
-.center[
-&lt;img src="ima/wide_long.png" width="600px" /&gt;
-]
-
----
-## De ancho a largo con pivot_longer()
-
-.center[
-&lt;img src="ima/wide_ima.png" width="1000px" /&gt;
-]
-
-.right[[Wichkham &amp; Grolemund (2018)](https://r4ds.had.co.nz/tidy-data.html)]
-
----
-## De ancho a largo con pivot_longer()
-
-.codefont[
-
-```r
-wb_unemp_long &lt;- wb_desempleo %&gt;% 
-  pivot_longer(cols = c("d_2018", "d_2019", "d_2020"), # Columnas a unir 
-               names_to = "year", # Nombre de variable "key" 
-               values_to = "desempleo") # Nombre de variable con valores
-print(wb_unemp_long)
-```
-
-```
-## # A tibble: 9 × 3
-##   pais      year   desempleo
-##   &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;
-## 1 Argentina d_2018       9.2
-## 2 Argentina d_2019       9.8
-## 3 Argentina d_2020      11.7
-## 4 Chile     d_2018       7.2
-## 5 Chile     d_2019       7.3
-## 6 Chile     d_2020      11.5
-## 7 Uruguay   d_2018       8.3
-## 8 Uruguay   d_2019       9.3
-## 9 Uruguay   d_2020      12.7
-```
-]
-
----
-## De largo a ancho con pivot_wider()
-
-.center[
-&lt;img src="ima/long_ima.png" width="800px" /&gt;
-]
-
-.right[[Wichkham &amp; Grolemund (2018)](https://r4ds.had.co.nz/tidy-data.html)]
-
----
-## De largo a ancho con pivot_wider()
-
-.codefont[
-
-
-```r
-print(wb_unemp)
-```
-
-```
-##        pais year       variable   valor
-## 1 Argentina 2018      desempleo     9.2
-## 2 Argentina 2019      desempleo     9.8
-## 3 Argentina 2020      desempleo    11.7
-## 4 Argentina 2018 pbi_per_capita 11633.0
-## 5 Argentina 2019 pbi_per_capita  9912.0
-```
-
-```r
-wb_unemp %&gt;% 
-  pivot_wider(names_from = variable,
-              values_from = valor)
-```
-
-```
-## # A tibble: 3 × 4
-##   pais       year desempleo pbi_per_capita
-##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;
-## 1 Argentina  2018       9.2          11633
-## 2 Argentina  2019       9.8           9912
-## 3 Argentina  2020      11.7             NA
-```
-]
-
----
-class: inverse, center, middle
-
-# Guia de estilo
-
----
-
-## Guía de estilo 
-
-El estilo -por definición- para escribir código siempre es subjetivo. Sin embargo, ciertas guías pueden servir para hacer nuestro código más legible (para propios y ajenos).
-
-Tidyverse cuenta con una [guía de estilo](https://style.tidyverse.org/) y también existen paquetes que nos ayudan a emprolijar nuestros códigos como [styler](https://styler.r-lib.org/)
-
-
----
-
-## Guía de estilo 
-
-- Un primer principio a tener en cuenta es la coherencia, ya sea en como nombrar objetos y variables, los espacios o tipos de anotaciones
-
-- Los nombres de objetos y variables deben contener letras minúsculas, números y guiones bajos (_). 
-
-- Siempre dejar un espacio luego de una coma (al igual que en el español).
-
-- Dejar espacios entre operadores (`=`, `%&gt;%`, etc.)
-
-- No dejar espacios al iniciar paréntesis 
-
-- No escribir líneas muy largas (la última versión de R Studio marca con una línea vertical un límite arbitrario, que se puede editar) 
-
-- Comentar el código es importante
-
----
-
-## Guía de estilo 
-
-
-.codefont[
-
-```r
-# Bien
-vector_1 &lt;- c("Rojo", "Verde", "Blanco")
-  
-# Mal (funciona igual)
-vector_1&lt;-c( "Rojo","Verde","Blanco" )
-  
-# Bien
-data %&gt;% 
-  mutate(pib_per_capita = pbi / poblacion)
-
-# Mal
-data %&gt;%mutate(pib_per_capita=pbi/poblacion)
-```
-]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

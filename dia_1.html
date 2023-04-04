@@ -4,7 +4,7 @@
     <title>Intro a R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Escuela de Invierno en Métodos 2023 - Martín Opertti" />
-    <meta name="date" content="2023-03-17" />
+    <meta name="date" content="2023-03-22" />
     <script src="libs/header-attrs-2.20/header-attrs.js"></script>
     <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -42,7 +42,7 @@ class: center, middle, inverse, title-slide
 ### Escuela de Invierno en Métodos 2023 - Martín Opertti
 ]
 .date[
-### March 17, 2023
+### March 22, 2023
 ]
 
 ---
@@ -52,7 +52,7 @@ class: inverse, center, middle
 
 
 
-# ¿Qué es y qué se puede hacer con R?  
+# ¿Qué es R?  
 
 ---
 
@@ -77,100 +77,8 @@ class: inverse, center, middle
 
 ---
 
-## ¿Por qué usar R? 
+## Recursos complementarios
 
-- Libre y gratuito
-
-- Comunidad 
-
-- Es uno de los programas más utilizados para técnicas innovadaras en estadística y visualización de datos 
-
-- Trabaja muy bien con otros programas/lenguajes (Excel, Latex, HTML, etc.)
-
-- Uso va en aumento
-
----
-class: inverse, center, middle
-
-# ¿Qué se puede hacer con R? 
-
----
-
-## ¿Qué se puede hacer con R?
-
-- Ingresar datos
---
-
-- Importar y exportar datos (de Excel, Stata, documento de texto, APIs, etc)
---
-
-- Manipular datos (recodificación, cambios de estructura)
---
-
-- Estadística descrpitiva e inferencial
---
-
-- Visualización de datos (gráficos de alta calidad)
---
-
-- Técnicas estadísticas y de visualización de datos innovadoras
---
-
-- Crear tus propias funciones y paquetes
---
-
-- Escribir artículos y presentaciones integrando código
---
-
-- Escribir libros
---
-
-- Webscrapping, trabajar con Big data y machine learning
---
-
-- Aplicaciones intercativas para visualización de datos (shiny apps)
---
-
-- Hasta jugar videojuegos!
-
----
-
-## Aplicaciones (shiny apps), paquetes y presentaciones
-
-- [Mirador DESCA](https://bancodedatos-fcs.shinyapps.io/Mirador-DESCA-app/) 
-
-- [OPUY](https://github.com/Nicolas-Schmidt/opuy) 
-
-- Esta misma presentación, ver [Xaringan](https://github.com/yihui/xaringan)
-
-- [r4ds](https://r4ds.had.co.nz/)
-
-
----
-class: inverse, center, middle
-
-# Aprendizaje
-
----
-
-## ¿Qué tan difícil es aprender R?
-
-- Al comienzo puede ser más difícil que la sintaxis básica de otros programas, particularmente porque es un lenguaje bastante distinto al resto. Sin embargo, una vez que se logra cierto entendimiento y autonomía, las posibilidades son infinitas.
-
-- Muchas de las dificultades para aprender R se deben a sus principales ventajas: flexibilidad y potencia.
-
----
-
-## Recursos 
-
-Ningún recurso es en si mismo suficiente para aprender R. Cada análisis de datos es particular en su manera y las soluciones no siempre estarán en el contenido de un curso o libro específico. Hay muchos recursos para aprender R de forma general y para obtener ayuda puntual.
-
-.center[
-&lt;img src="ima/sof.png" width="25%" /&gt;&lt;img src="ima/rblog.png" width="25%" /&gt;&lt;img src="ima/r4ds.jpg" width="25%" /&gt;
-]
----
-
-## Recursos
 La comunidad de usuarios de R es inmensa y muy abierta. Por esto hay muchísimos recursos para aprender de forma independiente y resolver problemas cuando nos estancamos:
 
 - Libro "R for Data Science". Es muy completo y referencia en la mayoría de los cursos de R, pueden acceder a la versión online [original](https://r4ds.had.co.nz/) y a una [traducción](https://r4ds-en-espaniol.netlify.app/)
@@ -179,31 +87,6 @@ La comunidad de usuarios de R es inmensa y muy abierta. Por esto hay muchísimos
 - Existen foros -por ej. [Stack Overflow](https://stackoverflow.com/)- donde responden una infinidad preguntas de programación en R. 
 - [IntRo](https://github.com/Nicolas-Schmidt/IntRo) es un excelente curso de R (con gran contenido teórico) de FCS-UdelaR a cargo de Nicolás Schmidt 
 - [AnalizaR](https://arcruz0.github.io/libroadp/index.html) es un libro sobre análisis de datos en R con énfasis en Ciencia Política 
-
----
-
-## Ayuda  
-
-- Obtener la ayuda correcta es fundamental al programar en R. Podemos obtener ayuda de todas las funciones que utilizamos con el comando `help()` (ej. `help(mean)`) o `?` (ej. `?mean`)
-
-- Si no podemos solucionar un error con la documentación de las funciones/paquetes muchas veces sirve buscar en un navegador 
-
-- Muchas páginas contienen información relevante para solucionar problemas, entre las que se destaca [stackoverflow](https://stackoverflow.com/questions/tagged/r)
-
-- En caso de no encontrar solución se puede consultar en páginas como stackoverflow mediante un [ejemplo reproducible o reprex](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
-
----
-
-## Ayuda
-
-
-```r
-help(mean)
-```
-
-.center[
-&lt;img src="ima/ima_mean.jpeg" width="1000px" /&gt;
-]
 
 
 ---
@@ -242,7 +125,33 @@ class: inverse, center, middle
 - Haciendo click luego en el script guardado se inicia R Studio. 
 
 - Para ejecutar una línea de código pueden usar el botón de "Run" arriba a la derecha o -más cómodo- `ctrl + enter`
-     
+
+---
+
+## Ayuda  
+
+- Obtener la ayuda correcta es fundamental al programar en R. Podemos obtener ayuda de todas las funciones que utilizamos con el comando `help()` (ej. `help(mean)`) o `?` (ej. `?mean`)
+
+- Si no podemos solucionar un error con la documentación de las funciones/paquetes muchas veces sirve buscar en un navegador 
+
+- Muchas páginas contienen información relevante para solucionar problemas, entre las que se destaca [stackoverflow](https://stackoverflow.com/questions/tagged/r)
+
+- En caso de no encontrar solución se puede consultar en páginas como stackoverflow mediante un [ejemplo reproducible o reprex](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
+
+---
+
+## Ayuda
+
+
+```r
+help(mean)
+```
+
+.center[
+&lt;img src="ima/ima_mean.jpeg" width="1000px" /&gt;
+]
+
+   
 ---
 
 ## Workspace
@@ -251,6 +160,7 @@ class: inverse, center, middle
 - Lo recomendado es NO guardar el workspace, y guardar solamente el Script. De esta forma, cuando retomemos nuestro análisis en una nueva sesión de R, podemos correrlo y chequear que efectivamente genere los que querramos.
 
 - Pueden desactivar la pregunta en Tools - Global Options - General - desmarcando la opción "Save workspace into RData" y desmarcando "restore RData into workspace"
+      
       
 ---
 class: inverse, center, middle
@@ -495,40 +405,6 @@ R tiene funciones que nos permiten identificar la clase, el tipo, la estructura 
 
 - `attributes()` - ¿Tiene metadatos?
 
----
-
-## Clases y tipos de objetos
-
-
-```r
-  # Creamos algunos objetos distintos
-  year &lt;- 2021
-  nombre &lt;- "Dos mil veintiuno"
-  
-  # Uso la función class para averiguar la clase de objeto
-  class(year) 
-```
-
-```
-## [1] "numeric"
-```
-
-```r
-  class(nombre)
-```
-
-```
-## [1] "character"
-```
-
-```r
-  # Uso la función typeof para averiguar el tipo de la data del objeto
-  typeof(nombre)
-```
-
-```
-## [1] "character"
-```
 
 ---
 
@@ -664,36 +540,6 @@ v3
 ```
 
 ---
-
-## Coerción 
-
-¿Qué pasa si unimos vectores de distinto tipo? 
-
-Si unimos un vector de tipo caracter con uno númerico, R convertirá todo el vector a caracter. Si unimos un vector númerico (double o integer) a lógico, R convertirá el vector en númerico (`TRUE = 1`, `FALSE = 0`)
-
-
-```r
-## Ejemplo de coerción automática:
-v2 &lt;- seq(0, 50, 10) # De 0 a 50 de a 10 números
-v4 &lt;- c("rojo", "verde", "blanco") # character
-v6 &lt;- c(v2, v4)
-v6
-```
-
-```
-## [1] "0"      "10"     "20"     "30"     "40"     "50"     "rojo"   "verde" 
-## [9] "blanco"
-```
-
-```r
-class(v6)
-```
-
-```
-## [1] "character"
-```
-
----
 class: inverse, center, middle
 
 # Dataframes 
@@ -744,6 +590,19 @@ class(encuesta)
 
 ```
 ## [1] "data.frame"
+```
+
+```r
+encuesta
+```
+
+```
+##   edad ideologia      voto
+## 1   18 Izquierda Partido A
+## 2   24 Izquierda Partido A
+## 3   80   Derecha Partido C
+## 4   40    Centro Partido B
+## 5   76   Derecha Partido B
 ```
 ]
 
@@ -1058,92 +917,6 @@ help(mean)
 &lt;img src="ima/ima_mean.jpeg" width="1000px" /&gt;
 ]
 
----
-
-## Errores y advertencias
-- Cuando utilizamos funciones podemos encontrarnos con errores (errors) y advertencias (warnings). La principal diferencia entre ellas es que el error implica que la función no se pudo aplicar, mientras que en la advertencia la función fue aplicada pero que algo no funcionó como esperado. También es posible ver mensajes (messages) que simplemente informan algo sobre la función
-
-
-```r
-vector_ej &lt;- rnorm(n = 10, mean = 10, sd = 5) # Creo valores aleatorios
-
-mean(Vector_ej) # Aplico función para obtener la media
-```
-
-```
-## Error in mean(Vector_ej): object 'Vector_ej' not found
-```
-
-.content-box-blue[
-*¿A qué se debe este error?*
-]
-
----
-
-## Errores y advertencias
-
-
-```r
-vector_ej &lt;- rnorm(n = 10, mean = 10, sd = 5) # Creo valores aleatorios
-
-mean(vector_ej) # Aplico función para obtener la media
-```
-
-```
-## [1] 8.442731
-```
-
----
-
-## Errores y advertencias 
-
-En el caso anterior, es sencillo entender porque la función no corrió. Sin embargo, muchas veces podemos no entender que es lo que salió mal y copiar y pegar el error en un buscador de internet es un buen primer paso.
-
-.codefontchico[
-
-```r
-vector_1 &lt;- c("10", "35%", "35", "50") # Vector de caracteres que contiene números 
-vector_1
-```
-
-```
-## [1] "10"  "35%" "35"  "50"
-```
-
-```r
-vector_2 &lt;- as.numeric(vector_1) # Transformo a vector númerico
-```
-
-```
-## Warning: NAs introduced by coercion
-```
-
-```r
-vector_2 # Los valores que además del número tenían (%) no pueden pasarse a númericos
-```
-
-```
-## [1] 10 NA 35 50
-```
-
-```r
-vector_1 &lt;- gsub("%", "", vector_1) # Quito los % del vector original 
-vector_1 # Sin valores perdidos
-```
-
-```
-## [1] "10" "35" "35" "50"
-```
-
-```r
-vector_2 &lt;- as.numeric(vector_1) # Transformo a vector númerico
-vector_2 # Los valores que además del número tenían (%) no pueden pasarse a númericos
-```
-
-```
-## [1] 10 35 35 50
-```
-]
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

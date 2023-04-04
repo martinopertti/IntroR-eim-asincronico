@@ -6,6 +6,7 @@
 ##  Martín Opertti - 2023                                         
 ## ***************************************************************************
 
+
 ## En este script vamos a repasar algunas funciones y operadores básicos de R
 
 
@@ -31,7 +32,6 @@ ls()
 year - 1996
 
 
-
 ## 2. Objetos   =============================================================
 
 ## * 2.1. Crear objetos ----
@@ -51,7 +51,7 @@ rm(year)
 
 # Para eliminar todos los objetos del ambiente:
 rm(list=ls())
-print(mi_primer_objeto) # No encuentra el objeto porque lo borró
+print(year) # No encuentra el objeto porque lo borró
 
 
 ## * 2.2. Tipos de objetos ----
@@ -102,7 +102,7 @@ mi_primer_vector <- c(1, 2, 3, 4, 5)
 print(mi_primer_vector)
 class(mi_primer_vector)
 length(mi_primer_vector)
-str(mi_primer_vector)
+
 
 # Más vectores:
 (v1 <- c(1:5)) # Todos los números de 1 a 5

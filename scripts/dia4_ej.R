@@ -58,19 +58,3 @@ glimpse(data)
 # Filtremos las encuestas  desde 1 de octubre de 2016 y creamos un boxplot para 
 # ver las diferencias en la intención de voto a ambos candidatos
 
-## 10. Por último, estimemos un modelo de regresión para ver si el tamaño
-# muestral es relevante en la precisión de las encuestadoras. Para ello
-# calculemos el valor absoluto de la diferencia entre  la intención de voto a
-# Trump en cada encuesta y su % final que obtuvo en 2016 (46.1%)
-data <- data %>% 
-  mutate(margen = abs(46.1 - rawpoll_trump))
-range(data$margen) # Diferencias entre 0.1 y 17.3
-
-# También usamos como control los días que faltan para la elección (electin day 
-# es el proxy)
-data <- data %>% 
-  mutate(dias_ele = as.numeric(as.Date("2016-11-08") - enddate))
-
-## Con el paquete broom y la función tidy() podemos extraer los resultaods del 
-# modelo en un dataframe en formato tidy!
-

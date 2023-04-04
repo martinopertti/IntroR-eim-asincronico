@@ -123,17 +123,6 @@ table(nba_data_19$season)
 ---
 ## Filtrar
 
-Si no guardamos el resultado en un objeto simplemente se imprime
-
-.codefont[
-```{r ch2a, echo = TRUE}
- filter(nba_data, season == 2019)
-```
-]
-
----
-## Filtrar
-
 Utilizando operadores lógicos podemos filtrar de formas más complejas:
 
 ```{r ch2b, echo = TRUE}
@@ -148,17 +137,6 @@ nba_data_temp <- filter(nba_data, season %in% temporadas)
 table(nba_data_temp$season)
 ```
 
----
-## Filtrar (operadores lógicos)
-
-.center[
-```{r, out.width = "700px"}
-knitr::include_graphics("ima/logical_op.png")
-```
-]
-
-.right[Fuente: Grolemund, G., & Wickham, H. (2018).
-]
 
 ---
 ## Filtrar (NA)
@@ -175,43 +153,6 @@ data_completa_reb <- filter(nba_data, !is.na(reb_home))
 dim(data_completa_reb)
 
 ```
-
----
-## Datos duplicados
-Una buena práctica cuando importamos un dataframe es chequear que no hayan casos duplicados (en caso de que conceptualmente no deban haberlos). La función `distinct()` de dplyr nos devuelve un dataframe sin datos duplicados (puede especificarse para que funcione para eliminar datos idénticos en todas las variables o en una sola variable)
-
-```{r ch3_b, results='hide', echo = FALSE}
-data <- data.frame(id = c(1, 2, 2, 2,  3, 4),
-                   color = c("Azul", "Azul", "Azul", "Azul", "Rojo", "Verde"),
-                   letra = c("A", "B", "B", "C", "D", "E"))
-```
-
-.codefont[
-```{r ch3_c, echo = TRUE}
-print(data)
-
-# Filtro para obtener datos no duplicados en la variable de id únicamente
-# Por defecto devuelve solo los valores de la variable especificada 
-distinct(data, id)
-```
-]
-
----
-## Datos duplicados
-
-.codefont[
-```{r ch3_d, echo = TRUE}
-# Filtro para obtener datos no duplicados en la variable de id únicamente, con
-# el argumento .keep_all = TRUE para mantener el resto de las variables
-distinct(data, id, .keep_all = TRUE)
-
-# Filtro para obtener datos no duplicados
-# (excluye las filas idénticas en todas las variables)
-distinct(data, .keep_all = TRUE)
-```
-]
-
-
 
 ---
 ## Seleccionar variables
@@ -306,24 +247,6 @@ nba_data %>%
 ]
 
 ---
-## Ordenar datos 
-
-```{r ch8, eval = FALSE, echo = TRUE}
-#Solo por pts_home ascendente
-nba_data %>% 
-  arrange(pts_home) 
-
-# Solo por pts_home descendente
-nba_data %>% 
-  arrange(desc(pts_home)) 
-
-# Primero por equipo local (alfabeticamente) y después por puntos 
-nba_data %>% 
-  arrange(home_team, pts_home) 
-```
-
-
----
 ## Renombrar variables con rename()
 
 Con la función `rename()` podemos renombrar las variables de un dataframe.
@@ -336,34 +259,9 @@ colnames(nba_data_2)
 ```
 
 ---
-## Extraer valores únicos con distinct() y pull() 
-
-La función `distinct()` filtra las observaciones unicas (puede especificarse una variable sola, ver argumento `.keep_all`), la función `pull()` toma una columna de un dataframe y la extrae como vector. La combinación de ambas funciones es muy útil cuando queremos extraer por ejemplo valores únicos de una variable.
-
-.codefont[
-```{r ch14b, echo = TRUE}
-# Solo con distinct() devuelve un dataframe
-nba_data_2 <- nba_data %>% 
-  distinct(home_team)
-nba_data_2
-
-```
-]
-
----
-## Extraer valores únicos con distinct() y pull() 
-
-.codefont[
-```{r ch14d, echo = TRUE}
-# Extraemos los distintos valores como vector
-nba_data %>% 
-  distinct(home_team) %>% 
-  pull()
-```
-]
-
----
 ## Otras funciones de dplyr muy útiles
+
+- `pull()` y `distinct()`: con `distinct()` es posible identificar los valores distintos de una variable y con `pull()` los podemos extraer como un vector
 
 - `slice_min()` y `slice_max()`: filtrar n observaciones de mayor o menor valor según variable. En general, la familia de funciones [slice](https://dplyr.tidyverse.org/reference/slice.html) permite filtrar observaciones en función de su posición.  
 
@@ -383,6 +281,19 @@ nba_data %>%
 
 
 ---
+## Ejercicio 
+
+```{r sadasdas, echo = TRUE}
+nba_data %>%
+  filter(home_team == "Dallas Mavericks" & season == 2011) %>% 
+  select(pts_home, ast_home, reb_home) %>% 
+  rename(puntos = pts_home,
+         asistencias = ast_home,
+         rebotes = reb_home)
+
+```
+
+---
 class: inverse, center, middle
 
 # Resumenes y tablas
@@ -397,11 +308,28 @@ Escencialmente `summarise()` resume un dataframe en una fila según una estadís
 .codefont[
 ```{r ch9, echo = TRUE}
 nba_data %>% 
-  drop_na() %>% 
-  summarise(media = mean(pts_home))
+  summarise(media = mean(pts_home, na.rm=T))
 
 # Por ahora no hay mucha diferencia con
 mean(nba_data$pts_home, na.rm = TRUE)
+```
+]
+
+
+---
+## Resumir datos 
+
+Hasta ahora `summarise()` no nos es de gran utilidad, la utilidad de `summarise()`  es su uso conjunto con `group_by()`, para estimar diferentes estadísticas según grupos específicos. 
+
+Cuando utilizamos `group_by()` en un pipeline cambiamos la unidad de análisis desde todo el dataframe a niveles de una variable. Retomando el ejemplo, podemos ver el promedio de puntos por temporada:
+
+.codefont[
+```{r ch10, echo = TRUE}
+nba_data %>% 
+  group_by(season) %>% 
+  summarise(media = mean(pts_home, na.rm = T)) %>% 
+  head()
+
 ```
 ]
 
@@ -418,41 +346,8 @@ Algunas de las operaciones más utilizadas para resumir datos:
 - `n()`: número de observaciones
 - `n_distinct()`: número de valores únicos
 - `min()` y `max()`: mínimo y máximo
+- `first()`: primer valor
 
----
-## Resumir datos 
-
-Hasta ahora `summarise()` no nos es de gran utilidad, la utilidad de `summarise()`  es su uso conjunto con `group_by()`, para estimar diferentes estadísticas según grupos específicos. 
-
-Cuando utilizamos `group_by()` en un pipeline cambiamos la unidad de análisis desde todo el dataframe a niveles de una variable. Retomando el ejemplo, podemos ver el promedio de puntos por temporada:
-
-.codefont[
-```{r ch10, echo = TRUE}
-nba_data %>% 
-  drop_na() %>% 
-  group_by(season) %>% 
-  summarise(media = mean(pts_home)) %>% 
-  head()
-
-```
-]
-
----
-## Resumir datos
-
-Siempre debemos especificar los grupos con `group_by()` antes de utilizar `summarise()`. Si queremos seguir realizando operaciones luego del `summarise()`, y no queremos que estas operaciones estén agrupadas utilizamos `ungroup()`.
-
-.codefont[
-```{r ch11, echo = TRUE}
-nba_data %>% 
-  drop_na() %>% 
-  group_by(season) %>% 
-  summarise(media = mean(pts_home)) %>% 
-  ungroup() %>% 
-  filter(season > 2010)
-
-```
-]
 
 ---
 ## Resumir datos
@@ -462,11 +357,9 @@ Podemos utilizar más de una variable dentro de `group_by()`. Por ejemplo, calcu
 .codefont[
 ```{r ch12, echo = TRUE, warning=FALSE}
 nba_data %>% 
-  drop_na() %>%
-  filter(home_team == "Chicago Bulls" | 
-           home_team == "New York Knicks") %>% 
+  filter(home_team %in% c("Chicago Bulls", "New York Knicks")) %>% 
   group_by(season, home_team) %>% 
-  summarise(media = mean(pts_home)) 
+  summarise(media = mean(pts_home, na.rm = TRUE)) 
 ```
 ]
 
@@ -489,53 +382,6 @@ nba_data %>%
 ]
 
 ---
-## Resumir datos de multiples variables
-
-Con `summarise()` y `across()` podemos especificar un tipo de resumen para un conjunto de variables. Por ejemplo, calcular la media para el equipo local de todas las variables que terminan con "pct_home".
-
-.codefont[
-```{r ch13b, echo = TRUE}
-nba_data %>%
-  group_by(home_team) %>%
-  summarise(across(ends_with("pct_home"), ~ mean(.x, na.rm = TRUE)))
-```
-]
-
----
-## Resumir datos de multiples variables
-
-Con `across()` (ver [across](https://dplyr.tidyverse.org/reference/across.html)) es posible especificar conjuntos de variables utilizando helpers como start_with() o ends_with(), con vectores de variables, utilizando operadores o condicionales
-
-.codefont[
-```{r ch13b1, echo = TRUE}
-nba_data %>%
-  group_by(home_team) %>%
-  summarise(across(c("pts_home", "ast_home"), ~ mean(.x, na.rm = TRUE)))
-```
-]
-
----
-## Resumir datos
-
-Con `where()` podemos establecer condiciones, como por ejemplo resumir todas las variables numéricas
-
-.codefont[
-```{r ch13b12, echo = TRUE}
-nba_data %>%
-  group_by(home_team) %>%
-  summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE)))
-```
-]
-
----
-## Ejercicio 
-
-.content-box-blue[
-*¿Cuál es la media y desviación estandar de rebotes y asistencias por temporada para los equipos locales?*
-]
-
-
----
 class: inverse, center, middle
 
 # Unir bases de datos
@@ -556,22 +402,7 @@ knitr::include_graphics("ima/bind.jpg")
 ---
 ## Unir dataframes por columna
 
-Cuando tenemos dos dataframes con las mismas variables podemos usar `bind_rows()`. También se puede utilizar `rbind()` del R Base.
-
-```{r ch15, echo = TRUE}
-# Dividamos el dataframe en 2 para volver a unirlo
-nba_data_18 <- filter(nba_data, season == 2018)
-nba_data_17 <- filter(nba_data, season == 2017)
-
-nba_data_17_18 <- bind_rows(nba_data_17, nba_data_18)
-
-table(nba_data_17_18$season)
-```
-
----
-## Unir dataframes por columna
-
-Si  las columnas de los dataframes que queremos unir no son exactamente iguales, con `bind_rows()` se generan columnas con datos perdidos, mientras que con `rbind()` da error.
+Para unir dos dataframes (sin importar si las clumnas son exactamente iguales) podemos utilizar la función `bind_rows()`. Si las columnas no son exactamente las mismas, se generan columnas con datos perdidos.
 
 .codefont[
 ```{r ch16, echo = TRUE}
@@ -594,7 +425,7 @@ head(nba_data_17_18, 3)
 ---
 ## Unir dataframes por fila
 
-Cuando tenemos dos dataframes con las mismas observaciones pero distintas variables podemos utilizar `bind_cols()` para unirlos. También se puede utilizar `cbind()` del R Base.
+Cuando tenemos dos dataframes con las mismas observaciones pero distintas variables podemos utilizar `bind_cols()` para unirlos. 
 
 .codefont[
 ```{r ch17, echo = TRUE}
@@ -612,36 +443,29 @@ head(nba_data_C, 5)
 ]
 
 ---
+
+class: inverse, center, middle
+
+# Datos relacionales
+
+---
 ## Joins
 
-- Cuando trabajamos con datos muchas veces debemos utilizar más de un conjunto de datos. Ya vimos que para combinar datos con las mismas columnas o las mismas filas usamos `bind_cols()` o  `bind_rows()`.
+- Cuando trabajamos con datos muchas veces debemos utilizar más de un conjunto de datos, que están relacionados entre sí. Ya vimos que para combinar datos con las mismas columnas o las mismas filas usamos `bind_cols()` o  `bind_rows()`.
 
 - Para combinar datos con distintas estructuras podemos utilizar las funciones `*_join()` de dplyr. 
 
 - Para llevar a cabo estas operaciones necesitamos al menos una variable que identifique los casos en ambos dataframes (pueden llamarse de distinta forma). Estas variables se denominan key variables.
 
----
-## Joins (ejemplo)
 
-Un ejemplo: La NBA se divide en dos conferencias: este y oeste. Supongamos que queremos averiguar los equipos de cuál conferencia ganaron más partidos en los últimos 10 años. Filtrando el dataframe `nba_data` podemos conseguir fácilmente el resultado de todos los partidos en los últimos 10 años:
-
-.codefont[
-```{r ch18, echo = TRUE}
+```{r ch18, echo = FALSE, results = 'hide', message=FALSE}
 nba_u10 <- nba_data %>% 
   filter(season > 2010) %>% 
   select(home_team, visitor_team, pts_home, pts_away)
 
 dim(nba_u10)
 head(nba_u10, 5)
-```
-]
 
----
-## Joins (ejemplo)
-
-El problema es que `nba_data` no tiene una variable que identifique la conferencia de cada equipo. Pero esa información está disponible en el dataframe `nba_teams`
-
-```{r ch19, echo = TRUE, message=FALSE}
 nba_teams <- read_csv("data/nba_teams.csv") %>% 
   janitor::clean_names()
 
@@ -649,53 +473,12 @@ nba_teams <- nba_teams %>%
   select(city, nickname, conference)
 
 glimpse(nba_teams)
-```
 
----
-## Joins (ejemplo)
-
-De esta forma, queremos incorporar datos de un dataframe a nivel equipo de 30 observaciones a nuestra data por partido de 12240 observaciones. La variable "key" es el equipo.
-
-El primer paso antes de realizar un join es chequear que las variables identificadoras coincidan. Una primer mirada a nuestros dataframes nos indica que este no es nuestro caso: en `nba_data` las variables `home_team` y `visitor_team` los equipos están definidos por ciudad y nombre (Chicago Bulls, por ej.) mientras que en `nba_teams` están dividos en dos variables `city` y `nickname`. 
-
-.codefontchico[
-```{r ch120, echo = TRUE, message=FALSE}
-pull(distinct(nba_teams, nickname))
-
-pull(distinct(nba_teams, city))
-```
-]
-
----
-## Joins (ejemplo)
-
-El primero paso entonces es unificar las categorías de las variables identificadoras.
-
-.codefont[
-```{r ch120_b, echo = TRUE, message=FALSE}
 nba_teams <- nba_teams %>% 
   mutate(team = paste(city, nickname)) %>% # Concateno ciudad y nombre
   select(team, conference)
-pull(distinct(nba_teams, team))
+
 ```
-]
-
----
-## Joins (ejemplo)
-
-Nuestros dataframes a combinar
-
-.codefont[
-```{r ch120_c, echo = TRUE, message=FALSE}
-glimpse(nba_teams)
-```
-]
-
-.codefont[
-```{r ch120_d, echo = TRUE, message=FALSE}
-glimpse(nba_u10)
-```
-]
 
 ---
 ## Joins 
@@ -716,6 +499,8 @@ Ahora que tenemos los dos dataframes y que la variable identificadora tiene las 
     - `right_join()`: une incluyendo todas las filas en y
     - `inner_join()`: une incluyendo todas las filas en x & y
     - `full_join()`: une incluyendo todas las filas en x o y
+
+
 
 ---
 ## Joins
@@ -744,6 +529,24 @@ knitr::include_graphics("ima/inner_join.png")
 ]
 
 .right[[Wichkham & Grolemund (2018)](https://r4ds.had.co.nz/relational-data.html)]
+
+
+---
+## Joins (ejemplo)
+
+Nuestros dataframes a combinar
+
+.codefont[
+```{r ch120_c, echo = TRUE, message=FALSE}
+glimpse(nba_teams)
+```
+]
+
+.codefont[
+```{r ch120_d, echo = TRUE, message=FALSE}
+glimpse(nba_u10)
+```
+]
 
 
 ---
@@ -794,157 +597,11 @@ df_b <- tibble(pais = c("Uruguay", "Argentina", "Brasil", "Colombia"),
 
 
 ---
-class: inverse, center, middle
+## Ejercicio
 
-# Estructura de datos
+```{r, echo = TRUE, message=FALSE}
+df_a <- df_a %>% 
+  left_join(df_b)
 
----
-## Estructura de datos
-
-Un mismo conjunto de datos puede ser estructurado de distintas formas. Los criterios para ellos pueden ir desde facilitar la entrada de datos, a utilizar el formato correcto para correr ciertas funciones. 
-
-En el marco del Tidyverse se estructuran los datos en formato "tidy". Esto no significa que siempre que utilicemos R tengamos que estructurar los datos de esta forma, algunas funciones pueden requerir otros formatos. Sin embargo, para la mayoría de las funciones del tidyverse (particularmente para visualizar datos) funcionan mejor con el formato tidy
-
-.center[
-```{r, out.width = "600px"}
-knitr::include_graphics("ima/tidy_data.png")
+df_a
 ```
-]
-
-.right[[Wichkham & Grolemund (2018)](https://r4ds.had.co.nz/tidy-data.html)]
-
-
----
-## Estructura de datos
-
-El formato tidy parece obvio, pero muchas veces nos encontramos con datos distinta forma. Por ejemplo, no es tan extraño encontrar datos donde una sola variable está esparcida en varias columnas o una observación en más de una fila. Analizemos un caso muy común:
-
-```{r ch122, echo = TRUE, results = "hide", message=FALSE}
-wb_desempleo <- data.frame(pais = c("Argentina", "Chile", "Uruguay"),
-                           d_2018 = c(9.2, 7.2, 8.3),
-                           d_2019 = c(9.8, 7.3, 9.3),
-                           d_2020 = c(11.7, 11.5, 12.7))
-```
-
-```{r ch123, echo = TRUE, message=FALSE}
-print(wb_desempleo)
-```
-
----
-## Cambio de estructura de datos
-
-Para pasar datos a estructura tidy tenemos las funciones `pivot_longer()` (para pasar de formato ancho a largo) y `pivot_wider()` (para pasar de formarto largo a ancho) del paquete tidyr.
-
-.center[
-```{r, out.width = "600px"}
-knitr::include_graphics("ima/wide_long.png")
-```
-]
-
----
-## De ancho a largo con pivot_longer()
-
-.center[
-```{r, out.width = "1000px"}
-knitr::include_graphics("ima/wide_ima.png")
-```
-]
-
-.right[[Wichkham & Grolemund (2018)](https://r4ds.had.co.nz/tidy-data.html)]
-
----
-## De ancho a largo con pivot_longer()
-
-.codefont[
-```{r ch124, echo = TRUE, message=FALSE}
-wb_unemp_long <- wb_desempleo %>% 
-  pivot_longer(cols = c("d_2018", "d_2019", "d_2020"), # Columnas a unir 
-               names_to = "year", # Nombre de variable "key" 
-               values_to = "desempleo") # Nombre de variable con valores
-print(wb_unemp_long)
-```
-]
-
----
-## De largo a ancho con pivot_wider()
-
-.center[
-```{r, out.width = "800px"}
-knitr::include_graphics("ima/long_ima.png")
-```
-]
-
-.right[[Wichkham & Grolemund (2018)](https://r4ds.had.co.nz/tidy-data.html)]
-
----
-## De largo a ancho con pivot_wider()
-
-.codefont[
-```{r ch125, echo = FALSE, results = "hide", message=FALSE}
-wb_unemp <- data.frame(pais = c("Argentina", "Argentina", "Argentina", "Argentina", "Argentina"),
-                       year = c(2018, 2019, 2020, 2018, 2019),
-                       variable = c("desempleo", "desempleo", "desempleo", "pbi_per_capita", "pbi_per_capita"),
-                       valor = c(9.2, 9.8, 11.7, 11633, 9912))
-```
-```{r ch126, echo = TRUE, message=FALSE}
-print(wb_unemp)
-
-wb_unemp %>% 
-  pivot_wider(names_from = variable,
-              values_from = valor)
-```
-]
-
----
-class: inverse, center, middle
-
-# Guia de estilo
-
----
-
-## Guía de estilo 
-
-El estilo -por definición- para escribir código siempre es subjetivo. Sin embargo, ciertas guías pueden servir para hacer nuestro código más legible (para propios y ajenos).
-
-Tidyverse cuenta con una [guía de estilo](https://style.tidyverse.org/) y también existen paquetes que nos ayudan a emprolijar nuestros códigos como [styler](https://styler.r-lib.org/)
-
-
----
-
-## Guía de estilo 
-
-- Un primer principio a tener en cuenta es la coherencia, ya sea en como nombrar objetos y variables, los espacios o tipos de anotaciones
-
-- Los nombres de objetos y variables deben contener letras minúsculas, números y guiones bajos (_). 
-
-- Siempre dejar un espacio luego de una coma (al igual que en el español).
-
-- Dejar espacios entre operadores (`=`, `%>%`, etc.)
-
-- No dejar espacios al iniciar paréntesis 
-
-- No escribir líneas muy largas (la última versión de R Studio marca con una línea vertical un límite arbitrario, que se puede editar) 
-
-- Comentar el código es importante
-
----
-
-## Guía de estilo 
-
-
-.codefont[
-```{r ch127, echo = TRUE, message=FALSE, eval = FALSE}
-# Bien
-vector_1 <- c("Rojo", "Verde", "Blanco")
-  
-# Mal (funciona igual)
-vector_1<-c( "Rojo","Verde","Blanco" )
-  
-# Bien
-data %>% 
-  mutate(pib_per_capita = pbi / poblacion)
-
-# Mal
-data %>%mutate(pib_per_capita=pbi/poblacion)
-```
-]

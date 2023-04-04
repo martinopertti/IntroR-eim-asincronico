@@ -188,39 +188,34 @@ df <- nba_data %>%
 
 ## Resumen con la media de pts_home
 nba_data %>% 
-  drop_na() %>% 
-  summarise(media = mean(pts_home))
+  summarise(media = mean(pts_home, na.rm = TRUE))
 
 ## Con group_by() podemos crear grupos para nuestros resumenes
 nba_data %>% 
-  drop_na() %>% 
   group_by(season) %>% 
-  summarise(media = mean(pts_home))
+  summarise(media = mean(pts_home, na.rm = TRUE))
 
 ## Como con la mayoría de las funciones de dplyr, nos devuelve un dataframe, 
 # que podemos guardar en un objeto
 pts_per_season <- nba_data %>%
-  drop_na() %>% 
   group_by(season) %>% 
-  summarise(media = mean(pts_home))
+  summarise(media = mean(pts_home, na.rm = TRUE))
 
 ## Con ungroup() dejamos de agrupar para las funciones que aún no han corrido,
 # Con la lógica del pipeline podemos luego seguir transformado el resumen, 
 # por ejemplo quedarnos con las temporadas posteriores a 2010
 nba_data %>% 
-  drop_na() %>% 
   group_by(season) %>% 
-  summarise(media = mean(pts_home)) %>% 
+  summarise(media = mean(pts_home, na.rm = TRUE)) %>% 
   ungroup() %>% 
   filter(season > 2010)
 
 ## Podemos agrupar por dos o más variables si queremos también
 nba_data %>% 
-  drop_na() %>%
   filter(home_team == "Chicago Bulls" | 
            home_team == "New York Knicks") %>% 
   group_by(season, home_team) %>% 
-  summarise(media = mean(pts_home)) 
+  summarise(media = mean(pts_home, na.rm = TRUE)) 
 
 # Podemos generar varios resumenes son summarise(), que son variables del 
 # dataframe que devuelve
@@ -240,21 +235,6 @@ nba_data %>%
             suma_pts_home = sum(pts_home),
             max_pts_home = max(pts_home),
             partidos = n()) 
-
-# Resumir usando across() todas las variables que terminen con cierto termino
-nba_data %>%
-  group_by(home_team) %>%
-  summarise(across(ends_with("pct_home"), ~ mean(.x, na.rm = TRUE)))
-
-# Usar across() con un vector de variables
-nba_data %>%
-  group_by(home_team) %>%
-  summarise(across(c("pts_home", "ast_home"), ~ mean(.x, na.rm = TRUE)))
-
-# Usar across() y where() para condiciones, por ejemplo variables numericas
-nba_data %>%
-  group_by(home_team) %>%
-  summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE)))
 
 rm(pts_per_season)
 

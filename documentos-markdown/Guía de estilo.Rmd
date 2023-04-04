@@ -1,0 +1,85 @@
+---
+title: "Guía de estilo"
+author: "Martín Opertti"
+date: "2023-03-29"
+output: 
+  html_document:
+    theme: cerulean 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+El estilo -por definición- para escribir código siempre es subjetivo. Sin embargo, ciertas guías pueden servir para hacer nuestro código más legible (para propios y ajenos). Tidyverse cuenta con una [guía de estilo](https://style.tidyverse.org/) y también existen paquetes que nos ayudan a emprolijar nuestros códigos como [styler](https://styler.r-lib.org/)
+
+
+Algunos principios a tener en cuenta:
+
+- Coherencia al nombrar objetos y variables: los espacios o tipos de anotaciones. Los nombres de objetos y variables deben contener letras minúsculas, números y guiones bajos.  Deben evitarse las otros operadores, mayúsculas y puntos.
+
+```{r echo = TRUE, message=FALSE, eval = FALSE}
+nombre_del_objeto <-  2 # Sí
+
+NombreDel.Objeto <- 3 # No
+```
+
+- Siempre dejar un espacio luego de una coma (al igual que en el español).
+
+```{r echo = TRUE, message=FALSE, eval = FALSE}
+df <- data.frame(var_1 = c(2, 4, 6),
+                 var_2 = c(2, 6, 9))
+
+df[1, 1] # Sí
+df[1,1] # No
+```
+
+- Dejar espacios entre operadores (`=`, `%>%`, etc.)
+
+```{r echo = TRUE, message=FALSE, eval = FALSE}
+4 == 4 # Sí
+4==3 # No
+```
+
+- No dejar espacios al iniciar paréntesis 
+
+```{r echo = TRUE, message=FALSE, eval = FALSE}
+mean(df$var_1) # Sí
+mean ( df$var_1) # No
+```
+- No escribir líneas muy largas (la última versión de R Studio marca con una línea vertical un límite arbitrario, que se puede editar) 
+
+
+- Comentar el código es importante
+
+
+Otros ejemplos:
+
+```{r ch127, echo = TRUE, message=FALSE, eval = FALSE}
+# Bien
+vector_1 <- c("Rojo", "Verde", "Blanco")
+  
+# Mal (funciona igual)
+vector_1<-c( "Rojo","Verde","Blanco" )
+  
+# Bien
+data %>% 
+  mutate(pib_per_capita = pbi / poblacion)
+
+# Mal
+data %>%mutate(pib_per_capita=pbi/poblacion)
+```
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>

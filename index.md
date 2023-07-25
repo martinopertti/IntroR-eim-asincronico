@@ -15,6 +15,7 @@
 - [Presentación](/dia_2.html)
 - [Dialectos y Tidyverse](/documentos-markdown/Dialectos-Tidyverse.html)
 - [Funciones y código](/documentos-markdown/Datos-perdidos-en-R.html)
+- [Directorios](/documentos-markdown/Directorios.html)
 - [Código de clase](/scripts/dia2_codigo.R)
 - [Ejercicios](/scripts/dia2_ej.R)
 - [Solución de ejercicios](/scripts/dia2_ej_sol.R)

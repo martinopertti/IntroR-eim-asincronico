@@ -1,0 +1,73 @@
+---
+title: "Directorios"
+subtitle: "Escuela de Invierno en Métodos 2023, UCU"
+author: "Martín Opertti"
+output: 
+  html_document:
+    theme: cerulean 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo=FALSE}
+h1, h3, h4 {
+  text-align: center;
+}
+
+body {
+  font-size: 12pt;
+}
+```
+
+Los directorios de trabajo sirven para indicarle a R dónde buscar archivos o qué archivos leer. En R se puede trabajar con directorios de distintas formas. Es decir, para abrir en R un archivo guardado en tu computadora, debes especificar en qué carpeta está guardado. Vamos a ver algunas de las fromas más comunes. 
+
+## Rutas completas
+
+Supongamos que yo voy a trabajar en una carpeta llamada **"curso-R"** que está guardada dentro de una carpeta llamada cursos. El primer paso es identificar de forma precisa dónde está la carpeta "curso-R" , no alcanza con saber la carpeta en donde está guardada, sino que necesitamos saber su ubicación completa o ruta. ¿Cómo podemos obtener eso? Hacemos click derecho en la carpeta y copiamos la dirección que dice en Ubicación/location. En este caso, para mi carpeta "curso-R" es: *"C:/Users/martin/Dropbox/cursos"*. Cuando copiamos rutas de una carpeta en R tenemos que tener en cuenta que las barras no pueden estar en este sentido `\`, deben estar en el otro sentido (`/`).  
+
+Ahora que conocemos la ruta de nuestra carpeta **"curso-R"**, vamos a escribir código para leer un archivo excel llamado **"desempleo"** guardado dentro de la carpeta **data**. La primera opción es hacerlo pasando la ruta completa a la función que importa los datos. En este caso vamos a usar la función read_excel() del paquete readxl porque se trata de un archivo excel. Para importar esa base deberíamos correr:
+
+```{r, eval = FALSE}
+df <- readxl::read_excel("C:/Users/martin/Dropbox/cursos/curso-R/data/desempleo-xlsx")
+```
+
+Este enfoque de llamar la ruta entera es sencillo pero tiene dos desventajas considerables. La primera es que si necesitamos importar y exportar varios objetos en un mismo script debemos copiar rutas (que son largas) varias veces, lo cuál no es práctico. En segundo lugar, y más importante, estas rutas son fijas y nos permiten poca fleixibildiad. Por ejemplo, si movemos la carpeta de lugar, debemos reemplazar todas las rutas o si compartimos el script con otra persona, la otra persona tendrá que reemplazar todos los directorios.
+
+## Fijar un directorio al comienzo del script
+
+Otra forma de manejar los directorios es fijar un directorio al comienzo del script y luego usar directorios relativos. ¿Qué significa esto? Supongamos que seguimos trabajando con la carpeta **"curso-R"**, y que todo lo que vamos a importar y exportar para ese proyecto queremos que esté dentro de esa misma carpeta. En ese caso, podemos decirle a R que busque todo dentro de esa carpeta. Primero usamos la función `setwd()` para indicarle a R en cuál directorio vamos a trabajar y luego cuando cargamos la base de datos por ejemplo, utilizamos un directorio relativo, es decir, el directorio solamente **dentro** de la carpeta especificada. Así haríamos lo mismo que en el punto 1.
+ 
+```{r, eval = FALSE}
+setwd("C:/Users/martin/Dropbox/cursos/curso-R") # Fijo el directorio
+
+df <- readxl::read_excel("data/desempleo-xlsx") # Ya sabe que tiene que buscar dentro de la carpeta curso-R y la ubicación de esta
+```
+
+De esta forma, reducimos algunos de los problemas mencionados anteriormentes. Por ejemplo si compartimos el script o cambiamos de ubicación la carpeta, solamente debemos modificar en el script una línea de código (la que incluye `setwd()`). Porque todas las restantes, serán relativas y no necesitarán cambiarse.
+
+## Proyectos de R
+
+Una tercer forma (y mi recomendación) es resolver la cuestión de los directorios utilizando proyectos de R. Es la mejor práctica para que nuestros scripts sean portables y reproducibles. Para crear un .Rproj vamos a `File/New Project` y ahí nos encontramos con la opción de crear una carpeta para guardar los archivos o utilizar una carpeta ya existente. Al crear un proyecto de R se creará un archivo de extensión `.Rproj`, **cuando le damos click se inicia una nueva sesión de R cuyo directorio es por defecto la carpeta en la que está guardado**. Podemos usar directorios relativos dentro de la carpeta en la que se aloja nuestro `.Rproj` para importar y exportar datos a y desde R. Esto hace que uno pueda cambiar la carpeta o compartirla y el script correrá de igual manera (a diferencia de si utilizamos `setwd()`)
+
+En este caso deberíamos crear un proyecto de R dentro de la carpeta **"curso-R"**. Luego de eso se podría ver algo así:
+
+```{r, out.width = "750px", echo = FALSE}
+knitr::include_graphics(here::here("ima/carpeta_curso.png"))
+```
+
+Una vez que abrimos el proyecto de R, se abrirá una sesión de R Studio desde donde podrán abrir o crear los scripts que deseen utilizar y el directorio de trabajo de esa sesión de R será la carpeta donde está alojada el proyecto. Esto si bien parece un poco más complejo que las dos opciones anteriores, no requiere esfuerzo una vez creado y hace que nuestros análisis sean 100% portables.
+
+&nbsp;
+<hr />
+
+<div style="text-align: center">										
+
+<center>
+![](ima/logo_es.png){width=30%}
+</center>
+
+ <font size="4"> Escuela de Invierno en Métodos, 2023. Universidad Católica del Uruguay </font> 
+
+<br>

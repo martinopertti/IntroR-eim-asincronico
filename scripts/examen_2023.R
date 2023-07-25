@@ -57,7 +57,8 @@
 # en el eje de las y, según región (denotada por el color de la barra, usar
 # la paleta "Dark2" para seleccionar los colores del gráfico)
 
-# (Partiendo de df_euro del punto anterior)
+# (Partiendo de df_euro del punto anterior hacemos un cambio de estructura),
+# se debería ver asi
 tabla_long <- df_euro %>% 
   group_by(region) %>% 
   summarize(mean_birth = mean(birthrate, na.rm = TRUE),

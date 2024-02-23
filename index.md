@@ -37,3 +37,7 @@
 - [Código de clase](/scripts/dia4_codigo.R)
 - [Ejercicios](/scripts/dia4_ej.R)
 - [Solución de ejercicios](/scripts/dia4_ej_sol.R)
+
+
+### Presentacion NCCLAS
+- [Presentación](/NCCLAS/presentation.html)

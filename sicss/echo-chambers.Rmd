@@ -683,7 +683,7 @@ knitr::include_graphics("ima/science2.png")
 
 --
 
-- Dejar de usar Facebook disminuyó un poco la polarización ideológica (no afectiva) aumentó la polarización ideológica.
+- Intervención para dejar de usar Facebook disminuyó un poco la polarización ideológica (no afectiva).
 
 --
 

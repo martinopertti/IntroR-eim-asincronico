@@ -67,27 +67,6 @@ class: inverse, center, middle
 
 ---
 
-## Redes sociales, política e información 
-
-La irrupción de las redes sociales dio paso al debate de si las nuevas tecnologías darían voz a nuevos actores generando un debate **más plural** o crearían comunidades ideológicas aisladas.
-
---
-
-- Los medios digitales y las redes sociales podrían bajar los **costos de adquirir información política** dando paso a un discurso político más plural. 
-
---
-
-- La abundancia y capacidad de elegir la información podría llevar a un división entre los **interesados en política y los que no les interesa**.
-
-  - Por ejemplo, [Instragram por defecto ahora bloquea el contenido politico de cuentas que el usuario no sigue.](https://about.instagram.com/blog/announcements/continuing-our-approach-to-political-content-on-instagram-and-threads)  Pero el usuario muy interesado en política puede desactivar esa condición. 
-  
---
-
-- También la tecnología facilitó la conexión con personas que piensan de forma similar a nosotros, a diferencia de la vida real donde solemos tener que enfrentarnos a la diversidad (Putnam, 2000).
-
-
----
-
 ## Cámaras de eco: argumento original
 
 - La posibilidad de elegir qué información obtener de forma más personalizada podía llevar a que la gente consuma la información que **refuerza sus opiniones previas**, formando **cámaras de eco**.
@@ -387,9 +366,6 @@ knitr::include_graphics("ima/magdalena.png")
 
 - Varios estudios muestran que el consumo de noticias online no está más fragmentado que el consumo de noticias offline, a causa de la exposición incidental (ej. [Fletcher y Nielsen, 2017](https://academic.oup.com/joc/article-abstract/67/4/476/4642154))
 
---
-
-- Sin embargo, un artículo reciente muestra que si bien los personas en general siguen/difunden contenido proveniente de cuentas de diversa orientación ideológica, cuando se miran los datos a nivel publicación o posteo, los segos son muchos grandes. Esto proviene de un fenómeno llamado burbujas de curación *(curation bubbles)* [(Green et al., forthcoming)](https://files.osf.io/v1/resources/udfaz/providers/osfstorage/6101ce1b317620027237dc3a?action=download&direct&version=4) 
 
 ---
 
@@ -427,8 +403,10 @@ knitr::include_graphics("ima/guess.png")
 
 ## Burbujas de curación
 
+- Sin embargo, un artículo reciente muestra que si bien los personas en general siguen/difunden contenido proveniente de cuentas de diversa orientación ideológica, cuando se miran los datos a nivel publicación o posteo, los segos son muchos grandes. Esto proviene de un fenómeno llamado burbujas de curación *(curation bubbles)* [(Green et al., forthcoming)](https://files.osf.io/v1/resources/udfaz/providers/osfstorage/6101ce1b317620027237dc3a?action=download&direct&version=4) 
+
 .center[
-```{r, out.width = "700px"}
+```{r, out.width = "500px"}
 knitr::include_graphics("ima/jongreen1.png")
 ```
 ]
@@ -448,6 +426,22 @@ knitr::include_graphics("ima/jongreen2.png")
 
 .pull-right[[(Green et al., forthcoming)](https://files.osf.io/v1/resources/udfaz/providers/osfstorage/6101ce1b317620027237dc3a?action=download&direct&version=4) ]
 
+---
+
+## Exposición a contenido ideológico cruzado
+
+En una colaboración con Facebook (Meta) previo a las elecciones de 2020, un equipo de más de 30 investigadores llevaron a cabo varios estudios -de los cuales hasta el momento se han publicado 4- con diseños de investigación muy sólidos en términos de validez interna y externa, que solo lo permite el trabajo en conjunto con una plataforma.
+
+Uno de los artículos, el de [Nyhan et al., (2023)](https://www.nature.com/articles/s41586-023-06297-w) analizó la orientación política del contenido al que están expuestos los usuarios en Facebook:
+
+  - El usuario mediano de Facebook recibe 50% de su contenido (político o no) de fuentes similares ideológicamente, y un 15% de fuentes del otro lado del espectro político.
+
+  
+  - La mediana del porcentaje de contenido político que reciben las personas en Facebook es de 7%.
+
+  - Solo 1 de cada 5 usuarios de Facebook recibe el 75% o más de su contenido de fuentes de la misma orientación política.
+
+
 
 ---
 
@@ -466,6 +460,10 @@ knitr::include_graphics("ima/jongreen2.png")
 --
 
 - Consumo de medios es más balanceado de lo esperado por la teoría de la exposición selectiva, aunque con matices.
+
+--
+
+- En términos de exposición, al menos en Facebook, hay homofilia pero un 15% del contenido político es del partido opuesto
 
 --
 
@@ -562,31 +560,12 @@ knitr::include_graphics("ima/allcott.png")
 
 [(Allcott et al., 2020)](https://www.aeaweb.org/articles?id=10.1257%2Faer.20190658&utm_campaign=Johannes)]
 
----
-
-## Polarización política y redes sociales
-
-En una colaboración con Facebook (Meta) previo a las elecciones de 2020, un equipo de más de 30 investigadores llevaron a cabo varios estudios -de los cuales hasta el momento se han publicado 4- con diseños de investigación muy sólidos en términos de validez interna y externa, que solo lo permite el trabajo en conjunto con una plataforma.
-
-Uno de los artículos, el de [Nyhan et al., (2023)](https://www.nature.com/articles/s41586-023-06297-w) analizó la orientación política del contenido al que están expuestos los usuarios en Facebook y llevó a cabo un experimento a gran escala donde redujeron el contenido creado por fuentes del mismo partido que los participantes.
 
 ---
 
 ## Polarización política y redes sociales
 
-Principales resultados del estudio de [Nyhan et al., (2023)](https://www.nature.com/articles/s41586-023-06297-w):
-
---
-
-- El usuario mediano de Facebook recibe 50% de su contenido (político o no) de fuentes similares ideológicamente, y un 15% de fuentes del otro lado del espectro político.
-
---
-
-- La mediana del porcentaje de contenido político que reciben las personas en Facebook es de 7%.
-
---
-
-- Solo 1 de cada 5 usuarios de Facebook recibe el 75% o más de su contenido de fuentes de la misma orientación política.
+Principales resultados del diseño experimental del estudio de [Nyhan et al., (2023)](https://www.nature.com/articles/s41586-023-06297-w):
 
 --
 
@@ -685,7 +664,7 @@ knitr::include_graphics("ima/science2.png")
 
 --
 
-- Dejar de usar Facebook disminuyó un poco la polarización ideológica (no afectiva) y aumentar exposición a información del otro lado del espectro político aumentó la polarización ideológica.
+- Dejar de usar Facebook disminuyó un poco la polarización ideológica (no afectiva) aumentó la polarización ideológica.
 
 --
 

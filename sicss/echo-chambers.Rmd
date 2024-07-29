@@ -1,5 +1,5 @@
 ---
-title: "Cámaras de Eco, homofilia y polarización en Redes Sociales"
+title: "Cámaras de eco, homofilia y polarización en redes sociales"
 author: "Summer Institute in Computational Social Science - FCS-UdelaR"
 institute: "Martín Opertti"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'

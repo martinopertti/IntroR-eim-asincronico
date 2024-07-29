@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Análisis de Datos de Encuestas en R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Summer Institute in Computational Social Science - UdelaR" />
+    <meta name="date" content="2024-07-28" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link href="libs/animate.css-3.7.2/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="estilo.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Análisis de Datos de Encuestas en R
+]
+.author[
+### Summer Institute in Computational Social Science - UdelaR
+]
+.institute[
+### Martín Opertti
+]
+.date[
+### July 28, 2024
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Repaso polarización
+
+---
+
+## Polarización política (ideológica) 
+
+- **Polarización ideológica (elites o sistema de partidos):** variación en la distribución de los partidos políticos en el eje izquierda-derecha [(Dalton, 2021)](https://www.sciencedirect.com/science/article/pii/S0261379421000652?casa_token=UvuykRFC-A8AAAAA:Fp58VZI-hdXOIXQiN9uRGs9reCsWLElTmr-j9l36WvJ6HfjSIfEULwqVI_oRLfaaHoz_Dcf_). 
+
+  - Poca polarización dificulta la elección de los partidos para los votantes 
+  
+  - Mayor polarización aumenta la participación. 
+  
+  - Polarización muy alta puede causar dificultades para governar
+
+- **Polarización ideológica (votantes):** qué tan extremas son las posiciones de los votantes en cuanto a preferencias por políticas públicas y cuánta distancia hay entre votantes/partidarios de distintos partidos/bloques ([Fiorina et al., 2009](https://www.journals.uchicago.edu/doi/abs/10.1017/S002238160808050X?casa_token=ozbT6OreOdgAAAAA:PXLuNMUAOMh2rrCQSk4oWFGb2lyRwwgYu9zr-WuwEX8z1D_z8gDD4wvpyniaiwPH0hqnuazXBHU) [Abramowitz y Sanders, 2008](https://www.journals.uchicago.edu/doi/abs/10.1017/S0022381608080493?casa_token=AXok-pBjVWMAAAAA:VHV8ENeremIBOQZszRTc7_O2eLo1tJQWSWxMR6Hchm76WX7WLQYTzeNcMsLZSp0dvSp7gLatT_8)). 
+
+  - Enfoque predominante hasta 2012 (ver [Iyengar et al., 2012](https://academic.oup.com/poq/article-abstract/76/3/405/1894274)).
+  
+- Operacionalización: 
+
+  - Distancia en ideología autorreportada.
+  
+  - Distancia y consistencia en opiniones sobre políticas públicas.
+
+
+---
+
+## Polarización política (afectiva) 
+
+.center[
+&lt;img src="ima/figure-1.png" width="700px" /&gt;
+]
+
+.pull-right[[Iyengar et al. (2019)](https://www.annualreviews.org/content/journals/10.1146/annurev-polisci-051117-073034)]
+
+---
+
+## Polarización política (afectiva) 
+
+- **Polarización afectiva:** estudia si los votantes muestran aversión, animosidad o desconfianza hacia los votantes/partidarios del otro partido [Iyengar et al., 2019](https://www.annualreviews.org/content/journals/10.1146/annurev-polisci-051117-073034). 
+
+  - Enfoque distinto basado en la teoría de identidades sociales *(Social Identity Theory)*, originado en Estados Unidos y muy extendido en la actualidad (ej. 
+[Wagner, 2021](https://www.sciencedirect.com/science/article/pii/S0261379420300822?casa_token=GT6hg0d11TAAAAAA:JlYO-9yphe6NUXxj87c6M6Q5dJn28oKJOoaUWHSe4vRaERfynq7mxTuGRyz4cB8kNfhGaw_C))
+  
+  - Incluso en países con bajos niveles de identificación partidaria puede existir altos niveles de polarización afectiva (ej. [Samuels y Zucco (2018)](https://books.google.es/books?hl=es&amp;lr=&amp;id=v9BVDwAAQBAJ&amp;oi=fnd&amp;pg=PR11&amp;dq=zucco+antipartisans&amp;ots=3OCVI9bwwk&amp;sig=dDhOauHNhthzrpwtG8RrwAmJcZs))
+
+  
+- Operacionalización
+
+  - Preguntas sobre gusta/disgusta partidos o votantes o termómetros de simpatía 
+  
+  - Medidas de distancia social (ej. preguntas sobre como se sentiría si hijo/a se casa con alguien del otro partido)
+  
+  - Medidas de confianza en partidarios de otros partidos/bloques.
+  
+  
+---
+
+## Polarización afectiva 
+
+.pull-left[
+&lt;img src="ima/thermometer.jpeg" width="350px" /&gt;
+]
+
+.pull-right[
+Escala CSES: *¿Cuánto le gusta o no le gusta cada uno de los siguientes partidos políticos? Ubique a cada uno en una escala de 0 a 10, donde 0 quiere decir que no le gusta nada y 10 que le gusta muchísimo*
+]
+
+---
+
+## Polarización afectiva en perspectiva comparada
+
+.center[
+&lt;img src="ima/wagner_1.png" width="350px" /&gt;
+]
+
+.pull-right[
+[Wagner (2021)](https://www.sciencedirect.com/science/article/pii/S0261379420300822?casa_token=bCRuxxjMeGIAAAAA:aJyziDgshKWdptNPxPQ8oSvG75lBsRA3XSBeFTIVtOy1Z1ykGI_eK0gFm0dT_GCcc5Pe6ymm)
+]
+
+---
+class: inverse, center, middle
+
+# Encuestas de opinión pública en Uruguay
+
+---
+
+## Fuentes
+
+- Sistema de encuestadoras privadas (~5) muy estable con larga tradición. 
+
+  - Metodología diversa y cambiante (RDD, online, cara a cara)
+
+  - Datos agregados publicados en medios de comunicación (ver [app política](https://bancodedatos-fcs.shinyapps.io/appPolitica/))
+  
+  - Datos a nivel individual de Cifra y Opción (ver [Álvarez et al., (2023)](https://scholar.google.es/citations?view_op=view_citation&amp;hl=es&amp;user=WmXuNEsAAAAJ&amp;citation_for_view=WmXuNEsAAAAJ:Tyk-4Ss8FVUC)), X encuestas 1993-2019, disponibles en Roper Center.
+  
+- Proyectos regionales e internacionales con mediciones en Uruguay
+
+  - [LAPOP](https://www.vanderbilt.edu/lapop/)
+  
+  - [Latinobarómetro](https://www.latinobarometro.org/)
+
+  - [Encuesta Mundial de Valores](https://www.worldvaluessurvey.org/)
+  
+  - [CSES](https://cses.org/)
+  
+---
+
+## CSES
+
+
+
+- Proyecto colaborativo de muchas universidades desde 1996.
+
+- Dos olas en Uruguay, la última en 2019 por Factum
+
+- Preguntas relaciondas a elecciones 
+
+.center[
+&lt;img src="ima/cses6.png" width="500px" /&gt;
+]
+
+
+---
+
+class: inverse, center, middle
+
+# Análisis de datos de encuestas en R
+
+---
+
+## Particularidades de datos de encuestas
+
+- Datos en general categóricos con etiquetas y categorías particulares (no sabe no contesta, etc.)
+
+- Ponderadores de post-estratificación para corregir sesgos de no respuesta.
+
+- Muestras complejas (efecto de diseño)
+
+- Casos perdidos
+
+---
+
+## Paquetes de R para analizar datos de encuestas
+
+- El paquete [survey](https://cran.r-project.org/package=survey) permite el análisis de datos de encuestras con muestras complejas. Por ejemplo, permite obtener tablas de resumen ponderadas.
+
+- El paquete [srvyr](http://gdfe.co/srvyr/) es la versión del tidyverse del paquete [survey](https://cran.r-project.org/package=survey).
+
+- El paquete [anesrake](https://cran.r-project.org/web/packages/anesrake/anesrake.pdf) permite generar ponderadores de post-estratificación via raking.
+
+.center[
+&lt;img src="ima/srvyr.png" width="300px" /&gt;
+]
+---
+
+## Importar datos
+
+- Normalmente cuando trabajamos con datos solemos utilizar datos ya creados guardados en los formatos de otros programas (ej. Excel, Stata, SPSS) 
+
+- Existen varios paquetes que permiten importar y exportar datos desde distintos formatos. Algunos de los más utilizados son [readr](https://readr.tidyverse.org/), [haven](https://haven.tidyverse.org/), [readxl](https://readxl.tidyverse.org/) y [utils](https://www.rdocumentation.org/packages/utils/versions/3.6.2)
+
+- Datos de encuestas muchas veces son guardados en el formato de Stata (.dta) o SPSS (.sav) porque son eficientes para guardar etiquetas. El paquete [haven](https://haven.tidyverse.org/) es muy util para esto.
+
+---
+
+## Importar datos (ejemplo)
+
+A partir de proyecto de R en la carpeta CSES, asignando la base al nombre df
+
+
+``` r
+df &lt;- read_dta('Data/cses5_stata/cses5.dta')
+```
+
+Directorio completo:
+
+
+``` r
+df &lt;- read_dta('C:/Users/opertti/Dropbox/cursos/SICCS/CSES/cses5_stata/cses5.dta')
+```
+
+---
+
+## Etiquetas y factores
+
+- Cuando importamos data de SPSS o Stata con variables categóricas que tienen etiquetas (ej: 1 = Aprueba; 2 = Desaprueba) con el paquete haven, por defecto el valor de las variables será el numérico (son de tipo dbl) y tendrán las etiquetas como atributos.
+
+- En general, al trabajar en R es mejor transformar estas variables categóricas en factores. Para ello podemos usar la función `as_factor()`del paquete `haven` (no confundir con `as.factor()`)
+
+
+
+``` r
+# Etiquetas como factores
+df &lt;- df %&gt;% 
+  haven::as_factor() 
+```
+
+---
+
+## Limpiar datos
+
+- Las tareas clásicas de limpieza de datos como seleccionar variables, filtrar datos y recodificar variables en R se pueden hacer de distintas maneras.
+
+- Con el paquete `dplyr` (dentro del universo `tidyverse`) podemos hacer todas estas tareas con una sintaxis en común
+
+
+``` r
+df &lt;- df %&gt;% 
+  select(var_1, var_2, var_3) %&gt;% 
+  filter(var_1 == 'Uruguay') %&gt;% 
+  rename(var_1_b = var_1) %&gt;% 
+  mutate(var_3_rec = case_when(
+    var_3 &gt;= 2 ~ '2 o +',
+    TRUE ~ 'Otros
+  ))
+```
+
+---
+
+## Post-estratificación
+
+Con el paquete `anesrake` podemos ponderar con el método de raking. [Ver tutorial](https://www.r-bloggers.com/2018/12/survey-raking-an-illustration/) 
+
+
+``` r
+library(anesrake)
+
+# Supongamos que quiero ponderar por sexo y el parámetro es 60% mujeres y 
+# 40% hombres 
+prop.table(table(df$sexo)) # Hay diferencia importante
+
+# Creo vector con parámetro y nombro los valores 
+# Tienen que coincidir con los valores de la variable
+par_sexo &lt;- c(0.6, 0.4) # Es un ejemplo, no son reales
+names(par_sexo) &lt;- c("Female", "Male")
+par_sexo
+
+# Lista con todos los parametros
+parametros &lt;- list(par_sexo) 
+# Nombrar con el nombre exacto de las variables
+names(parametros) &lt;- c("sexo") 
+```
+
+
+---
+
+## Post-estratificación
+
+
+``` r
+## Ponderador 
+outsave &lt;- anesrake(
+  parametros, # Lista con parámetros 
+  df, # Data 
+  caseid = df$id, # Id único por caso
+  cap = 5, # Fijo peso máximo de 5
+  type = "nolim",
+  pctlim = 5, # Si la diferencia no es &gt; a 5% no tenga en cuenta la var
+  force1 = TRUE # Asegura que cada parametro sume 1 si hay pequeñas diferencias
+  )
+
+summary(outsave) # Resumen
+
+## Ponderador como variable
+lat_17 &lt;- df %&gt;% 
+  mutate(ponderador = unlist(outsave[1]))
+```
+
+---
+
+## Crear objeto de encuesta
+
+Crear un objeto de encuesta con la función `as_survey_design()` del paquete `srvyr`.
+
+
+``` r
+encuesta &lt;- dataframe_original %&gt;% 
+  as_survey_design(weight = ponderador)
+```
+
+.center[
+&lt;img src="ima/help.png" width="600px" /&gt;
+]
+
+---
+
+## Estadísticas de resumen ponderadas
+
+- Usamos las funciones `survey_mean()`, `survey_total()` y `survey_quantile()` para obtener estadísticas de resumen con la sintáxis de dplyr. Por ejemplo:
+
+
+``` r
+# Frecuencia ponderada
+svy %&gt;%
+  group_by(pid_total) %&gt;%
+  srvyr::summarize(n_pond = survey_total(vartype = NULL))
+```
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"incremental": true,
+"df_print": "kable",
+"smaller": true,
+"widescreen": true,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

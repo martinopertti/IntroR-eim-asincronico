@@ -37,3 +37,10 @@
 - [Código de clase](/scripts/dia4_codigo.R)
 - [Ejercicios](/scripts/dia4_ej.R)
 - [Solución de ejercicios](/scripts/dia4_ej_sol.R)
+
+
+### Otros
+
+- [Camaras de eco](/sicss/echo-chambers.html)
+- [encuestas](/sicss/analisis-encuestas.html)
+

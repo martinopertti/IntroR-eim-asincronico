@@ -39,8 +39,3 @@
 - [Solución de ejercicios](/scripts/dia4_ej_sol.R)
 
 
-### Otros
-
-- [Camaras de eco](/sicss/echo-chambers.html)
-- [encuestas](/sicss/analisis-encuestas.html)
-
